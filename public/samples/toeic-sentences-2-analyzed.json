@@ -52,15 +52,18 @@
     "slash": [
      {
       "en": "The shipment, which was originally scheduled for Monday,",
-      "ja": "当初月曜に予定されていた発送品は"
+      "ja": "当初月曜に予定されていた発送品は",
+      "ipa": "ðə ˈʃɪpmənt ˈwɪtʃ ˈwɑz ɚˈɪdʒənəli ˈskɛdʒʊld fɚ ˈmʌndi"
      },
      {
       "en": "will now arrive on Wednesday",
-      "ja": "今は水曜に到着する予定だ"
+      "ja": "今は水曜に到着する予定だ",
+      "ipa": "ˈwɪl ˈnaʊ ɚˈaɪv ɑn ˈwɛnzdi"
      },
      {
       "en": "because of severe weather.",
-      "ja": "悪天候のため"
+      "ja": "悪天候のため",
+      "ipa": "bɪˈkɔz əv səˈvɪɹ ˈwɛðɚ"
      }
     ],
     "pattern": {
@@ -266,6 +269,24 @@
       "t": "because of severe weather.",
       "f": "前置詞句"
      }
+    ],
+    "iu": [
+     {
+      "t": "The shipment,",
+      "ipa": "ðə ˈʃɪpmənt"
+     },
+     {
+      "t": "which was originally scheduled for Monday,",
+      "ipa": "ˈwɪtʃ ˈwɑz ɚˈɪdʒənəli ˈskɛdʒʊld fɚ ˈmʌndi"
+     },
+     {
+      "t": "will now arrive on Wednesday",
+      "ipa": "ˈwɪl ˈnaʊ ɚˈaɪv ɑn ˈwɛnzdi"
+     },
+     {
+      "t": "because of severe weather.",
+      "ipa": "bɪˈkɔz əv səˈvɪɹ ˈwɛðɚ"
+     }
     ]
    },
    "level": 730,
@@ -340,15 +361,18 @@
     "slash": [
      {
       "en": "Please make sure",
-      "ja": "確認してください"
+      "ja": "確認してください",
+      "ipa": "ˈpliz ˈmeɪk ˈʃʊɹ"
      },
      {
       "en": "all cartons are properly labeled",
-      "ja": "すべての箱が適切にラベル付けされていると"
+      "ja": "すべての箱が適切にラベル付けされていると",
+      "ipa": "ˈɔl ˈkɑɹtənz ˈɑɹ ˈpɹɑpɚli ˈleɪbəld"
      },
      {
       "en": "before they are loaded onto the truck.",
-      "ja": "トラックに積まれる前に"
+      "ja": "トラックに積まれる前に",
+      "ipa": "bɪˈfɔɹ ˈðeɪ ˈɑɹ ˈloʊdɪd ˈɑntu ðə ˈtɹʌk"
      }
     ],
     "pattern": {
@@ -542,6 +566,16 @@
       "t": "onto the truck.",
       "f": "前置詞句"
      }
+    ],
+    "iu": [
+     {
+      "t": "Please make sure all cartons are properly labeled",
+      "ipa": "ˈpliz ˈmeɪk ˈʃʊɹ ˈɔl ˈkɑɹtənz ˈɑɹ ˈpɹɑpɚli ˈleɪbəld"
+     },
+     {
+      "t": "before they are loaded onto the truck.",
+      "ipa": "bɪˈfɔɹ ˈðeɪ ˈɑɹ ˈloʊdɪd ˈɑntu ðə ˈtɹʌk"
+     }
     ]
    },
    "level": 600,
@@ -616,15 +650,18 @@
     "slash": [
      {
       "en": "Had the supplier delivered",
-      "ja": "もし納入業者が納めていたら"
+      "ja": "もし納入業者が納めていたら",
+      "ipa": "ˈhæd ðə səˈplaɪɚ dɪˈlɪvɚd"
      },
      {
       "en": "the parts on time,",
-      "ja": "部品を時間どおりに"
+      "ja": "部品を時間どおりに",
+      "ipa": "ðə ˈpɑɹts ɑn ˈtaɪm"
      },
      {
       "en": "the assembly line would not have been shut down.",
-      "ja": "組立ラインは停止されなかっただろう"
+      "ja": "組立ラインは停止されなかっただろう",
+      "ipa": "ðə əˈsɛmbli ˈlaɪn ˈwʊd ˈnɑt ˈhæv ˈbɪn ˈʃʌt ˈdaʊn"
      }
     ],
     "pattern": {
@@ -821,6 +858,16 @@
       "t": "would not have been shut down.",
       "f": "動詞句"
      }
+    ],
+    "iu": [
+     {
+      "t": "Had the supplier delivered the parts on time,",
+      "ipa": "ˈhæd ðə səˈplaɪɚ dɪˈlɪvɚd ðə ˈpɑɹts ɑn ˈtaɪm"
+     },
+     {
+      "t": "the assembly line would not have been shut down.",
+      "ipa": "ðə əˈsɛmbli ˈlaɪn ˈwʊd ˈnɑt ˈhæv ˈbɪn ˈʃʌt ˈdaʊn"
+     }
     ]
    },
    "level": 860,
@@ -902,15 +949,18 @@
     "slash": [
      {
       "en": "The factory has reduced",
-      "ja": "その工場は減らした"
+      "ja": "その工場は減らした",
+      "ipa": "ðə ˈfæktɚi ˈhæz ɹəˈdust"
      },
      {
       "en": "its energy consumption",
-      "ja": "エネルギー消費量を"
+      "ja": "エネルギー消費量を",
+      "ipa": "ˈɪts ˈɛnɚdʒi kənˈsʌmpʃən"
      },
      {
       "en": "by installing more efficient machinery.",
-      "ja": "より効率的な機械を導入することで"
+      "ja": "より効率的な機械を導入することで",
+      "ipa": "baɪ ˌɪnˈstɔlɪŋ ˈmɔɹ ɪˈfɪʃənt məˈʃinɚi"
      }
     ],
     "pattern": {
@@ -1079,6 +1129,16 @@
       "t": "by installing more efficient machinery.",
       "f": "動名詞句"
      }
+    ],
+    "iu": [
+     {
+      "t": "The factory has reduced its energy consumption",
+      "ipa": "ðə ˈfæktɚi ˈhæz ɹəˈdust ˈɪts ˈɛnɚdʒi kənˈsʌmpʃən"
+     },
+     {
+      "t": "by installing more efficient machinery.",
+      "ipa": "baɪ ˌɪnˈstɔlɪŋ ˈmɔɹ ɪˈfɪʃənt məˈʃinɚi"
+     }
     ]
    },
    "level": 600,
@@ -1153,15 +1213,18 @@
     "slash": [
      {
       "en": "Quality inspectors are responsible",
-      "ja": "品質検査員は責任がある"
+      "ja": "品質検査員は責任がある",
+      "ipa": "ˈkwɑləti ˌɪnˈspɛktɚz ˈɑɹ ɹiˈspɑnsəbəl"
      },
      {
       "en": "for ensuring",
-      "ja": "確実にすることに対して"
+      "ja": "確実にすることに対して",
+      "ipa": "fɚ ɛnˈʃʊɹɪŋ"
      },
      {
       "en": "that every product meets the safety standards.",
-      "ja": "すべての製品が安全基準を満たすと"
+      "ja": "すべての製品が安全基準を満たすと",
+      "ipa": "ˈðæt ˈɛvɚi ˈpɹɑdəkt ˈmits ðə ˈseɪfti ˈstændɚdz"
      }
     ],
     "pattern": {
@@ -1343,6 +1406,16 @@
       "t": "that every product meets the safety standards.",
       "f": "名詞節(that節)"
      }
+    ],
+    "iu": [
+     {
+      "t": "Quality inspectors are responsible for ensuring",
+      "ipa": "ˈkwɑləti ˌɪnˈspɛktɚz ˈɑɹ ɹiˈspɑnsəbəl fɚ ɛnˈʃʊɹɪŋ"
+     },
+     {
+      "t": "that every product meets the safety standards.",
+      "ipa": "ˈðæt ˈɛvɚi ˈpɹɑdəkt ˈmits ðə ˈseɪfti ˈstændɚdz"
+     }
     ]
    },
    "level": 730,
@@ -1417,15 +1490,18 @@
     "slash": [
      {
       "en": "Due to the high volume of orders,",
-      "ja": "注文量が多いため"
+      "ja": "注文量が多いため",
+      "ipa": "ˈdu tə ðə ˈhaɪ ˈvɑljum əv ˈɔɹdɚz"
      },
      {
       "en": "customers may experience",
-      "ja": "お客様は経験するかもしれない"
+      "ja": "お客様は経験するかもしれない",
+      "ipa": "ˈkʌstəmɚz ˈmeɪ ɪkˈspɪɹiəns"
      },
      {
       "en": "delays in processing.",
-      "ja": "処理の遅れを"
+      "ja": "処理の遅れを",
+      "ipa": "dɪˈleɪz ɪn ˈpɹɑsɛsɪŋ"
      }
     ],
     "pattern": {
@@ -1602,6 +1678,16 @@
       "t": "in processing.",
       "f": "前置詞句"
      }
+    ],
+    "iu": [
+     {
+      "t": "Due to the high volume of orders,",
+      "ipa": "ˈdu tə ðə ˈhaɪ ˈvɑljum əv ˈɔɹdɚz"
+     },
+     {
+      "t": "customers may experience delays in processing.",
+      "ipa": "ˈkʌstəmɚz ˈmeɪ ɪkˈspɪɹiəns dɪˈleɪz ɪn ˈpɹɑsɛsɪŋ"
+     }
     ]
    },
    "level": 600,
@@ -1676,19 +1762,23 @@
     "slash": [
      {
       "en": "Employees are required",
-      "ja": "従業員は求められている"
+      "ja": "従業員は求められている",
+      "ipa": "ɛmˈplɔɪiz ˈɑɹ ɹiˈkwaɪɚd"
      },
      {
       "en": "to change their passwords",
-      "ja": "パスワードを変更することを"
+      "ja": "パスワードを変更することを",
+      "ipa": "tə ˈtʃeɪndʒ ˈðɛɹ ˈpæˌswɝdz"
      },
      {
       "en": "every ninety days",
-      "ja": "90日ごとに"
+      "ja": "90日ごとに",
+      "ipa": "ˈɛvɚi ˈnaɪnti ˈdeɪz"
      },
      {
       "en": "to protect confidential data.",
-      "ja": "機密データを守るために"
+      "ja": "機密データを守るために",
+      "ipa": "tə pɹəˈtɛkt ˌkɑnfəˈdɛnʃəl ˈdeɪtə"
      }
     ],
     "pattern": {
@@ -1878,6 +1968,20 @@
       "t": "to protect confidential data.",
       "f": "to+不定詞句(目的)"
      }
+    ],
+    "iu": [
+     {
+      "t": "Employees are required to change their passwords",
+      "ipa": "ɛmˈplɔɪiz ˈɑɹ ɹiˈkwaɪɚd tə ˈtʃeɪndʒ ˈðɛɹ ˈpæˌswɝdz"
+     },
+     {
+      "t": "every ninety days",
+      "ipa": "ˈɛvɚi ˈnaɪnti ˈdeɪz"
+     },
+     {
+      "t": "to protect confidential data.",
+      "ipa": "tə pɹəˈtɛkt ˌkɑnfəˈdɛnʃəl ˈdeɪtə"
+     }
     ]
    },
    "level": 730,
@@ -1959,15 +2063,18 @@
     "slash": [
      {
       "en": "The IT department will be upgrading the server",
-      "ja": "IT部門はサーバーを更新する予定だ"
+      "ja": "IT部門はサーバーを更新する予定だ",
+      "ipa": "ðə ˈɪt dɪˈpɑɹtmənt ˈwɪl ˈbi əpˈɡɹeɪdɪŋ ðə ˈsɝvɚ"
      },
      {
       "en": "over the weekend,",
-      "ja": "週末の間に"
+      "ja": "週末の間に",
+      "ipa": "ˈoʊvɚ ðə ˈwiˌkɛnd"
      },
      {
       "en": "so access to the system may be limited.",
-      "ja": "だからシステムへのアクセスは制限されるかもしれない"
+      "ja": "だからシステムへのアクセスは制限されるかもしれない",
+      "ipa": "ˈsoʊ ˈækˌsɛs tə ðə ˈsɪstəm ˈmeɪ ˈbi ˈlɪmətəd"
      }
     ],
     "pattern": {
@@ -2173,6 +2280,20 @@
       "t": "so access to the system may be limited.",
       "f": "接続詞+節"
      }
+    ],
+    "iu": [
+     {
+      "t": "The IT department",
+      "ipa": "ðə ˈɪt dɪˈpɑɹtmənt"
+     },
+     {
+      "t": "will be upgrading the server over the weekend,",
+      "ipa": "ˈwɪl ˈbi əpˈɡɹeɪdɪŋ ðə ˈsɝvɚ ˈoʊvɚ ðə ˈwiˌkɛnd"
+     },
+     {
+      "t": "so access to the system may be limited.",
+      "ipa": "ˈsoʊ ˈækˌsɛs tə ðə ˈsɪstəm ˈmeɪ ˈbi ˈlɪmətəd"
+     }
     ]
    },
    "level": 730,
@@ -2247,15 +2368,18 @@
     "slash": [
      {
       "en": "Once the software has been installed,",
-      "ja": "いったんソフトが導入されると"
+      "ja": "いったんソフトが導入されると",
+      "ipa": "ˈwʌns ðə ˈsɔfˌtwɛɹ ˈhæz ˈbɪn ˌɪnˈstɔld"
      },
      {
       "en": "users will be prompted",
-      "ja": "ユーザーは促される"
+      "ja": "ユーザーは促される",
+      "ipa": "ˈjuzɚz ˈwɪl ˈbi ˈpɹɑmptɪd"
      },
      {
       "en": "to create an account.",
-      "ja": "アカウントを作成するよう"
+      "ja": "アカウントを作成するよう",
+      "ipa": "tə kɹiˈeɪt ən əˈkaʊnt"
      }
     ],
     "pattern": {
@@ -2441,6 +2565,20 @@
       "t": "to create an account.",
       "f": "to+不定詞句"
      }
+    ],
+    "iu": [
+     {
+      "t": "Once the software has been installed,",
+      "ipa": "ˈwʌns ðə ˈsɔfˌtwɛɹ ˈhæz ˈbɪn ˌɪnˈstɔld"
+     },
+     {
+      "t": "users will be prompted",
+      "ipa": "ˈjuzɚz ˈwɪl ˈbi ˈpɹɑmptɪd"
+     },
+     {
+      "t": "to create an account.",
+      "ipa": "tə kɹiˈeɪt ən əˈkaʊnt"
+     }
     ]
    },
    "level": 730,
@@ -2515,19 +2653,23 @@
     "slash": [
      {
       "en": "The newly renovated lobby",
-      "ja": "新しく改装されたロビーには"
+      "ja": "新しく改装されたロビーには",
+      "ipa": "ðə ˈnuli ˈɹɛnəˌveɪtɪd ˈlɑbi"
      },
      {
       "en": "features",
-      "ja": "備わっている"
+      "ja": "備わっている",
+      "ipa": "ˈfitʃɚz"
      },
      {
       "en": "comfortable seating and a large display screen",
-      "ja": "快適な座席と大型ディスプレイ画面が"
+      "ja": "快適な座席と大型ディスプレイ画面が",
+      "ipa": "ˈkʌmfɚtəbəl ˈsitɪŋ ənd ə ˈlɑɹdʒ dɪˈspleɪ ˈskɹin"
      },
      {
       "en": "showing the daily schedule.",
-      "ja": "その日の予定を表示する"
+      "ja": "その日の予定を表示する",
+      "ipa": "ˈʃoʊɪŋ ðə ˈdeɪli ˈskɛdʒʊl"
      }
     ],
     "pattern": {
@@ -2712,6 +2854,20 @@
       "t": "showing the daily schedule.",
       "f": "分詞句"
      }
+    ],
+    "iu": [
+     {
+      "t": "The newly renovated lobby",
+      "ipa": "ðə ˈnuli ˈɹɛnəˌveɪtɪd ˈlɑbi"
+     },
+     {
+      "t": "features comfortable seating and a large display screen",
+      "ipa": "ˈfitʃɚz ˈkʌmfɚtəbəl ˈsitɪŋ ənd ə ˈlɑɹdʒ dɪˈspleɪ ˈskɹin"
+     },
+     {
+      "t": "showing the daily schedule.",
+      "ipa": "ˈʃoʊɪŋ ðə ˈdeɪli ˈskɛdʒʊl"
+     }
     ]
    },
    "level": 730,
@@ -2786,15 +2942,18 @@
     "slash": [
      {
       "en": "Visitors who wish to use the fitness center",
-      "ja": "フィットネスセンターを使いたい来訪者は"
+      "ja": "フィットネスセンターを使いたい来訪者は",
+      "ipa": "ˈvɪzɪtɚz ˈhu ˈwɪʃ tə ˈjus ðə ˈfɪtnəs ˈsɛntɚ"
      },
      {
       "en": "must first register",
-      "ja": "まず登録しなければならない"
+      "ja": "まず登録しなければならない",
+      "ipa": "ˈmʌst ˈfɝst ˈɹɛdʒɪstɚ"
      },
      {
       "en": "at the reception desk.",
-      "ja": "受付で"
+      "ja": "受付で",
+      "ipa": "ət ðə ɹɪˈsɛpʃən ˈdɛsk"
      }
     ],
     "pattern": {
@@ -2983,6 +3142,20 @@
       "t": "at the reception desk.",
       "f": "前置詞句"
      }
+    ],
+    "iu": [
+     {
+      "t": "Visitors who wish to use the fitness center",
+      "ipa": "ˈvɪzɪtɚz ˈhu ˈwɪʃ tə ˈjus ðə ˈfɪtnəs ˈsɛntɚ"
+     },
+     {
+      "t": "must first register",
+      "ipa": "ˈmʌst ˈfɝst ˈɹɛdʒɪstɚ"
+     },
+     {
+      "t": "at the reception desk.",
+      "ipa": "ət ðə ɹɪˈsɛpʃən ˈdɛsk"
+     }
     ]
    },
    "level": 600,
@@ -3057,15 +3230,18 @@
     "slash": [
      {
       "en": "The air conditioning system is so old",
-      "ja": "その空調システムはとても古いので"
+      "ja": "その空調システムはとても古いので",
+      "ipa": "ðə ˈɛɹ kənˈdɪʃənɪŋ ˈsɪstəm ˈɪz ˈsoʊ ˈoʊld"
      },
      {
       "en": "that it cannot cool the entire building",
-      "ja": "建物全体を冷やせない"
+      "ja": "建物全体を冷やせない",
+      "ipa": "ˈðæt ˈɪt ˈkænɑt ˈkul ðə ɪnˈtaɪɚ ˈbɪldɪŋ"
      },
      {
       "en": "in summer.",
-      "ja": "夏には"
+      "ja": "夏には",
+      "ipa": "ɪn ˈsʌmɚ"
      }
     ],
     "pattern": {
@@ -3255,6 +3431,20 @@
       "t": "that it cannot cool the entire building in summer.",
       "f": "副詞節(結果)"
      }
+    ],
+    "iu": [
+     {
+      "t": "The air conditioning system is so old",
+      "ipa": "ðə ˈɛɹ kənˈdɪʃənɪŋ ˈsɪstəm ˈɪz ˈsoʊ ˈoʊld"
+     },
+     {
+      "t": "that it cannot cool",
+      "ipa": "ˈðæt ˈɪt ˈkænɑt ˈkul"
+     },
+     {
+      "t": "the entire building in summer.",
+      "ipa": "ðə ɪnˈtaɪɚ ˈbɪldɪŋ ɪn ˈsʌmɚ"
+     }
     ]
    },
    "level": 730,
@@ -3329,19 +3519,23 @@
     "slash": [
      {
       "en": "Ms. Alvarez,",
-      "ja": "アルバレスさんは"
+      "ja": "アルバレスさんは",
+      "ipa": "ˈmɪz ˈælvɚˌɛz"
      },
      {
       "en": "whose department exceeded its annual target,",
-      "ja": "その部署が年間目標を上回った"
+      "ja": "その部署が年間目標を上回った",
+      "ipa": "ˈhuz dɪˈpɑɹtmənt ɪkˈsidəd ˈɪts ˈænjuəl ˈtɑɹɡət"
      },
      {
       "en": "was invited to speak",
-      "ja": "話すよう招かれた"
+      "ja": "話すよう招かれた",
+      "ipa": "ˈwɑz ˌɪnˈvaɪtəd tə ˈspik"
      },
      {
       "en": "at the company retreat.",
-      "ja": "社内研修旅行で"
+      "ja": "社内研修旅行で",
+      "ipa": "ət ðə ˈkʌmpəˌni ɹiˈtɹit"
      }
     ],
     "pattern": {
@@ -3552,6 +3746,24 @@
       "t": "at the company retreat.",
       "f": "前置詞句"
      }
+    ],
+    "iu": [
+     {
+      "t": "Ms. Alvarez,",
+      "ipa": "ˈmɪz ˈælvɚˌɛz"
+     },
+     {
+      "t": "whose department exceeded its annual target,",
+      "ipa": "ˈhuz dɪˈpɑɹtmənt ɪkˈsidəd ˈɪts ˈænjuəl ˈtɑɹɡət"
+     },
+     {
+      "t": "was invited to speak",
+      "ipa": "ˈwɑz ˌɪnˈvaɪtəd tə ˈspik"
+     },
+     {
+      "t": "at the company retreat.",
+      "ipa": "ət ðə ˈkʌmpəˌni ɹiˈtɹit"
+     }
     ]
    },
    "level": 730,
@@ -3626,15 +3838,18 @@
     "slash": [
      {
       "en": "Candidates are advised",
-      "ja": "応募者は勧められている"
+      "ja": "応募者は勧められている",
+      "ipa": "ˈkændədeɪts ˈɑɹ ædˈvaɪzd"
      },
      {
       "en": "to bring copies of their certificates",
-      "ja": "証明書のコピーを持ってくるよう"
+      "ja": "証明書のコピーを持ってくるよう",
+      "ipa": "tə ˈbɹɪŋ ˈkɑpiz əv ˈðɛɹ sɚˈtɪfɪkəts"
      },
      {
       "en": "to the interview.",
-      "ja": "面接に"
+      "ja": "面接に",
+      "ipa": "tə ðə ˈɪntɚˌvju"
      }
     ],
     "pattern": {
@@ -3807,6 +4022,20 @@
       "t": "to the interview.",
       "f": "前置詞句"
      }
+    ],
+    "iu": [
+     {
+      "t": "Candidates are advised",
+      "ipa": "ˈkændədeɪts ˈɑɹ ædˈvaɪzd"
+     },
+     {
+      "t": "to bring copies of their certificates",
+      "ipa": "tə ˈbɹɪŋ ˈkɑpiz əv ˈðɛɹ sɚˈtɪfɪkəts"
+     },
+     {
+      "t": "to the interview.",
+      "ipa": "tə ðə ˈɪntɚˌvju"
+     }
     ]
    },
    "level": 600,
@@ -3881,19 +4110,23 @@
     "slash": [
      {
       "en": "The training session is designed",
-      "ja": "その研修は設計されている"
+      "ja": "その研修は設計されている",
+      "ipa": "ðə ˈtɹeɪnɪŋ ˈsɛʃən ˈɪz dɪˈzaɪnd"
      },
      {
       "en": "to help new managers",
-      "ja": "新任マネージャーを助けるために"
+      "ja": "新任マネージャーを助けるために",
+      "ipa": "tə ˈhɛlp ˈnu ˈmænədʒɚz"
      },
      {
       "en": "communicate more effectively",
-      "ja": "より効果的に意思疎通できるよう"
+      "ja": "より効果的に意思疎通できるよう",
+      "ipa": "kəˈmjunəˌkeɪt ˈmɔɹ ɪˈfɛktɪvli"
      },
      {
       "en": "with their teams.",
-      "ja": "チームと"
+      "ja": "チームと",
+      "ipa": "wɪð ˈðɛɹ ˈtimz"
      }
     ],
     "pattern": {
@@ -4073,6 +4306,20 @@
       "t": "with their teams.",
       "f": "前置詞句"
      }
+    ],
+    "iu": [
+     {
+      "t": "The training session is designed",
+      "ipa": "ðə ˈtɹeɪnɪŋ ˈsɛʃən ˈɪz dɪˈzaɪnd"
+     },
+     {
+      "t": "to help new managers",
+      "ipa": "tə ˈhɛlp ˈnu ˈmænədʒɚz"
+     },
+     {
+      "t": "communicate more effectively with their teams.",
+      "ipa": "kəˈmjunəˌkeɪt ˈmɔɹ ɪˈfɛktɪvli wɪð ˈðɛɹ ˈtimz"
+     }
     ]
    },
    "level": 730,
@@ -4147,11 +4394,13 @@
     "slash": [
      {
       "en": "The more closely we monitor expenses,",
-      "ja": "経費を綿密に監視すればするほど"
+      "ja": "経費を綿密に監視すればするほど",
+      "ipa": "ðə ˈmɔɹ ˈkloʊsli ˈwi ˈmɑnətɚ ɪkˈspɛnsəz"
      },
      {
       "en": "the more money we can save.",
-      "ja": "より多くのお金を節約できる"
+      "ja": "より多くのお金を節約できる",
+      "ipa": "ðə ˈmɔɹ ˈmʌni ˈwi ˈkæn ˈseɪv"
      }
     ],
     "pattern": {
@@ -4325,6 +4574,16 @@
       "t": "the more money we can save.",
       "f": "比較句"
      }
+    ],
+    "iu": [
+     {
+      "t": "The more closely we monitor expenses,",
+      "ipa": "ðə ˈmɔɹ ˈkloʊsli ˈwi ˈmɑnətɚ ɪkˈspɛnsəz"
+     },
+     {
+      "t": "the more money we can save.",
+      "ipa": "ðə ˈmɔɹ ˈmʌni ˈwi ˈkæn ˈseɪv"
+     }
     ]
    },
    "level": 860,
@@ -4399,15 +4658,18 @@
     "slash": [
      {
       "en": "The meeting was postponed",
-      "ja": "会議は延期された"
+      "ja": "会議は延期された",
+      "ipa": "ðə ˈmitɪŋ ˈwɑz poʊstˈpoʊnd"
      },
      {
       "en": "until all department heads",
-      "ja": "すべての部長が~まで"
+      "ja": "すべての部長が~まで",
+      "ipa": "ənˈtɪl ˈɔl dɪˈpɑɹtmənt ˈhɛdz"
      },
      {
       "en": "could attend.",
-      "ja": "出席できる(ようになる)"
+      "ja": "出席できる(ようになる)",
+      "ipa": "ˈkʊd əˈtɛnd"
      }
     ],
     "pattern": {
@@ -4568,6 +4830,16 @@
       "t": "until all department heads could attend.",
       "f": "接続詞+節(副詞節)"
      }
+    ],
+    "iu": [
+     {
+      "t": "The meeting was postponed",
+      "ipa": "ðə ˈmitɪŋ ˈwɑz poʊstˈpoʊnd"
+     },
+     {
+      "t": "until all department heads could attend.",
+      "ipa": "ənˈtɪl ˈɔl dɪˈpɑɹtmənt ˈhɛdz ˈkʊd əˈtɛnd"
+     }
     ]
    },
    "level": 730,
@@ -4635,15 +4907,18 @@
     "slash": [
      {
       "en": "Although the conference was held",
-      "ja": "会議は開催されたけれども"
+      "ja": "会議は開催されたけれども",
+      "ipa": "ˌɔlˈðoʊ ðə ˈkɑnfɚəns ˈwɑz ˈhɛld"
      },
      {
       "en": "in a remote location,",
-      "ja": "辺鄙な場所で"
+      "ja": "辺鄙な場所で",
+      "ipa": "ɪn ə ɹɪˈmoʊt loʊˈkeɪʃən"
      },
      {
       "en": "attendance exceeded expectations.",
-      "ja": "参加者数は予想を超えた"
+      "ja": "参加者数は予想を超えた",
+      "ipa": "əˈtɛndəns ɪkˈsidəd ˌɛkspɛkˈteɪʃənz"
      }
     ],
     "pattern": {
@@ -4826,6 +5101,16 @@
       "t": "attendance exceeded expectations.",
       "f": "主語+動詞+目的語"
      }
+    ],
+    "iu": [
+     {
+      "t": "Although the conference was held in a remote location,",
+      "ipa": "ˌɔlˈðoʊ ðə ˈkɑnfɚəns ˈwɑz ˈhɛld ɪn ə ɹɪˈmoʊt loʊˈkeɪʃən"
+     },
+     {
+      "t": "attendance exceeded expectations.",
+      "ipa": "əˈtɛndəns ɪkˈsidəd ˌɛkspɛkˈteɪʃənz"
+     }
     ]
    },
    "level": 730,
@@ -4900,15 +5185,18 @@
     "slash": [
      {
       "en": "Please book your hotel",
-      "ja": "ホテルを予約してください"
+      "ja": "ホテルを予約してください",
+      "ipa": "ˈpliz ˈbʊk ˈjɔɹ hoʊˈtɛl"
      },
      {
       "en": "at least a month in advance",
-      "ja": "少なくとも1か月前に"
+      "ja": "少なくとも1か月前に",
+      "ipa": "ət ˈlist ə ˈmʌnθ ɪn ədˈvæns"
      },
      {
       "en": "to take advantage of the corporate discount.",
-      "ja": "法人割引を利用するために"
+      "ja": "法人割引を利用するために",
+      "ipa": "tə ˈteɪk ædˈvæntɪdʒ əv ðə ˈkɔɹpɚət dɪˈskaʊnt"
      }
     ],
     "pattern": {
@@ -5110,6 +5398,20 @@
       "t": "advance to take advantage of the corporate discount.",
       "f": "to+不定詞句"
      }
+    ],
+    "iu": [
+     {
+      "t": "Please book your hotel",
+      "ipa": "ˈpliz ˈbʊk ˈjɔɹ hoʊˈtɛl"
+     },
+     {
+      "t": "at least a month in advance",
+      "ipa": "ət ˈlist ə ˈmʌnθ ɪn ədˈvæns"
+     },
+     {
+      "t": "to take advantage of the corporate discount.",
+      "ipa": "tə ˈteɪk ædˈvæntɪdʒ əv ðə ˈkɔɹpɚət dɪˈskaʊnt"
+     }
     ]
    },
    "level": 730,
@@ -5184,19 +5486,23 @@
     "slash": [
      {
       "en": "Mr. Nakamura is scheduled",
-      "ja": "ナカムラ氏は予定されている"
+      "ja": "ナカムラ氏は予定されている",
+      "ipa": "ˈmɪstɚ nɑkɑˈmʊɹə ˈɪz ˈskɛdʒʊld"
      },
      {
       "en": "to present the quarterly results",
-      "ja": "四半期の結果を報告することが"
+      "ja": "四半期の結果を報告することが",
+      "ipa": "tə ˈpɹɛzənt ðə ˈkwɔɹtɚli ɹɪˈzʌlts"
      },
      {
       "en": "to the board",
-      "ja": "取締役会に"
+      "ja": "取締役会に",
+      "ipa": "tə ðə ˈbɔɹd"
      },
      {
       "en": "next Tuesday.",
-      "ja": "来週の火曜日に"
+      "ja": "来週の火曜日に",
+      "ipa": "ˈnɛkst ˈtuzdi"
      }
     ],
     "pattern": {
@@ -5381,6 +5687,20 @@
       "t": "next Tuesday.",
       "f": "副詞句"
      }
+    ],
+    "iu": [
+     {
+      "t": "Mr. Nakamura is scheduled",
+      "ipa": "ˈmɪstɚ nɑkɑˈmʊɹə ˈɪz ˈskɛdʒʊld"
+     },
+     {
+      "t": "to present the quarterly results",
+      "ipa": "tə ˈpɹɛzənt ðə ˈkwɔɹtɚli ɹɪˈzʌlts"
+     },
+     {
+      "t": "to the board next Tuesday.",
+      "ipa": "tə ðə ˈbɔɹd ˈnɛkst ˈtuzdi"
+     }
     ]
    },
    "level": 730,
@@ -5455,19 +5775,23 @@
     "slash": [
      {
       "en": "In the event of a cancellation,",
-      "ja": "キャンセルの場合には"
+      "ja": "キャンセルの場合には",
+      "ipa": "ɪn ðə ɪˈvɛnt əv ə ˌkænsəˈleɪʃən"
      },
      {
       "en": "the deposit",
-      "ja": "保証金は"
+      "ja": "保証金は",
+      "ipa": "ðə dəˈpɑzɪt"
      },
      {
       "en": "will be returned",
-      "ja": "返金される"
+      "ja": "返金される",
+      "ipa": "ˈwɪl ˈbi ɹɪˈtɝnd"
      },
      {
       "en": "within ten business days.",
-      "ja": "10営業日以内に"
+      "ja": "10営業日以内に",
+      "ipa": "wɪˈðɪn ˈtɛn ˈbɪznəs ˈdeɪz"
      }
     ],
     "pattern": {
@@ -5652,6 +5976,20 @@
       "t": "within ten business days.",
       "f": "前置詞句"
      }
+    ],
+    "iu": [
+     {
+      "t": "In the event of a cancellation,",
+      "ipa": "ɪn ðə ɪˈvɛnt əv ə ˌkænsəˈleɪʃən"
+     },
+     {
+      "t": "the deposit will be",
+      "ipa": "ðə dəˈpɑzɪt ˈwɪl ˈbi"
+     },
+     {
+      "t": "returned within ten business days.",
+      "ipa": "ɹɪˈtɝnd wɪˈðɪn ˈtɛn ˈbɪznəs ˈdeɪz"
+     }
     ]
    },
    "level": 600,
@@ -5726,19 +6064,23 @@
     "slash": [
      {
       "en": "The firm's profits",
-      "ja": "その会社の利益は"
+      "ja": "その会社の利益は",
+      "ipa": "ðə ˈfɝmz ˈpɹɑfɪts"
      },
      {
       "en": "have risen steadily",
-      "ja": "着実に増加している"
+      "ja": "着実に増加している",
+      "ipa": "ˈhæv ˈɹɪzən ˈstɛdəli"
      },
      {
       "en": "since it began",
-      "ja": "始めて以来"
+      "ja": "始めて以来",
+      "ipa": "ˈsɪns ˈɪt bɪˈɡæn"
      },
      {
       "en": "exporting to overseas markets.",
-      "ja": "海外市場へ輸出することを"
+      "ja": "海外市場へ輸出することを",
+      "ipa": "ɪkˈspɔɹtɪŋ tə ˈoʊvɚˈsiz ˈmɑɹkəts"
      }
     ],
     "pattern": {
@@ -5916,6 +6258,16 @@
       "t": "since it began exporting to overseas markets.",
       "f": "接続詞+節(副詞節)"
      }
+    ],
+    "iu": [
+     {
+      "t": "The firm's profits have risen steadily",
+      "ipa": "ðə ˈfɝmz ˈpɹɑfɪts ˈhæv ˈɹɪzən ˈstɛdəli"
+     },
+     {
+      "t": "since it began exporting to overseas markets.",
+      "ipa": "ˈsɪns ˈɪt bɪˈɡæn ɪkˈspɔɹtɪŋ tə ˈoʊvɚˈsiz ˈmɑɹkəts"
+     }
     ]
    },
    "level": 730,
@@ -5990,19 +6342,23 @@
     "slash": [
      {
       "en": "Applications for the research grant",
-      "ja": "研究助成金の申請書は"
+      "ja": "研究助成金の申請書は",
+      "ipa": "ˌæpləˈkeɪʃənz fɚ ðə ɹiˈsɝtʃ ˈɡɹænt"
      },
      {
       "en": "must be received",
-      "ja": "受け取られなければならない"
+      "ja": "受け取られなければならない",
+      "ipa": "ˈmʌst ˈbi ɹəˈsivd"
      },
      {
       "en": "no later than",
-      "ja": "遅くとも"
+      "ja": "遅くとも",
+      "ipa": "ˈnoʊ ˈleɪtɚ ðən"
      },
      {
       "en": "the end of this month.",
-      "ja": "今月末までに"
+      "ja": "今月末までに",
+      "ipa": "ðə ˈɛnd əv ˈðɪs ˈmʌnθ"
      }
     ],
     "pattern": {
@@ -6186,6 +6542,20 @@
       "t": "no later than the end of this month.",
       "f": "比較句"
      }
+    ],
+    "iu": [
+     {
+      "t": "Applications for the research grant",
+      "ipa": "ˌæpləˈkeɪʃənz fɚ ðə ɹiˈsɝtʃ ˈɡɹænt"
+     },
+     {
+      "t": "must be received",
+      "ipa": "ˈmʌst ˈbi ɹəˈsivd"
+     },
+     {
+      "t": "no later than the end of this month.",
+      "ipa": "ˈnoʊ ˈleɪtɚ ðən ðə ˈɛnd əv ˈðɪs ˈmʌnθ"
+     }
     ]
    },
    "level": 730,
@@ -6260,23 +6630,28 @@
     "slash": [
      {
       "en": "Because the budget was cut,",
-      "ja": "予算が削減されたので"
+      "ja": "予算が削減されたので",
+      "ipa": "bɪˈkɔz ðə ˈbʌdʒɪt ˈwɑz ˈkʌt"
      },
      {
       "en": "the project team",
-      "ja": "プロジェクトチームは"
+      "ja": "プロジェクトチームは",
+      "ipa": "ðə ˈpɹɑdʒɛkt ˈtim"
      },
      {
       "en": "was forced",
-      "ja": "余儀なくされた"
+      "ja": "余儀なくされた",
+      "ipa": "ˈwɑz ˈfɔɹst"
      },
      {
       "en": "to scale back",
-      "ja": "縮小することを"
+      "ja": "縮小することを",
+      "ipa": "tə ˈskeɪl ˈbæk"
      },
      {
       "en": "its original plans.",
-      "ja": "当初の計画を"
+      "ja": "当初の計画を",
+      "ipa": "ˈɪts ɚˈɪdʒənəl ˈplænz"
      }
     ],
     "pattern": {
@@ -6470,6 +6845,20 @@
       "t": "to scale back its original plans.",
       "f": "to+不定詞句"
      }
+    ],
+    "iu": [
+     {
+      "t": "Because the budget was cut,",
+      "ipa": "bɪˈkɔz ðə ˈbʌdʒɪt ˈwɑz ˈkʌt"
+     },
+     {
+      "t": "the project team was forced",
+      "ipa": "ðə ˈpɹɑdʒɛkt ˈtim ˈwɑz ˈfɔɹst"
+     },
+     {
+      "t": "to scale back its original plans.",
+      "ipa": "tə ˈskeɪl ˈbæk ˈɪts ɚˈɪdʒənəl ˈplænz"
+     }
     ]
    },
    "level": 730,
@@ -6544,19 +6933,23 @@
     "slash": [
      {
       "en": "Our new line of kitchen appliances",
-      "ja": "当社の新しい台所用品シリーズは"
+      "ja": "当社の新しい台所用品シリーズは",
+      "ipa": "ˈaʊɚ ˈnu ˈlaɪn əv ˈkɪtʃən əˈplaɪənsəz"
      },
      {
       "en": "is",
-      "ja": "である"
+      "ja": "である",
+      "ipa": "ˈɪz"
      },
      {
       "en": "not only affordable",
-      "ja": "手頃な価格なだけでなく"
+      "ja": "手頃な価格なだけでなく",
+      "ipa": "ˈnɑt ˈoʊnli əˈfɔɹdəbəl"
      },
      {
       "en": "but also environmentally friendly.",
-      "ja": "環境にも優しい"
+      "ja": "環境にも優しい",
+      "ipa": "ˈbʌt ˈɔlsoʊ ɪnˌvaɪɹənˈmɛntəli ˈfɹɛndli"
      }
     ],
     "pattern": {
@@ -6728,6 +7121,20 @@
       "t": "is not only affordable but also environmentally friendly.",
       "f": "動詞句+補語"
      }
+    ],
+    "iu": [
+     {
+      "t": "Our new line of kitchen appliances",
+      "ipa": "ˈaʊɚ ˈnu ˈlaɪn əv ˈkɪtʃən əˈplaɪənsəz"
+     },
+     {
+      "t": "is not only affordable",
+      "ipa": "ˈɪz ˈnɑt ˈoʊnli əˈfɔɹdəbəl"
+     },
+     {
+      "t": "but also environmentally friendly.",
+      "ipa": "ˈbʌt ˈɔlsoʊ ɪnˌvaɪɹənˈmɛntəli ˈfɹɛndli"
+     }
     ]
    },
    "level": 730,
@@ -6802,19 +7209,23 @@
     "slash": [
      {
       "en": "If you are not completely satisfied with your purchase,",
-      "ja": "購入品に完全に満足していなければ"
+      "ja": "購入品に完全に満足していなければ",
+      "ipa": "ˈɪf ˈju ˈɑɹ ˈnɑt kəmˈplitli ˈsætəsˌfaɪd wɪð ˈjɔɹ ˈpɝtʃəs"
      },
      {
       "en": "you may return it",
-      "ja": "それを返品できる"
+      "ja": "それを返品できる",
+      "ipa": "ˈju ˈmeɪ ɹɪˈtɝn ˈɪt"
      },
      {
       "en": "within thirty days",
-      "ja": "30日以内に"
+      "ja": "30日以内に",
+      "ipa": "wɪˈðɪn ˈθɝˌdi ˈdeɪz"
      },
      {
       "en": "for a full refund.",
-      "ja": "全額返金のために"
+      "ja": "全額返金のために",
+      "ipa": "fɚ ə ˈfʊl ɹɪˈfʌnd"
      }
     ],
     "pattern": {
@@ -7038,6 +7449,24 @@
       "t": "for a full refund.",
       "f": "前置詞句"
      }
+    ],
+    "iu": [
+     {
+      "t": "If you are not completely satisfied with your purchase,",
+      "ipa": "ˈɪf ˈju ˈɑɹ ˈnɑt kəmˈplitli ˈsætəsˌfaɪd wɪð ˈjɔɹ ˈpɝtʃəs"
+     },
+     {
+      "t": "you may return it",
+      "ipa": "ˈju ˈmeɪ ɹɪˈtɝn ˈɪt"
+     },
+     {
+      "t": "within thirty days",
+      "ipa": "wɪˈðɪn ˈθɝˌdi ˈdeɪz"
+     },
+     {
+      "t": "for a full refund.",
+      "ipa": "fɚ ə ˈfʊl ɹɪˈfʌnd"
+     }
     ]
    },
    "level": 730,
@@ -7119,23 +7548,28 @@
     "slash": [
      {
       "en": "Customer feedback",
-      "ja": "顧客の意見は"
+      "ja": "顧客の意見は",
+      "ipa": "ˈkʌstəmɚ ˈfidˌbæk"
      },
      {
       "en": "indicates",
-      "ja": "示している"
+      "ja": "示している",
+      "ipa": "ˈɪndɪˌkeɪts"
      },
      {
       "en": "that most users prefer",
-      "ja": "大半のユーザーが好むことを"
+      "ja": "大半のユーザーが好むことを",
+      "ipa": "ˈðæt ˈmoʊst ˈjuzɚz pɹəˈfɝ"
      },
      {
       "en": "the redesigned website",
-      "ja": "刷新されたウェブサイトを"
+      "ja": "刷新されたウェブサイトを",
+      "ipa": "ðə ˌɹidɪˈzaɪnd ˈwɛbˌsaɪt"
      },
      {
       "en": "to the previous version.",
-      "ja": "以前のバージョンよりも"
+      "ja": "以前のバージョンよりも",
+      "ipa": "tə ðə ˈpɹiviəs ˈvɝʒən"
      }
     ],
     "pattern": {
@@ -7312,6 +7746,20 @@
       "t": "that most users prefer the redesigned website to the previous version.",
       "f": "名詞節(that節)"
      }
+    ],
+    "iu": [
+     {
+      "t": "Customer feedback indicates",
+      "ipa": "ˈkʌstəmɚ ˈfidˌbæk ˈɪndɪˌkeɪts"
+     },
+     {
+      "t": "that most users prefer the redesigned website",
+      "ipa": "ˈðæt ˈmoʊst ˈjuzɚz pɹəˈfɝ ðə ˌɹidɪˈzaɪnd ˈwɛbˌsaɪt"
+     },
+     {
+      "t": "to the previous version.",
+      "ipa": "tə ðə ˈpɹiviəs ˈvɝʒən"
+     }
     ]
    },
    "level": 730,
@@ -7386,19 +7834,23 @@
     "slash": [
      {
       "en": "Free parking",
-      "ja": "無料駐車は"
+      "ja": "無料駐車は",
+      "ipa": "ˈfɹi ˈpɑɹkɪŋ"
      },
      {
       "en": "is available",
-      "ja": "利用できる"
+      "ja": "利用できる",
+      "ipa": "ˈɪz əˈveɪləbəl"
      },
      {
       "en": "to customers",
-      "ja": "お客様に対して"
+      "ja": "お客様に対して",
+      "ipa": "tə ˈkʌstəmɚz"
      },
      {
       "en": "who spend more than fifty dollars.",
-      "ja": "50ドルより多く使う"
+      "ja": "50ドルより多く使う",
+      "ipa": "ˈhu ˈspɛnd ˈmɔɹ ðən ˈfɪfti ˈdɑlɚz"
      }
     ],
     "pattern": {
@@ -7576,6 +8028,16 @@
       "t": "who spend more than fifty dollars.",
       "f": "関係詞節"
      }
+    ],
+    "iu": [
+     {
+      "t": "Free parking is available to customers",
+      "ipa": "ˈfɹi ˈpɑɹkɪŋ ˈɪz əˈveɪləbəl tə ˈkʌstəmɚz"
+     },
+     {
+      "t": "who spend more than fifty dollars.",
+      "ipa": "ˈhu ˈspɛnd ˈmɔɹ ðən ˈfɪfti ˈdɑlɚz"
+     }
     ]
    },
    "level": 730,
@@ -7649,19 +8111,23 @@
     "slash": [
      {
       "en": "Because of ongoing construction,",
-      "ja": "継続中の工事のために"
+      "ja": "継続中の工事のために",
+      "ipa": "bɪˈkɔz əv ˈɑnˌɡoʊɪŋ kənˈstɹʌkʃən"
      },
      {
       "en": "the main entrance",
-      "ja": "正面入口は"
+      "ja": "正面入口は",
+      "ipa": "ðə ˈmeɪn ˈɛntɹəns"
      },
      {
       "en": "will remain closed",
-      "ja": "閉鎖されたままである"
+      "ja": "閉鎖されたままである",
+      "ipa": "ˈwɪl ɹɪˈmeɪn ˈkloʊzd"
      },
      {
       "en": "until further notice.",
-      "ja": "追って通知があるまで"
+      "ja": "追って通知があるまで",
+      "ipa": "ənˈtɪl ˈfɝðɚ ˈnoʊtəs"
      }
     ],
     "pattern": {
@@ -7843,6 +8309,20 @@
       "t": "until further notice.",
       "f": "前置詞句"
      }
+    ],
+    "iu": [
+     {
+      "t": "Because of ongoing construction,",
+      "ipa": "bɪˈkɔz əv ˈɑnˌɡoʊɪŋ kənˈstɹʌkʃən"
+     },
+     {
+      "t": "the main entrance will remain closed",
+      "ipa": "ðə ˈmeɪn ˈɛntɹəns ˈwɪl ɹɪˈmeɪn ˈkloʊzd"
+     },
+     {
+      "t": "until further notice.",
+      "ipa": "ənˈtɪl ˈfɝðɚ ˈnoʊtəs"
+     }
     ]
    },
    "level": 600,
@@ -7916,19 +8396,23 @@
     "slash": [
      {
       "en": "Attached is",
-      "ja": "添付されているのは"
+      "ja": "添付されているのは",
+      "ipa": "əˈtætʃt ˈɪz"
      },
      {
       "en": "the revised schedule,",
-      "ja": "改訂版のスケジュールです"
+      "ja": "改訂版のスケジュールです",
+      "ipa": "ðə ɹɪˈvaɪzd ˈskɛdʒʊl"
      },
      {
       "en": "which reflects the changes",
-      "ja": "それは変更点を反映している"
+      "ja": "それは変更点を反映している",
+      "ipa": "ˈwɪtʃ ɹɪˈflɛkts ðə ˈtʃeɪndʒəz"
      },
      {
       "en": "discussed during yesterday's meeting.",
-      "ja": "昨日の会議で話し合われた"
+      "ja": "昨日の会議で話し合われた",
+      "ipa": "dɪˈskʌst ˈdʊɹɪŋ ˈjɛstɚˌdeɪz ˈmitɪŋ"
      }
     ],
     "pattern": {
@@ -8105,6 +8589,20 @@
      {
       "t": "which reflects the changes discussed during yesterday's meeting.",
       "f": "関係詞節"
+     }
+    ],
+    "iu": [
+     {
+      "t": "Attached is the revised schedule,",
+      "ipa": "əˈtætʃt ˈɪz ðə ɹɪˈvaɪzd ˈskɛdʒʊl"
+     },
+     {
+      "t": "which reflects the changes discussed",
+      "ipa": "ˈwɪtʃ ɹɪˈflɛkts ðə ˈtʃeɪndʒəz dɪˈskʌst"
+     },
+     {
+      "t": "during yesterday's meeting.",
+      "ipa": "ˈdʊɹɪŋ ˈjɛstɚˌdeɪz ˈmitɪŋ"
      }
     ]
    },

@@ -84,3 +84,5 @@ table.v td{padding:4px 8px 4px 0;vertical-align:top;border-bottom:1px solid var(
 .hide-btn{display:block;width:100%;text-align:left;color:var(--sub)}
 .wrow .w1{font-weight:600}
 button.sm{padding:2px 8px;font-size:13px}
+.chunk-only[hidden]{display:none}
+.hl{background:var(--hl);border-radius:3px;padding:0 2px}

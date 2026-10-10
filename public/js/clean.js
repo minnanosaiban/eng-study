@@ -43,11 +43,23 @@ const Clean = (() => {
     if (!Array.isArray(sl) || sl.length < 2 || sl.length > 12) return null;
     const out = [];
     for (const x of sl) {
-      const en = clip(x && x.en, 300), ja = clip(x && x.ja, 200);
+      const en = clip(x && x.en, 300), ja = clip(x && x.ja, 200), p = ipa(x && x.ipa);
       if (!en) return null;
-      out.push({ en, ja });
+      out.push(p ? { en, ja, ipa: p } : { en, ja });
     }
     return norm(out.map(x => x.en).join(" ")) === norm(text) ? out : null;
+  }
+
+  // イントネーション・ユニット(IU): [{t, ipa?}]。つなぐと原文と一致するときだけ。1つだけの文もある
+  function iu(list, text) {
+    if (!Array.isArray(list) || list.length < 1 || list.length > 8) return null;
+    const out = [];
+    for (const x of list) {
+      const t = clip(x && x.t, 300), p = ipa(x && x.ipa);
+      if (!t) return null;
+      out.push(p ? { t, ipa: p } : { t });
+    }
+    return norm(out.map(x => x.t).join(" ")) === norm(text) ? out : null;
   }
 
   function vocab(v) {
@@ -99,7 +111,7 @@ const Clean = (() => {
       id: uid(), type: "sentence", text,
       ja: clip(a.translation ?? a.ja, 500), level: level(o.level), groups,
       status: "new", review_count: 0, last_reviewed: null, verified: !(a.translation || a.ja), added: Date.now(),
-      words: words(a.words, text), phrases: phrases(a.phrases, text), slash: slash(a.slash, text),
+      words: words(a.words, text), phrases: phrases(a.phrases, text), slash: slash(a.slash, text), iu: iu(a.iu, text),
       vocab: vocab(a.vocab), grammar: grammar(a.grammar), toeic: toeic(a.toeic), quiz: quiz(o.quiz)
     };
     if (keepState) {
@@ -115,7 +127,9 @@ const Clean = (() => {
   function fill(ex, add) {
     let c = false;
     const set = (k, v) => { if (v && (ex[k] == null || (Array.isArray(ex[k]) && !ex[k].length))) { ex[k] = v; c = true } };
-    set("ja", add.ja); set("words", add.words); set("phrases", add.phrases); set("slash", add.slash);
+    set("ja", add.ja); set("words", add.words); set("phrases", add.phrases); set("slash", add.slash); set("iu", add.iu);
+    if (ex.slash && add.slash && ex.slash.length === add.slash.length) ex.slash.forEach((x, i) => { if (!x.ipa && add.slash[i].ipa && x.en === add.slash[i].en) { x.ipa = add.slash[i].ipa; c = true } });
+    if (ex.iu && add.iu && ex.iu.length === add.iu.length) ex.iu.forEach((x, i) => { if (!x.ipa && add.iu[i].ipa && x.t === add.iu[i].t) { x.ipa = add.iu[i].ipa; c = true } });
     set("grammar", add.grammar); set("toeic", add.toeic); set("quiz", add.quiz); set("level", add.level);
     set("vocab", add.vocab && add.vocab.length ? add.vocab : null);
     if (ex.vocab && add.vocab) { // 発音記号が無い単語にだけ足す
@@ -149,6 +163,40 @@ const Clean = (() => {
     return w;
   }
 
+  // 意味句・IU(区切り)1件。type: "meaning" | "iu"。ex = 親の英文、idx = 何番目、n = 全部でいくつ
+  const CTYPE = { meaning: "意味句", iu: "IU" };
+  function chunk(o, { keepState = false } = {}) {
+    if (!o || !has(CTYPE, o.type) || typeof o.text !== "string") return null;
+    const text = clip(o.text, 300), ex = clip(o.ex, 500);
+    const n = Math.floor(+o.n), idx = Math.floor(+o.idx);
+    if (!text || !ex || !(n >= 1 && n <= 12) || !(idx >= 0 && idx < n)) return null;
+    const c = {
+      id: uid(), type: o.type, text, ipa: ipa(o.ipa), ja: o.type === "meaning" ? clip(o.ja, 200) : "", ex, idx, n,
+      level: level(o.level), groups: [...new Set((Array.isArray(o.groups) ? o.groups : []).map(g => clip(g, 40)).filter(Boolean))].slice(0, 20),
+      status: "new", review_count: 0, last_reviewed: null, added: Date.now()
+    };
+    if (keepState) {
+      if (has(STATUS, o.status)) c.status = o.status;
+      c.review_count = Math.max(0, Math.floor(+o.review_count || 0));
+      c.last_reviewed = date(o.last_reviewed);
+    }
+    return c;
+  }
+  const chunkKey = c => c.type + "|" + c.ex.toLowerCase() + "|" + c.idx;
+  // 英文から、意味句と IU の一覧を作る。難易度・グループは、その英文のものを引き継ぐ
+  function chunksOf(s) {
+    const mk = (type, list, f) => (list || []).map((x, idx) => ({ type, text: f.t(x), ja: f.ja ? x.ja : "", ipa: x.ipa, ex: s.text, idx, n: list.length, level: s.level, groups: s.groups }));
+    return [...mk("meaning", s.slash, { t: x => x.en, ja: true }), ...mk("iu", s.iu, { t: x => x.t })];
+  }
+  function fillChunk(ex, add) {
+    let c = false;
+    for (const k of ["ipa", "ja"]) if (!ex[k] && add[k]) { ex[k] = add[k]; c = true }
+    if (!ex.level && add.level) { ex.level = add.level; c = true }
+    const g = [...new Set([...(ex.groups || []), ...(add.groups || [])])];
+    if (g.length !== (ex.groups || []).length) { ex.groups = g; c = true }
+    return c;
+  }
+
   // 英文の単語欄(vocab)から、単語の一覧を作る。難易度・グループ・例文は、その英文のものを引き継ぐ
   function wordsOf(s) {
     return (s.vocab || []).map(v => ({ word: v.word, pos: v.pos, meaning: v.meaning, note: v.note, ipa: v.ipa, freq: v.level, toeic: v.toeic, level: s.level, groups: s.groups, ex: s.text }));
@@ -164,5 +212,5 @@ const Clean = (() => {
     return c;
   }
 
-  return { word, wordsOf, fillWord, clip, norm, POS, STATUS, ipa, words, phrases, slash, vocab, grammar, toeic, quiz, level, date, uid, sentence, fill };
+  return { iu, chunk, chunkKey, chunksOf, fillChunk, CTYPE, word, wordsOf, fillWord, clip, norm, POS, STATUS, ipa, words, phrases, slash, vocab, grammar, toeic, quiz, level, date, uid, sentence, fill };
 })();
