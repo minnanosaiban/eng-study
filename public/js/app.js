@@ -307,7 +307,7 @@
 
   // 表示の見方の、1行の説明(何を基準に区切っているか)
   const DISP_NOTE = {
-    full: "英文を、そのまま表示します。",
+    full: "全文の下に、区切りの見方を表示できます。上のボタンで選んでください(もう一度押すと消えます)。",
     slash: "【意味】意味のまとまりで区切り、各区切りに日本語訳を付けています。前から順に意味を取る練習用です(スラッシュリーディング)。",
     phrases: "【文法】文法の単位(主語+動詞・前置詞句・関係詞節など)で区切り、各区切りに形の名前を付けています。文の組み立てを確かめる用です。",
     iu: "【音】息継ぎの切れ目(一息で読む単位。イントネーション・ユニット)で区切っています。シャドーイングは、この区切りで進みます。",
@@ -317,26 +317,25 @@
     const d = prefs.disp; let h = "", legend = "";
     const hl = i => (i === now ? " now" : "");
     // 品詞の色(どの見方にも重ねる)。区切りをつなぐと原文に戻るので、語の並びの順に、品詞を当てる。文字の色だけで表す(区切りの下線と重ならないように)
-    const pw = prefs.posOn && r.words ? r.words : null; let ti = 0;
-    const P = text => !pw ? esc(text) : text.split(" ").filter(Boolean).map(t => { const w = pw[ti++]; return w && w.w === t ? '<span class="pw pw-' + w.p + '">' + esc(t) + "</span>" : esc(t) }).join(" ");
+    const pw = prefs.posOn && r.words ? r.words : null;
+    const mkP = () => { let ti = 0; return text => !pw ? esc(text) : text.split(" ").filter(Boolean).map(t => { const w = pw[ti++]; return w && w.w === t ? '<span class="pw pw-' + w.p + '">' + esc(t) + "</span>" : esc(t) }).join(" ") };
+    const P = mkP(); // 見方の下の区切りの文字
+    const top = '<div class="fulltext">' + mkP()(r.text) + "</div>"; // いちばん上は、いつも全文
     if (d === "slash" && r.slash) h = r.slash.map((s, i) => `<span class="sl"><span class="seg-i${hl(i)}" data-c="${i}">${P(s.en)}</span>${prefs.aux.ja ? `<span class="ja">${esc(s.ja)}</span>` : ""}</span>`).join("");
     else if (d === "phrases" && r.phrases) h = r.phrases.map((p, i) => `<span class="ph"><span class="no">${NUM[i] || i + 1}</span><span class="seg-i cl-${phClass(p.f)}${hl(i)}" data-c="${i}">${P(p.t)}</span> <span class="lab">${esc(p.f)}</span></span>`).join("");
     else if (d === "iu" && r.iu) h = r.iu.map((x, i) => `<span class="ph"><span class="no">${NUM[i] || i + 1}</span><span class="seg-i cl-v${hl(i)}" data-c="${i}">${P(x.t)}</span>${prefs.aux.ipa && x.ipa ? ` <span class="ipa">/${esc(x.ipa)}/</span>` : ""}</span>`).join("");
     else if (d === "links") {
-      if (!Pron.ready) { h = esc(r.text) + '<div class="sub">発音辞書を読み込み中…</div>'; Pron.load().then(ok => { if (ok && prefs.disp === "links" && cur() === r) renderStudy() }) }
+      if (!Pron.ready) { h = '<div class="sub">発音辞書を読み込み中…</div>'; Pron.load().then(ok => { if (ok && prefs.disp === "links" && cur() === r) renderStudy() }) }
       else {
         h = Pron.links(r.text).map((g, i) => g.linked
           ? `<span class="lk${hl(i)}" data-c="${i}">${P(g.t)}${g.ipa ? `<span class="lk-ipa ipa">/${esc(g.ipa)}/</span>` : ""}</span>`
           : `<span class="lk-s${hl(i)}">${P(g.t)}</span>`).join("");
         legend = '<span>下線の所 = つながって聞こえやすい語のまとまり(発音記号の ‿ は、つながる所)</span><span>規則で作れるもの(連結・弱い語のくっつき)だけです。脱落・はじき音などは表せません</span>';
       }
-    } else {
-      h = `<span class="seg-i" data-c="0">${P(r.text)}</span>`;
-      if (d !== "full") h += `<div class="sub">この英文には、この表示のデータがありません。</div>`;
-    }
+    } else if (d !== "full") h = '<div class="sub">この英文には、この見方のデータがありません。</div>';
     if (pw) legend += LEG.map(([k, n]) => `<span><i style="background:var(--pc-${k})"></i>${n}</span>`).join("");
     $("#dispNote").textContent = (DISP_NOTE[d] || "") + (prefs.posOn && !r.words ? " (この英文には、品詞の情報がないので、品詞の色は付きません)" : "");
-    $("#disp").innerHTML = h; $("#legend").innerHTML = legend;
+    $("#disp").innerHTML = top + (h ? '<div class="view">' + h + "</div>" : ""); $("#legend").innerHTML = legend;
   }
 
   function renderAux(r) {
@@ -390,7 +389,8 @@
   $("#segAux").onclick = e => { const b = e.target.closest("button[data-x]"); if (b) toggleAux(b.dataset.x) };
   $("#shGap").onchange = e => { prefs.sh.gap = +e.target.value; savePrefs() };
   $("#shRep").onchange = e => { prefs.sh.rep = +e.target.value; savePrefs() };
-  function setDisp(d) { dictOn = false; prefs.disp = d; savePrefs(); renderStudy() }
+  function setDisp(d) { dictOn = false; prefs.disp = prefs.disp === d && d !== "full" ? "full" : d; // 選んでいる見方を、もう一度押すと消える(全文だけになる)
+     savePrefs(); renderStudy() }
   function toggleAux(x) { prefs.aux[x] = !prefs.aux[x]; savePrefs(); renderStudy() }
   $("#stSel").onchange = async e => { const r = cur(); if (r) { r.status = e.target.value; await Store.put(r, "sentences") } };
 
@@ -624,9 +624,9 @@
       else if (ax[k] && has(ax[k])) { prefs.waux[ax[k]] = !prefs.waux[ax[k]]; savePrefs(); renderStudy() }
       return;
     }
-    const map = { "1": "full", "2": "slash", "3": "phrases", "5": "iu", "6": "links" }, ax = { i: "ipa", j: "ja", g: "grammar", v: "vocab", t: "toeic", q: "quiz", k: "rec" };
+    const map = { "0": "full", "1": "slash", "2": "phrases", "4": "iu", "5": "links" }, ax = { i: "ipa", j: "ja", g: "grammar", v: "vocab", t: "toeic", q: "quiz", k: "rec" };
     if (k === " ") { e.preventDefault(); play("once") } else if (k === "c") play("chunks"); else if (k === "r") play("shadow"); else if (k === "l") play("links"); else if (k === "d") play("dict");
-    else if (k === "4") { prefs.posOn = !prefs.posOn; savePrefs(); renderStudy() }
+    else if (k === "3") { prefs.posOn = !prefs.posOn; savePrefs(); renderStudy() }
     else if (map[k]) setDisp(map[k]); else if (ax[k]) toggleAux(ax[k]);
   });
 
