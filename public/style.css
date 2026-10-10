@@ -86,3 +86,10 @@ table.v td{padding:4px 8px 4px 0;vertical-align:top;border-bottom:1px solid var(
 button.sm{padding:2px 8px;font-size:13px}
 .chunk-only[hidden]{display:none}
 .hl{background:var(--hl);border-radius:3px;padding:0 2px}
+dialog{border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--tx);width:min(640px,94vw);padding:16px}
+dialog::backdrop{background:rgba(0,0,0,.45)}
+dialog textarea{margin-top:8px}
+.err{color:var(--danger);white-space:pre-wrap}
+.aiset{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.aiset input[type=password],.aiset input[type=text]{width:100%}
+summary{cursor:pointer;color:var(--sub);margin-top:8px}

@@ -20,6 +20,26 @@
   <!-- 登録 -->
   <section id="tab-reg" class="tab">
     <div class="card">
+      <h2>AI で解析する(和訳・区切り・品詞・単語・発音記号・TOEIC・4択)</h2>
+      <p id="aiInfo" class="sub"></p>
+      <div class="row wrap">
+        <button id="btnAI" class="pri">解析する</button>
+        <button id="btnAIStop" hidden>止める</button>
+        <span id="aiProg" class="sub"></span>
+      </div>
+      <details id="aiSet">
+        <summary>設定(方法・API キー)</summary>
+        <div class="aiset">
+          <label class="inl"><input type="radio" name="aiMode" value="copy"> コピペモード(API キー不要。プロンプトを Gemini に貼って、返事を貼り戻す。5文ずつ)</label>
+          <label class="inl"><input type="radio" name="aiMode" value="api"> Gemini API(1文ずつ、自動で呼ぶ。API キーが必要)</label>
+          <input id="apiKey" type="password" autocomplete="off" placeholder="Gemini API キー(Google AI Studio で取得)">
+          <input id="aiModel" type="text" placeholder="モデル名(既定: gemini-2.5-flash)">
+          <p class="sub">API キーは、この端末のブラウザの中だけに保存します(バックアップ・同期には入りません)。呼び出しは、「解析する」を押したときだけです。</p>
+          <button id="aiSave">設定を保存</button>
+        </div>
+      </details>
+    </div>
+    <div class="card">
       <h2>すぐ試す</h2>
       <p class="sub">TOEIC風のオリジナル英文 90文(和訳・区切り・品詞・単語の発音記号・4択つき)を入れます。API は要りません。</p>
       <button id="btnSamples" class="pri">サンプル英文を入れる</button>
@@ -180,10 +200,21 @@
   </section>
 </main>
 
+<dialog id="cpDlg">
+  <h2 id="cpTitle">コピペモード</h2>
+  <p class="sub">1. 「プロンプトをコピー」→ Gemini(アプリや Web)に貼り付けて送る。2. 返事の全体をコピーして、下に貼る。</p>
+  <textarea id="cpPrompt" rows="5" readonly></textarea>
+  <div class="row"><button id="cpCopy">プロンプトをコピー</button></div>
+  <textarea id="cpIn" rows="6" placeholder="Gemini の返事を、ここに貼り付け"></textarea>
+  <p id="cpErr" class="sub err"></p>
+  <div class="row"><span class="grow"></span><button id="cpCancel">やめる</button><button id="cpOk" class="pri">この返事を使う</button></div>
+</dialog>
+
 <div id="toast" role="status" aria-live="polite"></div>
 
 <script src="js/clean.js"></script>
 <script src="js/store.js"></script>
+<script src="js/ai.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

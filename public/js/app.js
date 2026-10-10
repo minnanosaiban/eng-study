@@ -426,11 +426,78 @@
     else if (map[k]) setDisp(map[k]); else if (ax[k]) toggleAux(ax[k]);
   });
 
-  function renderAll() { renderReg(); if (tab === "pick") renderPick(); if (tab === "study") renderStudy() }
+  // ---------- AI で解析(Gemini API / コピペモード) ----------
+  // 足りない解析がある英文
+  const needsAI = r => !r.ja || !r.slash || !r.phrases || !r.words || !r.iu || !(r.vocab && r.vocab.length) || !r.quiz;
+  let aiBusy = false, aiStop = false;
+
+  function renderAI() {
+    const n = rows.filter(needsAI).length, c = AI.cfg;
+    $("#aiInfo").textContent = n ? `解析が足りない英文: ${n} 文(方法: ${c.mode === "api" ? "Gemini API" : "コピペモード"})` : (rows.length ? "すべての英文に、解析があります。" : "英文を登録すると、ここから解析できます。");
+    $("#btnAI").disabled = aiBusy || !n; $("#btnAIStop").hidden = !(aiBusy && c.mode === "api");
+    document.querySelectorAll("[name=aiMode]").forEach(r => { r.checked = r.value === c.mode });
+    if (document.activeElement !== $("#apiKey")) $("#apiKey").value = c.apiKey;
+    if (document.activeElement !== $("#aiModel")) $("#aiModel").value = c.model;
+  }
+  $("#aiSave").onclick = async () => {
+    await AI.save({ mode: document.querySelector("[name=aiMode]:checked").value, apiKey: $("#apiKey").value, model: $("#aiModel").value });
+    renderAI(); toast("設定を保存しました");
+  };
+
+  // AI の1文分の結果を、英文に足す。検査を通ったものだけ(解析・状態・記録は上書きしない)。足したら true
+  async function applyAI(row, res) {
+    if (!res || typeof res !== "object" || Array.isArray(res)) return false;
+    const add = Clean.sentence({ text: row.text, level: res.difficulty, quiz: res.quiz, analysis: res });
+    if (!add) return false;
+    const had = !!row.ja, c = Clean.fill(row, add);
+    if (c) {
+      if (!had && row.ja) row.verified = false; // AI の解析は「未確認」
+      await Store.put(row, "sentences");
+      await importWords(Clean.wordsOf(row)); await importChunks(Clean.chunksOf(row)); // 単語・意味句・IU の表にも入れる
+    }
+    return c;
+  }
+
+  async function runAI() {
+    const targets = rows.filter(needsAI);
+    if (!targets.length || aiBusy) return;
+    const mode = AI.cfg.mode;
+    if (mode === "api" && !AI.cfg.apiKey) { $("#aiSet").open = true; return toast("Gemini API キーを入力するか、コピペモードに切り替えてください") }
+    aiBusy = true; aiStop = false; let done = 0, skipped = 0, err = "";
+    renderAI();
+    try {
+      if (mode === "api") {
+        for (let i = 0; i < targets.length && !aiStop; i++) {
+          $("#aiProg").textContent = `解析中 ${i + 1} / ${targets.length}`;
+          const res = await AI.gemini(AI.prompt.one(targets[i].text));
+          if (await applyAI(targets[i], res)) done++; else skipped++;
+        }
+      } else {
+        const N = 5, total = Math.ceil(targets.length / N);
+        for (let k = 0; k < total; k++) {
+          const part = targets.slice(k * N, k * N + N);
+          $("#aiProg").textContent = `${k + 1} / ${total} 通目`;
+          const res = await AI.copyPaste(AI.prompt.batch(part.map(r => r.text)), `コピペモード ${k + 1} / ${total} 通目(${part.length} 文)`);
+          const arr = Array.isArray(res) ? res : [res];
+          for (let j = 0; j < arr.length; j++) {
+            const idx = Number.isInteger(arr[j] && arr[j].n) ? arr[j].n - 1 : j; // n(番号)があれば、それで英文を決める
+            if (part[idx] && await applyAI(part[idx], arr[j])) done++; else skipped++;
+          }
+        }
+      }
+    } catch (e) { err = e.message }
+    aiBusy = false; $("#aiProg").textContent = ""; renderAll();
+    toast(`解析: ${done} 文に追加${skipped ? `、${skipped} 文は、検査を通らず見送り` : ""}${aiStop ? "(止めました)" : ""}${err ? "。中断: " + err : ""}`);
+  }
+  $("#btnAI").onclick = runAI;
+  $("#btnAIStop").onclick = () => { aiStop = true };
+
+  function renderAll() { renderReg(); renderAI(); if (tab === "pick") renderPick(); if (tab === "study") renderStudy() }
 
   // ---------- 起動 ----------
   (async () => {
     try {
+      await AI.load();
       rows = await Store.all("sentences"); words = await Store.all("words"); chunks = await Store.all("chunks");
       const p = await Store.getMeta("prefs", null);
       if (p && typeof p === "object") prefs = { ...prefs, ...p, aux: { ...prefs.aux, ...(p.aux || {}) }, waux: { ...prefs.waux, ...(p.waux || {}) } };

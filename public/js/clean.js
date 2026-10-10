@@ -98,7 +98,9 @@ const Clean = (() => {
 
   function level(v) { const n = +v; return [600, 730, 860].includes(n) ? n : null; }
   function date(s) { return typeof s === "string" && /^\d{4}-\d{2}-\d{2}$/.test(s) ? s : null; }
-  function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
+  // 作った順に並ぶ id(IndexedDB は id 順に返すので、同じ瞬間に作ったものも、作った順になる)
+  let seq = 0;
+  function uid() { seq = (seq + 1) % 1296; return Date.now().toString(36) + seq.toString(36).padStart(2, "0") + Math.random().toString(36).slice(2, 6); }
 
   // 英文1件。text が無い・空なら null。外から来た値は、ここで作り直す(状態・復習回数なども検査する)
   function sentence(o, { keepState = false } = {}) {
@@ -126,7 +128,7 @@ const Clean = (() => {
   // すでにある英文に、足りないものだけを足す。足したら true(解析・状態・記録は上書きしない)
   function fill(ex, add) {
     let c = false;
-    const set = (k, v) => { if (v && (ex[k] == null || (Array.isArray(ex[k]) && !ex[k].length))) { ex[k] = v; c = true } };
+    const set = (k, v) => { if (v && (ex[k] == null || ex[k] === "" || (Array.isArray(ex[k]) && !ex[k].length))) { ex[k] = v; c = true } };
     set("ja", add.ja); set("words", add.words); set("phrases", add.phrases); set("slash", add.slash); set("iu", add.iu);
     if (ex.slash && add.slash && ex.slash.length === add.slash.length) ex.slash.forEach((x, i) => { if (!x.ipa && add.slash[i].ipa && x.en === add.slash[i].en) { x.ipa = add.slash[i].ipa; c = true } });
     if (ex.iu && add.iu && ex.iu.length === add.iu.length) ex.iu.forEach((x, i) => { if (!x.ipa && add.iu[i].ipa && x.t === add.iu[i].t) { x.ipa = add.iu[i].ipa; c = true } });
