@@ -10,7 +10,7 @@
   let sel = { sentence: new Set(), meaning: new Set(), iu: new Set(), word: new Set() }; // 単位ごとの選択中の id
   let unit = "sentence";                           // 学習対象選択で見ている単位
   let study = { unit: "sentence", ids: [], i: 0 }; // 学習セット
-  let prefs = { disp: "full", aux: { ipa: false, ja: true, grammar: false, vocab: false, toeic: false, quiz: false, rec: false }, waux: { ipa: true, ex: true, toeic: false, tr: false, quiz: false }, sh: { gap: 1, rep: 1 }, posOn: false, rate: 1 };
+  let prefs = { view: { iu: false, links: false, slash: false, phrases: false }, aux: { ipa: false, ja: true, grammar: false, vocab: false, toeic: false, quiz: false, rec: false }, waux: { ipa: true, ex: true, toeic: false, tr: false, quiz: false }, sh: { gap: 1, rep: 1 }, posOn: false, rate: 1 };
   let tab = "reg", wReveal = false;
   const UN = { sentence: { kind: "sentences", name: "英文" }, meaning: { kind: "chunks", name: "意味句" }, iu: { kind: "chunks", name: "IU" }, word: { kind: "words", name: "単語" } };
   const tbl = u => (u === "word" ? words : u === "sentence" ? rows : chunks.filter(c => c.type === u));
@@ -289,53 +289,59 @@
     return "o";
   }
   // 音声で読み上げる区切り。区切りの形があればそれ、なければスラッシュリーディング、なければ文全体
-  const chunksOf = r => (r.phrases ? r.phrases.map(p => p.t) : r.slash ? r.slash.map(p => p.en) : [r.text]);
 
   function renderSentence(r) {
     $("#pos").textContent = `${study.i + 1} / ${study.ids.length}`;
     $("#btnPrev").disabled = study.i === 0; $("#btnNext").disabled = study.i >= study.ids.length - 1;
-    document.querySelectorAll("#segDisp button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.d === prefs.disp)));
-    document.querySelectorAll("#segAux button").forEach(b => b.setAttribute("aria-pressed", String(!!prefs.aux[b.dataset.x])));
-    $("#btnPos").setAttribute("aria-pressed", String(!!prefs.posOn)); $("#btnPos").textContent = (prefs.posOn ? "☑ " : "☐ ") + "品詞の色";
+    document.querySelectorAll("#segShow button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v ? !!prefs.view[b.dataset.v] : b.dataset.x ? !!prefs.aux[b.dataset.x] : !!prefs.posOn)));
     $("#rate").value = $("#wrate").value = String(prefs.rate);
     $("#shGap").value = String(prefs.sh.gap); $("#shRep").value = String(prefs.sh.rep);
-    $("#dict").hidden = !dictOn; $("#disp").hidden = dictOn; $("#legend").hidden = dictOn; $("#dispNote").hidden = dictOn;
+    $("#dict").hidden = !dictOn; $("#disp").hidden = dictOn; $("#legend").hidden = dictOn;
     $("#stSel").value = r.status;
     $("#stInfo").textContent = infoText(r);
     renderDisp(r); renderAux(r);
   }
 
-  // 表示の見方の、1行の説明(何を基準に区切っているか)
-  const DISP_NOTE = {
-    full: "全文の下に、区切りの見方を表示できます。上のボタンで選んでください(もう一度押すと消えます)。",
-    slash: "【意味】意味のまとまりで区切り、各区切りに日本語訳を付けています。前から順に意味を取る練習用です(スラッシュリーディング)。",
-    phrases: "【文法】文法の単位(主語+動詞・前置詞句・関係詞節など)で区切り、各区切りに形の名前を付けています。文の組み立てを確かめる用です。",
-    iu: "【音】息継ぎの切れ目(一息で読む単位。イントネーション・ユニット)で区切っています。シャドーイングは、この区切りで進みます。",
-    links: "【音】くっついて聞こえやすい語のまとまりを示しています。聞き取りの練習用です。"
-  };
-  function renderDisp(r, now = -1) {
-    const d = prefs.disp; let h = "", legend = "";
-    const hl = i => (i === now ? " now" : "");
+  // 区切りの見方(表示の入り切り)。全文の下に、出している見方が、この並びで縦に並ぶ。それぞれに、何を基準に区切っているかの説明を付ける
+  const VIEWS = [
+    { k: "iu", note: "【音区切り】息継ぎの切れ目(一息で読む単位。イントネーション・ユニット)で区切っています。シャドーイングは、この区切りで進みます。" },
+    { k: "links", note: "【音のつながり】くっついて聞こえやすい語のまとまりを示しています(聞き取りの練習用)。下線の所 = つながって聞こえやすい。発音記号の ‿ は、つながる所。規則で作れるもの(連結・弱い語のくっつき)だけで、脱落・はじき音などは表せません。" },
+    { k: "slash", note: "【意味区切り】意味のまとまりで区切り、各区切りに日本語訳を付けています。前から順に意味を取る練習用です(スラッシュリーディング)。" },
+    { k: "phrases", note: "【文法区切り】文法の単位(主語+動詞・前置詞句・関係詞節など)で区切り、各区切りに形の名前を付けています。文の組み立てを確かめる用です。" }
+  ];
+  // 区切って聞く・シャドーイングが使う区切り。forShadow: シャドーイング(音区切り → 文法 → 意味の順)。そうでなければ、出している区切り(音 → 意味 → 文法)、何も出していなければ、文法 → 意味 → 音
+  function chunkSrc(r, forShadow) {
+    const avail = { iu: r.iu && r.iu.map(x => x.t), slash: r.slash && r.slash.map(x => x.en), phrases: r.phrases && r.phrases.map(x => x.t) };
+    const key = forShadow ? ["iu", "phrases", "slash"].find(k => avail[k])
+      : ["iu", "slash", "phrases"].find(k => prefs.view[k] && avail[k]) || ["phrases", "slash", "iu"].find(k => avail[k]);
+    return key ? { key, list: avail[key] } : { key: null, list: [r.text] };
+  }
+  // その見方を、表示に出す(出ていなければ)
+  function showView(k) { if (k && !prefs.view[k]) { prefs.view[k] = true; savePrefs(); renderStudy() } }
+
+  function renderDisp(r, now = -1, nowView = null) {
     // 品詞の色(どの見方にも重ねる)。区切りをつなぐと原文に戻るので、語の並びの順に、品詞を当てる。文字の色だけで表す(区切りの下線と重ならないように)
     const pw = prefs.posOn && r.words ? r.words : null;
     const mkP = () => { let ti = 0; return text => !pw ? esc(text) : text.split(" ").filter(Boolean).map(t => { const w = pw[ti++]; return w && w.w === t ? '<span class="pw pw-' + w.p + '">' + esc(t) + "</span>" : esc(t) }).join(" ") };
-    const P = mkP(); // 見方の下の区切りの文字
-    const top = '<div class="fulltext">' + mkP()(r.text) + "</div>"; // いちばん上は、いつも全文
-    if (d === "slash" && r.slash) h = r.slash.map((s, i) => `<span class="sl"><span class="seg-i${hl(i)}" data-c="${i}">${P(s.en)}</span>${prefs.aux.ja ? `<span class="ja">${esc(s.ja)}</span>` : ""}</span>`).join("");
-    else if (d === "phrases" && r.phrases) h = r.phrases.map((p, i) => `<span class="ph"><span class="no">${NUM[i] || i + 1}</span><span class="seg-i cl-${phClass(p.f)}${hl(i)}" data-c="${i}">${P(p.t)}</span> <span class="lab">${esc(p.f)}</span></span>`).join("");
-    else if (d === "iu" && r.iu) h = r.iu.map((x, i) => `<span class="ph"><span class="no">${NUM[i] || i + 1}</span><span class="seg-i cl-v${hl(i)}" data-c="${i}">${P(x.t)}</span>${prefs.aux.ipa && x.ipa ? ` <span class="ipa">/${esc(x.ipa)}/</span>` : ""}</span>`).join("");
-    else if (d === "links") {
-      if (!Pron.ready) { h = '<div class="sub">発音辞書を読み込み中…</div>'; Pron.load().then(ok => { if (ok && prefs.disp === "links" && cur() === r) renderStudy() }) }
-      else {
-        h = Pron.links(r.text).map((g, i) => g.linked
+    let html = '<div class="fulltext">' + mkP()(r.text) + "</div>"; // いちばん上は、いつも全文
+    for (const v of VIEWS) {
+      if (!prefs.view[v.k]) continue;
+      const P = mkP(), hl = i => (nowView === v.k && i === now ? " now" : "");
+      let body;
+      if (v.k === "slash" && r.slash) body = r.slash.map((s, i) => `<span class="sl"><span class="seg-i${hl(i)}" data-c="${i}">${P(s.en)}</span>${prefs.aux.ja ? `<span class="ja">${esc(s.ja)}</span>` : ""}</span>`).join("");
+      else if (v.k === "phrases" && r.phrases) body = r.phrases.map((p, i) => `<span class="ph"><span class="no">${NUM[i] || i + 1}</span><span class="seg-i cl-${phClass(p.f)}${hl(i)}" data-c="${i}">${P(p.t)}</span> <span class="lab">${esc(p.f)}</span></span>`).join("");
+      else if (v.k === "iu" && r.iu) body = r.iu.map((x, i) => `<span class="ph"><span class="no">${NUM[i] || i + 1}</span><span class="seg-i cl-v${hl(i)}" data-c="${i}">${P(x.t)}</span>${prefs.aux.ipa && x.ipa ? ` <span class="ipa">/${esc(x.ipa)}/</span>` : ""}</span>`).join("");
+      else if (v.k === "links") {
+        if (!Pron.ready) { body = '<div class="sub">発音辞書を読み込み中…</div>'; Pron.load().then(ok => { if (ok && prefs.view.links && cur() === r) renderStudy() }) }
+        else body = Pron.links(r.text).map((g, i) => g.linked
           ? `<span class="lk${hl(i)}" data-c="${i}">${P(g.t)}${g.ipa ? `<span class="lk-ipa ipa">/${esc(g.ipa)}/</span>` : ""}</span>`
           : `<span class="lk-s${hl(i)}">${P(g.t)}</span>`).join("");
-        legend = '<span>下線の所 = つながって聞こえやすい語のまとまり(発音記号の ‿ は、つながる所)</span><span>規則で作れるもの(連結・弱い語のくっつき)だけです。脱落・はじき音などは表せません</span>';
-      }
-    } else if (d !== "full") h = '<div class="sub">この英文には、この見方のデータがありません。</div>';
-    if (pw) legend += LEG.map(([k, n]) => `<span><i style="background:var(--pc-${k})"></i>${n}</span>`).join("");
-    $("#dispNote").textContent = (DISP_NOTE[d] || "") + (prefs.posOn && !r.words ? " (この英文には、品詞の情報がないので、品詞の色は付きません)" : "");
-    $("#disp").innerHTML = top + (h ? '<div class="view">' + h + "</div>" : ""); $("#legend").innerHTML = legend;
+      } else body = '<div class="sub">この英文には、この見方のデータがありません。</div>';
+      html += `<div class="view" data-view="${v.k}"><div class="vnote">${esc(v.note)}</div>${body}</div>`;
+    }
+    $("#disp").innerHTML = html;
+    $("#legend").innerHTML = pw ? LEG.map(([k, n]) => `<span><i style="background:var(--pc-${k})"></i>${n}</span>`).join("")
+      : (prefs.posOn ? "<span>この英文には、品詞の情報がないので、品詞の色は付きません</span>" : "");
   }
 
   function renderAux(r) {
@@ -384,13 +390,16 @@
     $("#stInfo").textContent = infoText(r);
   };
 
-  $("#btnPos").onclick = () => { prefs.posOn = !prefs.posOn; savePrefs(); renderStudy() };
-  $("#segDisp").onclick = e => { const b = e.target.closest("button[data-d]"); if (b) setDisp(b.dataset.d) };
-  $("#segAux").onclick = e => { const b = e.target.closest("button[data-x]"); if (b) toggleAux(b.dataset.x) };
+  // 表示のボタン: 区切りの見方(data-v)・補助(data-x)・品詞の色(data-p)は、どれも独立した入り切り
+  $("#segShow").onclick = e => {
+    const b = e.target.closest("button"); if (!b) return;
+    if (b.dataset.v) toggleView(b.dataset.v); else if (b.dataset.x) toggleAux(b.dataset.x); else if (b.dataset.p) togglePos();
+  };
   $("#shGap").onchange = e => { prefs.sh.gap = +e.target.value; savePrefs() };
   $("#shRep").onchange = e => { prefs.sh.rep = +e.target.value; savePrefs() };
-  function setDisp(d) { dictOn = false; prefs.disp = prefs.disp === d && d !== "full" ? "full" : d; // 選んでいる見方を、もう一度押すと消える(全文だけになる)
-     savePrefs(); renderStudy() }
+  function toggleView(k) { dictOn = false; prefs.view[k] = !prefs.view[k]; savePrefs(); renderStudy() }
+  function togglePos() { prefs.posOn = !prefs.posOn; savePrefs(); renderStudy() }
+  function clearViews() { for (const k of Object.keys(prefs.view)) prefs.view[k] = false; savePrefs(); renderStudy() }
   function toggleAux(x) { prefs.aux[x] = !prefs.aux[x]; savePrefs(); renderStudy() }
   $("#stSel").onchange = async e => { const r = cur(); if (r) { r.status = e.target.value; await Store.put(r, "sentences") } };
 
@@ -520,22 +529,20 @@
     if (mode === "links") return playLinks(r, me);
     if (mode === "ex") { if (r.ex) await say(r.ex); else toast("例文がありません"); return }
     if (mode === "once") { await say(r.text); return }
-    const ch = chunksOf(r);
-    if (prefs.disp === "full" || prefs.disp === "pos") { prefs.disp = r.phrases ? "phrases" : r.slash ? "slash" : "full"; renderStudy() }
+    const { key, list: ch } = chunkSrc(r, false); showView(key); // 読む区切りを、表示に出す
     for (let i = 0; i < ch.length; i++) {
       if (me !== playing) return;
-      renderDisp(r, i); await say(ch[i]);
+      renderDisp(r, i, key); await say(ch[i]);
     }
     if (me === playing) renderDisp(r);
   }
   // シャドーイング: 区切り(IU があれば IU)ごとに、聞く → 同じ長さの無音(まねする時間)。区切りは、設定の回数だけ繰り返す
   async function shadow(r, me) {
-    const ch = r.iu ? r.iu.map(x => x.t) : chunksOf(r), rep = prefs.sh.rep;
-    const want = r.iu ? "iu" : r.phrases ? "phrases" : r.slash ? "slash" : "full";
-    if (prefs.disp !== want) { prefs.disp = want; savePrefs(); renderStudy() }
+    const { key, list: ch } = chunkSrc(r, true), rep = prefs.sh.rep;
+    showView(key);
     for (let i = 0; i < ch.length; i++) for (let k = 1; k <= rep; k++) {
       if (me !== playing) return;
-      renderDisp(r, i); pst(`聞く(${i + 1} / ${ch.length}${rep > 1 ? `・${k}回目` : ""})`);
+      renderDisp(r, i, key); pst(`聞く(${i + 1} / ${ch.length}${rep > 1 ? `・${k}回目` : ""})`);
       const ms = await sayTimed(ch[i]); if (me !== playing) return;
       const wait = Practice.gap(ms, ch[i], prefs.sh.gap, prefs.rate);
       pst(`声に出して、まねしてください…(${(wait / 1000).toFixed(1)}秒)`);
@@ -548,13 +555,13 @@
   async function playLinks(r, me) {
     if (!await Pron.load()) return toast("発音辞書を読み込めませんでした(通信できない可能性)");
     if (me !== playing) return;
-    if (prefs.disp !== "links") { prefs.disp = "links"; savePrefs(); renderStudy() }
+    showView("links");
     const gs = Pron.links(r.text), n = gs.filter(g => g.linked).length;
     if (!n) return toast("この英文には、つながりの所が、ありません");
     for (let i = 0; i < gs.length; i++) {
       if (!gs[i].linked) continue;
       if (me !== playing) return;
-      renderDisp(r, i); pst("つながり: " + gs[i].t + "(ゆっくり → ふつう)");
+      renderDisp(r, i, "links"); pst("つながり: " + gs[i].t + "(ゆっくり → ふつう)");
       await say(gs[i].t, Math.min(prefs.rate, 0.7)); if (me !== playing) return; await sleep(350, me);
       if (me !== playing) return; await say(gs[i].t, prefs.rate); if (me !== playing) return; await sleep(600, me);
     }
@@ -624,10 +631,10 @@
       else if (ax[k] && has(ax[k])) { prefs.waux[ax[k]] = !prefs.waux[ax[k]]; savePrefs(); renderStudy() }
       return;
     }
-    const map = { "0": "full", "1": "slash", "2": "phrases", "4": "iu", "5": "links" }, ax = { i: "ipa", j: "ja", g: "grammar", v: "vocab", t: "toeic", q: "quiz", k: "rec" };
+    const map = { "1": "slash", "2": "phrases", "4": "iu", "5": "links" }, ax = { i: "ipa", j: "ja", g: "grammar", v: "vocab", t: "toeic", q: "quiz", k: "rec" };
     if (k === " ") { e.preventDefault(); play("once") } else if (k === "c") play("chunks"); else if (k === "r") play("shadow"); else if (k === "l") play("links"); else if (k === "d") play("dict");
-    else if (k === "3") { prefs.posOn = !prefs.posOn; savePrefs(); renderStudy() }
-    else if (map[k]) setDisp(map[k]); else if (ax[k]) toggleAux(ax[k]);
+    else if (k === "3") togglePos(); else if (k === "0") clearViews();
+    else if (map[k]) toggleView(map[k]); else if (ax[k]) toggleAux(ax[k]);
   });
 
   // ---------- 記録と復習 ----------
@@ -796,8 +803,10 @@
       reviewLog = await Store.getMeta("log", {}) || {};
       rows = await Store.all("sentences"); words = await Store.all("words"); chunks = await Store.all("chunks");
       const p = await Store.getMeta("prefs", null);
-      if (p && typeof p === "object") prefs = { ...prefs, ...p, aux: { ...prefs.aux, ...(p.aux || {}) }, waux: { ...prefs.waux, ...(p.waux || {}) }, sh: { ...prefs.sh, ...(p.sh || {}) } };
-      if (prefs.disp === "pos") { prefs.disp = "full"; prefs.posOn = true } // 古い設定: 見方「品詞の色」は、入り切りに変わった
+      if (p && typeof p === "object") prefs = { ...prefs, ...p, aux: { ...prefs.aux, ...(p.aux || {}) }, waux: { ...prefs.waux, ...(p.waux || {}) }, sh: { ...prefs.sh, ...(p.sh || {}) }, view: { ...prefs.view, ...(p.view || {}) } };
+      // 古い設定(見方を1つだけ選ぶ形)から移す
+      if (p.disp === "pos") prefs.posOn = true; else if (p.disp && prefs.view[p.disp] === false) prefs.view[p.disp] = true;
+      delete prefs.disp;
       const s = await Store.getMeta("study", null);
       if (s && Array.isArray(s.ids)) {
         const u = UN[s.unit] ? s.unit : "sentence", ok = new Set(tbl(u).map(r => r.id));

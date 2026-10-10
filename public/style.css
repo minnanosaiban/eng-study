@@ -133,3 +133,10 @@ code{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding
 .pw{font-weight:500}
 .fulltext{margin-bottom:2px;overflow-wrap:anywhere}
 .view{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.rowl{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.rowl + .rowl{margin-top:8px}
+.lbl{font-size:13px;font-weight:600;color:var(--sub);min-width:2.6em;padding-right:8px;border-right:2px solid var(--line)}
+.bar.stick{margin-bottom:8px}
+.ctl{margin-bottom:12px}
+.vnote{font-size:12.5px;color:var(--sub);margin-bottom:4px;line-height:1.5}
+.view + .view{margin-top:10px}
