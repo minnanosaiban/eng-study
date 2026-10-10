@@ -298,12 +298,21 @@
     document.querySelectorAll("#segAux button").forEach(b => b.setAttribute("aria-pressed", String(!!prefs.aux[b.dataset.x])));
     $("#rate").value = $("#wrate").value = String(prefs.rate);
     $("#shGap").value = String(prefs.sh.gap); $("#shRep").value = String(prefs.sh.rep);
-    $("#dict").hidden = !dictOn; $("#disp").hidden = dictOn; $("#legend").hidden = dictOn;
+    $("#dict").hidden = !dictOn; $("#disp").hidden = dictOn; $("#legend").hidden = dictOn; $("#dispNote").hidden = dictOn;
     $("#stSel").value = r.status;
     $("#stInfo").textContent = infoText(r);
     renderDisp(r); renderAux(r);
   }
 
+  // 表示の見方の、1行の説明(何を基準に区切っているか)
+  const DISP_NOTE = {
+    full: "英文を、そのまま表示します。",
+    slash: "【意味】意味のまとまりで区切り、各区切りに日本語訳を付けています。前から順に意味を取る練習用です(スラッシュリーディング)。",
+    phrases: "【文法】文法の単位(主語+動詞・前置詞句・関係詞節など)で区切り、各区切りに形の名前を付けています。文の組み立てを確かめる用です。",
+    pos: "【品詞】語ごとの品詞を、色と下線で表しています。",
+    iu: "【音】息継ぎの切れ目(一息で読む単位。イントネーション・ユニット)で区切っています。シャドーイングは、この区切りで進みます。",
+    links: "【音】くっついて聞こえやすい語のまとまりを示しています。聞き取りの練習用です。"
+  };
   function renderDisp(r, now = -1) {
     const d = prefs.disp; let h = "", legend = "";
     const hl = i => (i === now ? " now" : "");
@@ -325,6 +334,7 @@
       h = `<span class="seg-i" data-c="0">${esc(r.text)}</span>`;
       if (d !== "full") h += `<div class="sub">この英文には、この表示のデータがありません。</div>`;
     }
+    $("#dispNote").textContent = DISP_NOTE[d] || "";
     $("#disp").innerHTML = h; $("#legend").innerHTML = legend;
   }
 

@@ -215,16 +215,18 @@
     <div id="studyBox" hidden>
       <div class="bar card">
         <div class="seg" id="segDisp" role="group" aria-label="英文表示">
-          <button data-d="full" title="1">全文</button>
-          <button data-d="slash" title="2">スラッシュ</button>
-          <button data-d="phrases" title="3">区切りの形</button>
-          <button data-d="pos" title="4">品詞の色</button>
-          <button data-d="iu" title="5">IU</button>
-          <button data-d="links" title="6">つながり</button>
+          <span class="grp-l">読む</span>
+          <button data-d="full" title="全文をそのまま表示(1)">全文</button>
+          <button data-d="slash" title="意味のまとまりで区切り、日本語訳を付ける(2)">意味で区切る</button>
+          <button data-d="phrases" title="文法の単位で区切り、形の名前を付ける(3)">文法で区切る</button>
+          <button data-d="pos" title="語ごとの品詞を、色で表す(4)">品詞の色</button>
+          <span class="grp-l">聞く</span>
+          <button data-d="iu" title="一息で読む単位(音の切れ目)で区切る(5)">音で区切る</button>
+          <button data-d="links" title="くっついて聞こえる語のまとまりを示す(6)">つながり</button>
         </div>
         <div class="seg" id="segAudio" role="group" aria-label="音声">
           <button data-a="once" title="スペース">▶ 1回聞く</button>
-          <button data-a="chunks" title="C">▶ 区切りごと</button>
+          <button data-a="chunks" title="文法の区切り(なければ意味の区切り)を、1区切りずつ読む(C)">▶ 区切りごと</button>
           <button data-a="shadow" title="R">🗣 シャドーイング</button>
           <button data-a="links" title="L">🔗 つながりを聞く</button>
           <button data-a="dict" title="D">✍ 聞き取り</button>
@@ -256,6 +258,7 @@
           <span id="pos" class="sub"></span>
           <button id="btnNext" aria-label="次へ">→</button>
         </div>
+        <div id="dispNote" class="dispnote"></div>
         <div id="disp"></div>
         <div id="pstatus" class="pstatus" hidden></div>
         <div id="dict" class="dict" hidden>

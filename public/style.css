@@ -126,3 +126,6 @@ code{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding
 .gapbox{font-size:19px;line-height:2.4;margin:8px 0}
 .gapin{font:inherit;font-size:17px;border:0;border-bottom:2px solid var(--pc-adv);background:var(--bg);padding:0 4px;border-radius:4px 4px 0 0}
 .gapres{margin:4px 0;font-size:17px}
+.grp-l{font-size:12px;color:var(--sub);align-self:center;margin:0 2px 0 6px}
+.grp-l:first-child{margin-left:0}
+.dispnote{font-size:13px;color:var(--sub);margin:2px 0 6px;line-height:1.5}
