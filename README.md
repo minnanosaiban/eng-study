@@ -14,22 +14,45 @@ TOEIC 対策の英語学習アプリ。英文・意味句・イントネーシ�
 - 単語: 英文の「単語・熟語」から取り出す(意味・発音記号・頻出度・難易度・グループ・例文を引き継ぐ)/ 貼り付け(`単語,意味`)/ .json。学習対象選択で、英文と単語を切り替え、同じ形で選べる。単語の学習は、発音記号・意味(隠して、見ると復習1回)・例文・TOEIC、読み上げ(単語・例文)
 - 意味句・IU: 英文から取り出す(意味句は和訳つき。どちらも発音記号つき。難易度・グループは英文のものを引き継ぐ)。選択では、語数(1〜2 / 3〜5 / 6以上)と文中の位置(文頭・文中・文末)で絞り込める。学習は、区切りを大きく出し、文の中で見る・文の和訳・読み上げ(区切り・文)。意味句は、和訳を隠して、見ると復習1回。IU は、声に出して練習したら「練習した」で復習1回
 - AI で解析: 「登録」の「解析する」で、解析が足りない英文に、和訳・意味句・区切りの形・品詞・IU・単語(発音記号つき)・文法・TOEIC の観点・4択をまとめて付ける。方法は2つ: **Gemini API**(1文ずつ自動。API キーが必要。止められる。エラーで中断)/ **コピペモード**(API キー不要。プロンプトを Gemini に貼り、返事を貼り戻す。5文ずつ)。返事は、原文と一致するかなどの検査を通ったものだけを入れる(通らない部分だけ見送り、ほかは入れる)。入れた英文は「未確認」、単語・意味句・IU の表にも自動で入る。API キーは、この端末の IndexedDB だけに保存し、バックアップに入れない
+- クラウド同期(暗号化): 「同期」タブで、パスフレーズから鍵を作り(PBKDF2 60万回)、英文・単語・意味句・IU を AES-GCM で暗号化してから Cloudflare D1 に保存する。サーバーは中身を読めない。2台目は、同期キー(または QR コード)とパスフレーズで接続。変更は数秒後に自動で同期。同じ英文・単語・区切りが両方にあれば1つにまとめる。暗号鍵は、取り出せない形で、この端末の IndexedDB に置く
+- 受信箱: 「同期 → 受信箱」で、書き込み専用の合言葉を発行すると、Claude Code などが `tools/inbox-send.mjs` で内容を預けられる(公開鍵で暗号化。復号できるのは、パスフレーズを知る端末だけ)。同期のときに受け取って登録する。状態・復習回数は、外から設定できない。使い方は `CLAUDE.md`
 - 保存: IndexedDB(英文・単語・意味句とIUの表)
 
-まだ無いもの: 単語の4択、受信箱、クラウド同期、シャドーイング・聞き取り、記録と復習の集計。
+まだ無いもの: 単語の4択、シャドーイング・聞き取り、記録と復習の集計。
 
-試すには、`public/` を、静的サーバーで開きます(例: `python -m http.server -d public`)。Gemini API は、ブラウザから直接呼びます(キーは、この端末の中だけ)。
+試すには、`public/` を、静的サーバーで開きます(例: `python -m http.server -d public`)。同期・受信箱も試すときは、下の「同期のローカル実行」を使います。Gemini API は、ブラウザから直接呼びます(キーは、この端末の中だけ)。
 
 ## フォルダ
 
 ```
 docs/         設計メモ
-public/       アプリ本体(index.html、style.css、js/、samples/)
-src/          同期 API(Worker)(まだ空)
-migrations/   D1 のテーブル定義(まだ空)
-tools/        受信箱などの道具(まだ空)
+public/       アプリ本体(index.html、style.css、js/、vendor/、samples/)
+src/          同期 API・受信箱(Cloudflare Worker。暗号文の保存・取得だけ)
+migrations/   D1 のテーブル定義(0001 同期、0002 受信箱)
+tools/        inbox-send.mjs(受信箱へ預ける)
 ```
+
+## 同期のローカル実行
+
+```bash
+npx wrangler d1 migrations apply eng-study-db --local
+```
+
+```bash
+npx wrangler dev --var SETUP_CODE:localtest
+```
+
+## 公開(Cloudflare)
+
+1. `npx wrangler d1 create eng-study-db` で D1 を作り、表示された `database_id` を `wrangler.jsonc` に書く
+2. `npx wrangler d1 migrations apply eng-study-db --remote`
+3. `npx wrangler secret put SETUP_CODE`(保管庫を作るときのセットアップコード)
+4. `npx wrangler deploy`
 
 ## ライセンス
 
 [MIT License](LICENSE)
+
+## 外部素材
+
+- QR コード: [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator)(MIT、Kazuhiko Arase。`public/vendor/qrcode.js` に同梱)

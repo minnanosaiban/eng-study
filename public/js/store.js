@@ -33,11 +33,14 @@ const Store = (() => {
   }
   const req = r => new Promise((res, rej) => { r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error) });
 
+  const hook = { onChange: null }; // 同期が、変更を知るための入り口
+  const changed = r => { try { hook.onChange && hook.onChange() } catch {} return r };
   return {
+    get onChange() { return hook.onChange }, set onChange(f) { hook.onChange = f },
     // kind: "sentences"(英文)/ "words"(単語)/ "chunks"(意味句・IU)
     all: (kind = "sentences") => tx(kind, "readonly", s => req(s.getAll())),
-    put: (rows, kind = "sentences") => tx(kind, "readwrite", s => { (Array.isArray(rows) ? rows : [rows]).forEach(r => s.put(r)); }),
-    del: (ids, kind = "sentences") => tx(kind, "readwrite", s => { ids.forEach(id => s.delete(id)); }),
+    put: (rows, kind = "sentences") => tx(kind, "readwrite", s => { (Array.isArray(rows) ? rows : [rows]).forEach(r => s.put(r)); }).then(changed),
+    del: (ids, kind = "sentences") => tx(kind, "readwrite", s => { ids.forEach(id => s.delete(id)); }).then(changed),
     getMeta: async (key, dflt) => { const r = await tx("meta", "readonly", s => req(s.get(key))); return r ? r.value : dflt },
     setMeta: (key, value) => tx("meta", "readwrite", s => { s.put({ key, value }); })
   };

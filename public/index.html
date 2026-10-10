@@ -12,8 +12,10 @@
   <nav id="tabs" role="tablist">
     <button role="tab" data-tab="reg" aria-selected="true">登録</button>
     <button role="tab" data-tab="pick" aria-selected="false">学習対象選択</button>
-    <button role="tab" data-tab="study" aria-selected="false">英文学習</button>
+    <button role="tab" data-tab="study" aria-selected="false">学習</button>
+    <button role="tab" data-tab="sync" aria-selected="false">同期</button>
   </nav>
+  <span id="syncStatus" class="sub" hidden></span>
 </header>
 
 <main>
@@ -78,6 +80,14 @@
       </div>
     </div>
     <p class="sub">登録の経路のうち、Gemini API・コピペモード・受信箱は、これから作ります。</p>
+  </section>
+
+  <!-- 同期・受信箱 -->
+  <section id="tab-sync" class="tab" hidden>
+    <div class="card">
+      <h2>クラウド同期(暗号化)</h2>
+      <div id="syncBox"></div>
+    </div>
   </section>
 
   <!-- 学習対象選択 -->
@@ -215,6 +225,8 @@
 <script src="js/clean.js"></script>
 <script src="js/store.js"></script>
 <script src="js/ai.js"></script>
+<script src="vendor/qrcode.js"></script>
+<script src="js/sync.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

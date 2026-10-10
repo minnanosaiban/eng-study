@@ -65,15 +65,17 @@
   }
 
   // ファイルの中身 → { sentences, words, chunks }(groups は名前にそろえる)
+  // バックアップ・解析済み JSON・受信箱の中身 → { sentences, words, chunks }。試作の形 {groups, items, words}(gids)も読む
+  function normPayload(d) {
+    if (!d || typeof d !== "object") throw new Error("JSON の形が違います");
+    const gname = Object.create(null);
+    for (const g of Array.isArray(d.groups) ? d.groups : []) if (g && typeof g.name === "string") gname[g.id] = g.name;
+    const fix = i => ({ ...i, groups: Array.isArray(i.groups) ? i.groups : (Array.isArray(i.gids) ? i.gids.map(g => gname[g]).filter(Boolean) : []) });
+    const items = Array.isArray(d) ? d : Array.isArray(d.sentences) ? d.sentences : Array.isArray(d.items) ? d.items : [];
+    return { sentences: items.map(fix), words: (Array.isArray(d.words) ? d.words : []).map(fix), chunks: (Array.isArray(d.chunks) ? d.chunks : []).map(fix) };
+  }
   function parseFile(name, text) {
-    if (/\.json$/i.test(name)) {
-      const d = JSON.parse(text);
-      const gname = Object.create(null);
-      for (const g of Array.isArray(d.groups) ? d.groups : []) if (g && typeof g.name === "string") gname[g.id] = g.name;
-      const fix = i => ({ ...i, groups: Array.isArray(i.groups) ? i.groups : (Array.isArray(i.gids) ? i.gids.map(g => gname[g]).filter(Boolean) : []) });
-      const items = Array.isArray(d) ? d : Array.isArray(d.sentences) ? d.sentences : Array.isArray(d.items) ? d.items : [];
-      return { sentences: items.map(fix), words: (Array.isArray(d.words) ? d.words : []).map(fix), chunks: (Array.isArray(d.chunks) ? d.chunks : []).map(fix) };
-    }
+    if (/\.json$/i.test(name)) return normPayload(JSON.parse(text));
     if (/\.csv$/i.test(name)) {
       return {
         sentences: text.split(/\r?\n/).map(l => l.trim()).filter(Boolean).map(l => {
@@ -84,6 +86,12 @@
       };
     }
     return { sentences: text.split(/\r?\n/).map(l => l.trim()).filter(Boolean).map(t => ({ text: t })), words: [] };
+  }
+
+  // 同期・受信箱から届いた中身を取り込む。外から来るので、状態(学習中・復習回数など)は取り込まない(検査は Clean が行う)
+  async function importPayload(d) {
+    const p = normPayload(d), a = await importSentences(p.sentences), b = await importWords(p.words), c = await importChunks(p.chunks);
+    return { n: a.n, m: b.n, c: c.n, u: a.u + b.u + c.u };
   }
 
   async function addFrom(data, label, opts) {
@@ -103,6 +111,7 @@
     document.querySelectorAll(".tab").forEach(s => { s.hidden = s.id !== "tab-" + t });
     if (t === "pick") renderPick();
     if (t === "study") renderStudy();
+    if (t === "sync") Sync.render();
     window.scrollTo(0, 0);
   }
   $("#tabs").onclick = e => { const b = e.target.closest("button[data-tab]"); if (b) setTab(b.dataset.tab) };
@@ -508,5 +517,14 @@
       }
     } catch (e) { toast("保存先(IndexedDB)を開けませんでした: " + e.message) }
     renderAll();
+    // クラウド同期(あれば、起動時に1回同期する)
+    const byId = (a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+    await Sync.init({
+      table: k => (k === "word" ? words : k === "chunk" ? chunks : rows),
+      sortAll: () => { rows.sort(byId); words.sort(byId); chunks.sort(byId) }, // id は作った順に並ぶ
+      refresh: () => { study.ids = study.ids.filter(id => tbl(study.unit).some(r => r.id === id)); if (study.i >= study.ids.length) study.i = 0; renderAll() },
+      importPayload, toast
+    });
+    if (Sync.wantsJoin) setTab("sync");
   })();
 })();

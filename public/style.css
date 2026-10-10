@@ -93,3 +93,7 @@ dialog textarea{margin-top:8px}
 .aiset{display:flex;flex-direction:column;gap:8px;margin-top:8px}
 .aiset input[type=password],.aiset input[type=text]{width:100%}
 summary{cursor:pointer;color:var(--sub);margin-top:8px}
+.sect{margin-top:14px;padding-top:10px;border-top:1px solid var(--line)}
+.sect h3{font-size:14px;margin:0 0 4px}
+#syncStatus{margin-left:auto}
+code{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:0 4px;font-size:.9em}
