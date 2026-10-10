@@ -73,6 +73,12 @@
       </div>
     </div>
     <div class="card">
+      <h2>発音記号を付ける</h2>
+      <p id="ipaInfo" class="sub"></p>
+      <p class="sub">発音辞書(CMU Pronouncing Dictionary、アメリカ英語)から、発音記号が無い単語・意味句・IU に付けます。AI を使わず、API キーも要りません。語ごとの発音をつないだもので、辞書に無い語(数字・固有名詞など)を含む区切りには付きません。辞書(約0.8MB)は、必要なときに1回だけ読み込みます。</p>
+      <button id="btnIpa" class="pri">発音記号を辞書から付ける</button>
+    </div>
+    <div class="card">
       <h2>登録済み</h2>
       <p id="regInfo" class="sub"></p>
       <div class="row">
@@ -283,6 +289,7 @@
 
 <script src="js/clean.js"></script>
 <script src="js/store.js"></script>
+<script src="js/pron.js"></script>
 <script src="js/practice.js"></script>
 <script src="js/stats.js"></script>
 <script src="js/wordquiz.js"></script>

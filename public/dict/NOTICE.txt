@@ -1,0 +1,8 @@
+発音辞書について
+
+cmudict-ipa.txt は、CMU Pronouncing Dictionary(Carnegie Mellon University が作った、アメリカ英語の発音辞書)から作りました。
+辞書の音は ARPAbet という記号で書かれているので、IPA に直し、強勢の印(ˈ ˌ)を音節の頭に置いています(tools/build-pron.mjs)。
+辞書は、npm の cmu-pronouncing-dictionary(ISC License)から取り出しています。
+
+元の辞書: http://www.speech.cs.cmu.edu/cgi-bin/cmudict
+辞書の著作権・使用条件は、元の辞書の配布元の表示に従います。

@@ -4,3 +4,4 @@ node_modules/
 .dev.vars
 setup-code.txt
 tools/inbox.json
+tools/pron-exclude.txt

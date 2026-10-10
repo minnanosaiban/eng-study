@@ -100,6 +100,7 @@
     const msg = [];
     if (a.n || a.u) msg.push(`英文 ${a.n} 文を追加${a.u ? `、${a.u} 文に足りない項目を追加` : ""}`);
     if (b.n || b.u) msg.push(`単語 ${b.n} 語を追加${b.u ? `、${b.u} 語に足りない項目を追加` : ""}`);
+    if (b.n || c.n) { const l = lackIpa(); if (l.w + l.c) { const r = await fillIpa(); if (r && (r.w || r.c)) { msg.push(`発音記号 ${r.w + r.c} 個を辞書から付与`); renderAll() } } }
     if (c.n || c.u) msg.push(`意味句・IU ${c.n} 個を追加${c.u ? `、${c.u} 個に足りない項目を追加` : ""}`);
     toast(`${label}: ${msg.join(" / ") || "追加するものはありませんでした"}`);
   }
@@ -587,6 +588,35 @@
   $("#recWordMis").onclick = e => { if (e.target.closest("#wmGo")) startSet("word", Stats.mistaken(words, weakDays || null).map(w => w.id)) };
   $("#rvMis").onclick = () => startSet("sentence", Stats.mistaken(rows, weakDays || null).map(r => r.id));
 
+  // ---------- 発音記号(辞書から) ----------
+  const lackIpa = () => ({
+    w: words.filter(x => !x.ipa).length, c: chunks.filter(x => !x.ipa).length,
+    s: rows.filter(r => (r.slash || []).some(x => !x.ipa) || (r.iu || []).some(x => !x.ipa) || (r.vocab || []).some(x => !x.ipa)).length
+  });
+  function renderIpa() {
+    const l = lackIpa(), n = l.w + l.c;
+    $("#ipaInfo").textContent = (words.length || chunks.length) ? (n || l.s ? `発音記号が無い: 単語 ${l.w} 語 ・ 意味句とIU ${l.c} 個${l.s ? ` ・ 英文の中の区切りや単語 ${l.s} 文` : ""}` : "すべてに、発音記号があります。") : "単語・意味句・IU を登録すると、ここから付けられます。";
+    $("#btnIpa").disabled = !(n || l.s);
+  }
+  // 発音記号が無いものに、辞書から付ける(すでにあるものは、そのまま)。付けた数を返す。辞書を読み込めなければ null
+  async function fillIpa() {
+    if (!await Pron.load()) return null;
+    const out = { s: 0, w: 0, c: 0 }, rs = [], ws = [], cs = [];
+    for (const r of rows) if (Pron.fillSentence(r)) { out.s++; rs.push(r) }
+    for (const w of words) if (!w.ipa) { const p = Pron.vocab(w.text); if (p) { w.ipa = p; ws.push(w) } }
+    for (const c of chunks) if (!c.ipa) { const p = Pron.chunk(c.text); if (p) { c.ipa = p; cs.push(c) } }
+    out.w = ws.length; out.c = cs.length;
+    if (rs.length) await Store.put(rs, "sentences"); if (ws.length) await Store.put(ws, "words"); if (cs.length) await Store.put(cs, "chunks");
+    return out;
+  }
+  $("#btnIpa").onclick = async e => {
+    const b = e.currentTarget; b.disabled = true; b.textContent = "辞書を読み込み中…";
+    try {
+      const r = await fillIpa();
+      toast(r ? `発音記号を付けました: 単語 ${r.w} 語 ・ 意味句とIU ${r.c} 個 ・ 英文 ${r.s} 文` : "辞書を読み込めませんでした(通信できない可能性)");
+    } finally { b.textContent = "発音記号を辞書から付ける"; renderAll() }
+  };
+
   // ---------- AI で解析(Gemini API / コピペモード) ----------
   // 足りない解析がある英文
   const needsAI = r => !r.ja || !r.slash || !r.phrases || !r.words || !r.iu || !(r.vocab && r.vocab.length) || !r.quiz;
@@ -610,8 +640,9 @@
     if (!res || typeof res !== "object" || Array.isArray(res)) return false;
     const add = Clean.sentence({ text: row.text, level: res.difficulty, quiz: res.quiz, analysis: res });
     if (!add) return false;
-    const had = !!row.ja, c = Clean.fill(row, add);
+    const had = !!row.ja, hadVocab = !!(row.vocab && row.vocab.length), c = Clean.fill(row, add);
     if (c) {
+      if (await Pron.load()) Pron.fillSentence(row, { override: !hadVocab }); // 発音記号は、AI ではなく、辞書から(辞書に無い語は、AI のものを残す)
       if (!had && row.ja) row.verified = false; // AI の解析は「未確認」
       await Store.put(row, "sentences");
       await importWords(Clean.wordsOf(row)); await importChunks(Clean.chunksOf(row)); // 単語・意味句・IU の表にも入れる
@@ -653,7 +684,7 @@
   $("#btnAI").onclick = runAI;
   $("#btnAIStop").onclick = () => { aiStop = true };
 
-  function renderAll() { if (tab === "rec") renderRec(); renderReg(); renderAI(); if (tab === "pick") renderPick(); if (tab === "study") renderStudy() }
+  function renderAll() { if (tab === "rec") renderRec(); renderReg(); renderAI(); renderIpa(); if (tab === "pick") renderPick(); if (tab === "study") renderStudy() }
 
   // ---------- 起動 ----------
   (async () => {
