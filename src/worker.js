@@ -131,8 +131,11 @@ async function pull(url, env, v) {
   const { results } = await env.DB.prepare(
     "SELECT kind, id, iv, data, deleted, seq FROM records WHERE vault = ? AND seq > ? ORDER BY seq LIMIT ?"
   ).bind(v.id, since, PAGE + 1).all();
-  const more = results.length > PAGE;
-  return json({ records: results.slice(0, PAGE), more });
+  // 1回の送信(push)で送られた行は、同じ seq を持つ。ページの区切りが、その途中に来ると、続きの行を、次の取得(seq > since)で飛ばしてしまう。
+  // そこで、区切りの先頭の行と同じ seq の行は、このページに入れず、次のページに回す(1回の送信は 200 行までで、ページ(300行)より小さい)
+  if (results.length <= PAGE) return json({ records: results, more: false });
+  const cut = results[PAGE].seq;
+  return json({ records: results.filter((r) => r.seq < cut), more: true });
 }
 
 async function push(request, env, v) {

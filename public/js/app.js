@@ -212,6 +212,8 @@
   function pickInfo(shown) {
     $("#pickInfo").textContent = `表示 ${shown ?? filtered().length} 件 / 全 ${tbl(unit).length} 件 ・ 選択中 ${sel[unit].size} 件`;
     $("#btnStart").disabled = sel[unit].size === 0;
+    $("#btnDelSel").disabled = sel[unit].size === 0;
+    $("#btnDelSel").textContent = sel[unit].size ? `選んだ ${sel[unit].size} 件を削除` : "選んだものを削除";
   }
   $("#segUnit").onclick = e => { const b = e.target.closest("button[data-u]"); if (b) { unit = b.dataset.u; renderPick() } };
   $("#pickList").onchange = e => { const c = e.target.closest("input[data-id]"); if (!c) return; c.checked ? sel[unit].add(c.dataset.id) : sel[unit].delete(c.dataset.id); pickInfo() };
@@ -223,6 +225,39 @@
     for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]] }
     sel[unit] = new Set(pool.slice(0, n)); renderPick(); toast(`${sel[unit].size} 件を選びました`);
   };
+  // ---------- 削除 ----------
+  // 英文を消すと、その英文から作った意味句・IU も消す(単語は、ほかの英文でも使うので、残す)。同期している端末からも消える
+  async function deleteItems(u, ids) {
+    const set = new Set(ids); let cids = [];
+    if (u === "sentence") {
+      const texts = new Set(rows.filter(r => set.has(r.id)).map(r => r.text.toLowerCase()));
+      cids = chunks.filter(c => texts.has(c.ex.toLowerCase())).map(c => c.id);
+      rows = rows.filter(r => !set.has(r.id)); await Store.del(ids, "sentences");
+    } else if (u === "word") { words = words.filter(w => !set.has(w.id)); await Store.del(ids, "words") }
+    else cids = ids;
+    if (cids.length) { const cs = new Set(cids); chunks = chunks.filter(c => !cs.has(c.id)); await Store.del(cids, "chunks") }
+    for (const k of Object.keys(sel)) for (const id of [...ids, ...cids]) sel[k].delete(id);
+    study.ids = study.ids.filter(id => !set.has(id) && !cids.includes(id)); if (study.i >= study.ids.length) study.i = Math.max(0, study.ids.length - 1);
+    wq = null; wReveal = false; dictOn = false; stopAudio(); await saveStudy(); renderAll();
+    return cids.length;
+  }
+  // 確認してから削除。何を消すかを、はっきり見せる
+  async function confirmDelete(u, ids) {
+    if (!ids.length) return;
+    let msg = ids.length + " 件の" + UN[u].name + "を削除します。";
+    if (u === "sentence") {
+      const texts = new Set(rows.filter(r => ids.includes(r.id)).map(r => r.text.toLowerCase())), n = chunks.filter(c => texts.has(c.ex.toLowerCase())).length;
+      msg += "\nこの英文から作った意味句・IU(" + n + " 個)も、いっしょに削除します。単語は残ります。";
+    }
+    msg += "\n同期している場合は、ほかの端末からも消えます。元に戻せません。よろしいですか?";
+    if (!confirm(msg)) return;
+    const extra = await deleteItems(u, ids);
+    toast(ids.length + " 件の" + UN[u].name + "を削除しました" + (extra && u === "sentence" ? "(意味句・IU " + extra + " 個も)" : ""));
+  }
+  $("#btnDelSel").onclick = () => confirmDelete(unit, tbl(unit).filter(r => sel[unit].has(r.id)).map(r => r.id));
+  $("#btnDelCur").onclick = () => { const r = cur(); if (r) confirmDelete(study.unit, [r.id]) };
+  $("#wDel").onclick = () => { const r = cur(); if (r) confirmDelete(study.unit, [r.id]) };
+
   $("#btnStart").onclick = async () => {
     // 表の並び順のまま、選んだものを学習セットにする
     study = { unit, ids: tbl(unit).filter(r => sel[unit].has(r.id)).map(r => r.id), i: 0 };

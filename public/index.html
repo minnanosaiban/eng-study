@@ -173,6 +173,7 @@
       <p id="pickInfo" class="sub"></p>
       <div class="row">
         <button id="btnStart" class="pri">この英文で学習を始める</button>
+        <button id="btnDelSel" class="danger">選んだものを削除</button>
       </div>
     </div>
     <div id="pickList" class="list"></div>
@@ -205,6 +206,7 @@
             <select id="wStSel"><option value="new">未学習</option><option value="learning">学習中</option><option value="mastered">覚えた</option></select>
           </label>
           <button id="wDone" class="sm" hidden>✓ 練習した(復習+1)</button>
+          <button id="wDel" class="sm danger">🗑 削除</button>
           <span id="wStInfo" class="sub"></span>
         </div>
       </article>
@@ -267,6 +269,7 @@
           <label class="inl">状態
             <select id="stSel"><option value="new">未学習</option><option value="learning">学習中</option><option value="mastered">覚えた</option></select>
           </label>
+          <button id="btnDelCur" class="sm danger">🗑 この英文を削除</button>
           <span id="stInfo" class="sub"></span>
         </div>
       </article>

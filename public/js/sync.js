@@ -60,6 +60,7 @@ const Sync = (() => {
       if (idx >= 0 && !dirty) { arr.splice(idx, 1); await Store.del([rec.id], kd.store) }
       delete st.hashes[kk]; return true;
     }
+    if (idx < 0 && st.hashes[kk]) return false; // 前回までに同期した行が、手元に無い = この端末で消した。次の送信で「消した」と伝えるので、戻さない
     const o = await decrypt(rec.iv, rec.data, st.key);
     if (!o || typeof o !== "object" || typeof o.text !== "string") return false;
     o.id = rec.id;
