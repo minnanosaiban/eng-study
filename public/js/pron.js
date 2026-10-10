@@ -61,5 +61,36 @@ const Pron = (() => {
     return c;
   }
 
-  return { load, chunk, vocab, fillSentence, get ready() { return !!dict } };
+  // ---------- つながり(音がつながって聞こえる所) ----------
+  // 規則で作れるものだけ: (1) 連結 = 子音で終わる語に、母音で始まる語が続く(copies of → ˈkɑpiz‿əv)
+  //                       (2) 弱い語のくっつき = of・to・the などの弱く読まれる語が、次の語にくっつく(to the interview)
+  // 脱落(t が消える)・はじき音(t が d のように聞こえる)・want to → wanna などは、表せない。
+  const V = "ɑæʌɔəɛɚɝɪʊiueoa";                       // 母音(二重母音の頭・終わりを含む)
+  const startsVowel = ip => !!ip && V.includes(ip.replace(/^[ˈˌ]+/, "").charAt(0));
+  const endsVowel = ip => !!ip && V.includes(ip.charAt(ip.length - 1));
+  const MAX_GROUP = 4;
+
+  // 英文を、音のまとまり(つながる語の並び)に分ける。全部の語を、前から順に覆う。
+  // 返すもの: [{ t: 英語, n: 語数, ipa: 発音記号(つながる所は ‿)。辞書に無い語があれば ""、linked: 2語以上か }]
+  function links(text) {
+    const raw = String(text).split(/\s+/).filter(Boolean);
+    const w = raw.map(r => {
+      const s = r.replace(/^[("'“‘$]+|[.,;:?!)"”’]+$/g, "");
+      return { r, s, ip: s ? tok(s, true) || "" : "", brk: /[.,;:?!)"”]$/.test(r), weak: !!s && !!WEAK[s.toLowerCase()] && s !== s.toUpperCase() };
+    });
+    const linkable = (a, b) => !a.brk && a.ip && b.ip && endsVowel(a.ip) === false && startsVowel(b.ip); // 連結
+    const out = [];
+    for (let i = 0; i < w.length;) {
+      let j = i;
+      while (j + 1 < w.length && j - i + 1 < MAX_GROUP && !w[j].brk && w[j].ip && w[j + 1].ip && (linkable(w[j], w[j + 1]) || w[j].weak)) j++;
+      const g = w.slice(i, j + 1);
+      let ipa = "";
+      if (g.every(x => x.ip)) ipa = g.map((x, k) => (k ? (linkable(g[k - 1], x) ? "‿" : " ") : "") + x.ip).join("");
+      out.push({ t: g.map(x => x.r).join(" "), n: g.length, ipa, linked: g.length > 1 });
+      i = j + 1;
+    }
+    return out;
+  }
+
+  return { load, chunk, vocab, fillSentence, links, get ready() { return !!dict } };
 })();

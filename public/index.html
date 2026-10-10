@@ -220,11 +220,13 @@
           <button data-d="phrases" title="3">区切りの形</button>
           <button data-d="pos" title="4">品詞の色</button>
           <button data-d="iu" title="5">IU</button>
+          <button data-d="links" title="6">つながり</button>
         </div>
         <div class="seg" id="segAudio" role="group" aria-label="音声">
           <button data-a="once" title="スペース">▶ 1回聞く</button>
           <button data-a="chunks" title="C">▶ 区切りごと</button>
           <button data-a="shadow" title="R">🗣 シャドーイング</button>
+          <button data-a="links" title="L">🔗 つながりを聞く</button>
           <button data-a="dict" title="D">✍ 聞き取り</button>
           <button id="btnStop" title="S">■</button>
         </div>
@@ -259,6 +261,8 @@
         <div id="dict" class="dict" hidden>
           <div class="sub">英文を隠しています。聞いて、聞こえた英文を書いてください。</div>
           <div class="row wrap"><button id="dPlay" class="pri">▶ 聞く</button><button id="dSlow">▶ ゆっくり聞く</button><button id="dEnd">やめる</button></div>
+          <label class="inl"><input type="checkbox" id="dGap"> つながり部分だけ空欄にする(穴あき)</label>
+          <div id="dGapBox" class="gapbox" hidden></div>
           <textarea id="dIn" rows="3" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="聞こえた英文を、ここに書く"></textarea>
           <div class="row"><button id="dCheck" class="pri">答え合わせ</button></div>
           <div id="dRes"></div>
@@ -273,7 +277,7 @@
           <span id="stInfo" class="sub"></span>
         </div>
       </article>
-      <p class="sub keys">ショートカット: ← → 前後 / スペース 1回聞く / C 区切りごと / R シャドーイング / D 聞き取り / S 止める / 1〜5 表示 / I J G V T Q K 補助</p>
+      <p class="sub keys">ショートカット: ← → 前後 / スペース 1回聞く / C 区切りごと / R シャドーイング / D 聞き取り / S 止める / 1〜6 表示 / L つながりを聞く / I J G V T Q K 補助</p>
     </div>
   </section>
 </main>

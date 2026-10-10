@@ -1,4 +1,4 @@
-// 画面の動き。登録 → 学習対象選択 → 学習。学習の単位は、英文と単語(意味句・IU は、あとで足す)
+// 画面の動き。登録 → 学習対象選択 → 学習。学習の単位は、英文・意味句・IU・単語
 (() => {
   const $ = s => document.querySelector(s);
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -310,7 +310,15 @@
     if (d === "slash" && r.slash) h = r.slash.map((s, i) => `<span class="sl"><span class="seg-i${hl(i)}" data-c="${i}">${esc(s.en)}</span>${prefs.aux.ja ? `<span class="ja">${esc(s.ja)}</span>` : ""}</span>`).join("");
     else if (d === "phrases" && r.phrases) h = r.phrases.map((p, i) => `<span class="ph"><span class="no">${NUM[i] || i + 1}</span><span class="seg-i cl-${phClass(p.f)}${hl(i)}" data-c="${i}">${esc(p.t)}</span> <span class="lab">${esc(p.f)}</span></span>`).join("");
     else if (d === "iu" && r.iu) h = r.iu.map((x, i) => `<span class="ph"><span class="no">${NUM[i] || i + 1}</span><span class="seg-i cl-v${hl(i)}" data-c="${i}">${esc(x.t)}</span>${prefs.aux.ipa && x.ipa ? ` <span class="ipa">/${esc(x.ipa)}/</span>` : ""}</span>`).join("");
-    else if (d === "pos" && r.words) {
+    else if (d === "links") {
+      if (!Pron.ready) { h = esc(r.text) + '<div class="sub">発音辞書を読み込み中…</div>'; Pron.load().then(ok => { if (ok && prefs.disp === "links" && cur() === r) renderStudy() }) }
+      else {
+        h = Pron.links(r.text).map((g, i) => g.linked
+          ? `<span class="lk${hl(i)}" data-c="${i}">${esc(g.t)}${g.ipa ? `<span class="lk-ipa ipa">/${esc(g.ipa)}/</span>` : ""}</span>`
+          : `<span class="lk-s${hl(i)}">${esc(g.t)}</span>`).join("");
+        legend = '<span>下線の所 = つながって聞こえやすい語のまとまり(発音記号の ‿ は、つながる所)</span><span>規則で作れるもの(連結・弱い語のくっつき)だけです。脱落・はじき音などは表せません</span>';
+      }
+    } else if (d === "pos" && r.words) {
       h = r.words.map(w => `<span class="w w-${w.p}">${esc(w.w)}</span>`).join("");
       legend = LEG.map(([k, n]) => `<span><i style="background:var(--pc-${k})"></i>${n}</span>`).join("");
     } else {
@@ -497,6 +505,7 @@
     }
     if (mode === "dict") { dictOn ? dictEnd() : dictStart(); return }
     if (mode === "shadow") return shadow(r, me);
+    if (mode === "links") return playLinks(r, me);
     if (mode === "ex") { if (r.ex) await say(r.ex); else toast("例文がありません"); return }
     if (mode === "once") { await say(r.text); return }
     const ch = chunksOf(r);
@@ -523,10 +532,56 @@
     if (me === playing) { pst(null); renderDisp(r); await countReview(r, "sentences"); renderStudy(); toast("シャドーイングが終わりました(復習+1)") }
   }
 
+  // つながりを聞く: つながって聞こえる所(2語以上のまとまり)を、ゆっくり → ふつうの速さの順に、聞き比べる
+  async function playLinks(r, me) {
+    if (!await Pron.load()) return toast("発音辞書を読み込めませんでした(通信できない可能性)");
+    if (me !== playing) return;
+    if (prefs.disp !== "links") { prefs.disp = "links"; savePrefs(); renderStudy() }
+    const gs = Pron.links(r.text), n = gs.filter(g => g.linked).length;
+    if (!n) return toast("この英文には、つながりの所が、ありません");
+    for (let i = 0; i < gs.length; i++) {
+      if (!gs[i].linked) continue;
+      if (me !== playing) return;
+      renderDisp(r, i); pst("つながり: " + gs[i].t + "(ゆっくり → ふつう)");
+      await say(gs[i].t, Math.min(prefs.rate, 0.7)); if (me !== playing) return; await sleep(350, me);
+      if (me !== playing) return; await say(gs[i].t, prefs.rate); if (me !== playing) return; await sleep(600, me);
+    }
+    if (me === playing) { pst(null); renderDisp(r) }
+  }
+
+  // 聞き取り(穴あき): つながり部分だけを空欄にして、聞こえた語を書く
+  let dictGroups = null;
+  async function dictGapOn() {
+    const r = cur(); if (!r) return false;
+    if (!await Pron.load()) { toast("発音辞書を読み込めませんでした(通信できない可能性)"); return false }
+    dictGroups = Pron.links(r.text);
+    if (!dictGroups.some(g => g.linked)) { toast("この英文には、つながりの所が、ありません"); dictGroups = null; return false }
+    $("#dGapBox").innerHTML = dictGroups.map((g, i) => g.linked
+      ? `<input class="gapin" data-g="${i}" size="${Math.max(7, Math.round(g.t.length * 0.9))}" placeholder="${g.n}語" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="空欄 ${i + 1}(${g.n}語)">`
+      : esc(g.t)).join(" ");
+    return true;
+  }
+  function dictGapView() {
+    const gap = $("#dGap").checked && !!dictGroups;
+    $("#dGapBox").hidden = !gap; $("#dIn").hidden = gap;
+  }
+  async function dictGapCheck() {
+    const r = cur(); if (!r || !dictGroups) return;
+    const items = dictGroups.map((g, i) => ({ g, i })).filter(x => x.g.linked).map(x => {
+      const v = (document.querySelector(`.gapin[data-g="${x.i}"]`) || {}).value || "", d = Practice.diff(x.g.t.replace(/[.,;:?!]+$/, ""), v);
+      return { g: x.g, v, ok: d.ok === d.total && d.ops.every(o => o.k === "ok") };
+    });
+    const ok = items.filter(x => x.ok).length;
+    $("#dRes").innerHTML = `<span class="sc">つながり部分 ${ok} / ${items.length} 個 正解</span>` + items.map(x => `<div class="gapres ${x.ok ? "d-ok" : "d-sub"}">${x.ok ? "○" : "×"} <b>${esc(x.g.t)}</b> <span class="ipa">/${esc(x.g.ipa)}/</span>${x.ok ? "" : ` <span class="sub">あなたの答え: ${esc(x.v) || "(空欄)"}</span>`}</div>`).join("") + `<div class="sub">原文: ${esc(r.text)}</div>`;
+    if (!dictChecked) { dictChecked = true; await countReview(r, "sentences"); if (ok < items.length) await addMistake(r, "聞き取り", "dict"); $("#stInfo").textContent = infoText(r); if (prefs.aux.rec) renderAux(r) }
+  }
+  $("#dGap").onchange = async e => { if (e.target.checked) { if (!await dictGapOn()) { e.target.checked = false } } $("#dRes").innerHTML = ""; dictGapView() };
+
   // 聞き取り練習: 英文を隠して聞き、書いて、語ごとに答え合わせ
-  function dictStart() { dictOn = true; dictChecked = false; $("#dIn").value = ""; $("#dRes").innerHTML = ""; renderStudy(); $("#dIn").focus(); const r = cur(); if (r) say(r.text) }
+  function dictStart() { dictOn = true; dictChecked = false; dictGroups = null; $("#dGap").checked = false; dictGapView(); $("#dIn").value = ""; $("#dRes").innerHTML = ""; renderStudy(); $("#dIn").focus(); const r = cur(); if (r) say(r.text) }
   function dictEnd() { dictOn = false; stopAudio(); renderStudy() }
   async function dictCheck() {
+    if ($("#dGap").checked && dictGroups) return dictGapCheck();
     const r = cur(); if (!r) return;
     const d = Practice.diff(r.text, $("#dIn").value);
     const w = o => o.k === "ok" ? `<span class="d-w d-ok">${esc(o.t)}</span>` : o.k === "miss" ? `<span class="d-w d-miss">${esc(o.t)}</span>`
@@ -557,8 +612,8 @@
       else if (ax[k] && has(ax[k])) { prefs.waux[ax[k]] = !prefs.waux[ax[k]]; savePrefs(); renderStudy() }
       return;
     }
-    const map = { "1": "full", "2": "slash", "3": "phrases", "4": "pos", "5": "iu" }, ax = { i: "ipa", j: "ja", g: "grammar", v: "vocab", t: "toeic", q: "quiz", k: "rec" };
-    if (k === " ") { e.preventDefault(); play("once") } else if (k === "c") play("chunks"); else if (k === "r") play("shadow"); else if (k === "d") play("dict");
+    const map = { "1": "full", "2": "slash", "3": "phrases", "4": "pos", "5": "iu", "6": "links" }, ax = { i: "ipa", j: "ja", g: "grammar", v: "vocab", t: "toeic", q: "quiz", k: "rec" };
+    if (k === " ") { e.preventDefault(); play("once") } else if (k === "c") play("chunks"); else if (k === "r") play("shadow"); else if (k === "l") play("links"); else if (k === "d") play("dict");
     else if (map[k]) setDisp(map[k]); else if (ax[k]) toggleAux(ax[k]);
   });
 
