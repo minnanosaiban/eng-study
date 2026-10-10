@@ -77,7 +77,7 @@ const Sync = (() => {
 
   // 受信箱から受け取る: 1通ずつ、公開鍵で包まれた AES 鍵を秘密鍵で開き、本文を復号して取り込む
   async function pullInbox() {
-    const total = { n: 0, m: 0, c: 0, u: 0, bad: 0 };
+    const total = { n: 0, m: 0, c: 0, u: 0, bad: 0, msgs: 0 };
     for (let round = 0; round < 40; round++) {
       const r = await api("inbox");
       if (!r.items || !r.items.length) break;
@@ -91,7 +91,7 @@ const Sync = (() => {
           const { n, m, c, u } = await hooks.importPayload(await decrypt(it.iv, it.data, aes));
           total.n += n; total.m += m; total.c += c; total.u += u;
         } catch { total.bad++ } // 復号できない・形が違う通は、取り込まずに捨てる
-        done.push(it.id);
+        done.push(it.id); total.msgs++;
       }
       // 取り込みは、先に保存(IndexedDB)してから、受信箱から消す。途中で止まっても、次回の重複除外で二重にならない
       await api("inbox", { method: "DELETE", body: JSON.stringify({ ids: done }) });
@@ -116,11 +116,13 @@ const Sync = (() => {
         for (const rec of r.records) { if (await applyRemote(rec)) got++; st.since = Math.max(st.since, rec.seq) }
         if (!r.more) break;
       }
-      let inb = { n: 0, m: 0, c: 0, u: 0, bad: 0 };
+      let inb = { n: 0, m: 0, c: 0, u: 0, bad: 0, msgs: 0 };
       try { inb = await pullInbox() } catch (e) { if (manual) hooks.toast("受信箱を確認できませんでした: " + e.message) }
       applying = false;
       if (got || inb.n || inb.m || inb.c || inb.u) { hooks.sortAll(); hooks.refresh() }
-      if (inb.n || inb.m || inb.c || inb.u || inb.bad)
+      if (inb.msgs) { st.inboxLog = { at: Date.now(), msgs: inb.msgs, n: inb.n, m: inb.m, c: inb.c, u: inb.u, bad: inb.bad }; await saveState() } // 前回の受け取り(同期タブに出す)
+      if (inb.msgs && !(inb.n || inb.m || inb.c || inb.u || inb.bad)) hooks.toast(`受信箱から ${inb.msgs} 通を受け取りました。新しいものは、ありませんでした(すでに登録済みで、足りない項目もなし)`);
+      else if (inb.n || inb.m || inb.c || inb.u || inb.bad)
         hooks.toast(`受信箱から 英文 ${inb.n} / 単語 ${inb.m} / 意味句・IU ${inb.c} を受け取りました${inb.u ? `(${inb.u} 件に、足りない項目を追加)` : ""}${inb.bad ? `(読めなかった ${inb.bad} 通は捨てました)` : ""}`);
       const present = new Set(), out = []; // 2) 送信(前回の同期から変わったものだけ)
       for (const k of Object.keys(KIND)) for (const o of hooks.table(k)) {
@@ -136,7 +138,7 @@ const Sync = (() => {
       }
       st.last = Date.now(); await saveState();
       setStatus("☁ 同期済み " + new Date(st.last).toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit" }));
-      if (manual) hooks.toast(`同期しました(受信 ${got} 件・送信 ${sent} 件)`);
+      if (manual) hooks.toast(`同期しました(受信 ${got} 件・送信 ${sent} 件${inb.msgs ? `・受信箱 ${inb.msgs} 通: 英文 ${inb.n} / 単語 ${inb.m} / 意味句・IU ${inb.c} を追加` : ""})`);
     } catch (e) { setStatus("☁ 同期エラー", true); if (manual) hooks.toast("同期できませんでした: " + e.message) }
     finally { applying = false; syncing = false; if (again) { again = false; schedule() } }
   }
@@ -209,6 +211,7 @@ const Sync = (() => {
     const box = $("#syncBox"); if (!box) return;
     if (st) {
       box.innerHTML = `<p class="sub">この端末は同期しています(最終同期: ${st.last ? new Date(st.last).toLocaleString("ja-JP") : "まだ"})。データは暗号化して Cloudflare に保存されます。</p>
+        ${st.inboxLog ? `<p class="sub">受信箱から最後に受け取ったとき: ${new Date(st.inboxLog.at).toLocaleString("ja-JP")} ・ ${st.inboxLog.msgs} 通(英文 ${st.inboxLog.n} / 単語 ${st.inboxLog.m} / 意味句・IU ${st.inboxLog.c} を追加、${st.inboxLog.u} 件に足りない項目を追加${st.inboxLog.bad ? `、読めなかった ${st.inboxLog.bad} 通` : ""})</p>` : ""}
         ${newToken ? `<div class="card"><b>同期キー(別の端末で接続するときに必要)</b>
           <input type="text" readonly id="tokOut" value="${esc(newToken)}" style="margin-top:6px;width:100%;font-family:monospace;font-size:12px">
           <p class="sub">パスワード管理アプリなど安全な場所に保管してください。パスフレーズとは別に必要です。</p></div>` : ""}
