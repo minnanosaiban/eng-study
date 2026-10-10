@@ -1,7 +1,7 @@
 // 保存先: IndexedDB。英文の表(sentences)と、小さな設定(meta)を持つ。
 // localStorage(約5MB)では、行数が増えると足りなくなるため。
 const Store = (() => {
-  const DB = "eng-study", VER = 1;
+  const DB = "eng-study", VER = 2;
   let dbp = null;
 
   function open() {
@@ -11,6 +11,7 @@ const Store = (() => {
       r.onupgradeneeded = () => {
         const d = r.result;
         if (!d.objectStoreNames.contains("sentences")) d.createObjectStore("sentences", { keyPath: "id" });
+        if (!d.objectStoreNames.contains("words")) d.createObjectStore("words", { keyPath: "id" });
         if (!d.objectStoreNames.contains("meta")) d.createObjectStore("meta", { keyPath: "key" });
       };
       r.onsuccess = () => res(r.result);
@@ -32,9 +33,10 @@ const Store = (() => {
   const req = r => new Promise((res, rej) => { r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error) });
 
   return {
-    all: () => tx("sentences", "readonly", s => req(s.getAll())),
-    put: rows => tx("sentences", "readwrite", s => { (Array.isArray(rows) ? rows : [rows]).forEach(r => s.put(r)); }),
-    del: ids => tx("sentences", "readwrite", s => { ids.forEach(id => s.delete(id)); }),
+    // kind: "sentences"(英文)/ "words"(単語)
+    all: (kind = "sentences") => tx(kind, "readonly", s => req(s.getAll())),
+    put: (rows, kind = "sentences") => tx(kind, "readwrite", s => { (Array.isArray(rows) ? rows : [rows]).forEach(r => s.put(r)); }),
+    del: (ids, kind = "sentences") => tx(kind, "readwrite", s => { ids.forEach(id => s.delete(id)); }),
     getMeta: async (key, dflt) => { const r = await tx("meta", "readonly", s => req(s.get(key))); return r ? r.value : dflt },
     setMeta: (key, value) => tx("meta", "readwrite", s => { s.put({ key, value }); })
   };

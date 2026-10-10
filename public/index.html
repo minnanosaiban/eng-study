@@ -35,8 +35,19 @@
     </div>
     <div class="card">
       <h2>ファイルから読み込む</h2>
-      <p class="sub">.csv(1列目=英文、2列目=グループ名。「、」で複数)/ .txt(1行=1文)/ .json(バックアップ、または解析済みのデータ)</p>
+      <p class="sub">.csv(1列目=英文、2列目=グループ名。「、」で複数)/ .txt(1行=1文)/ .json(バックアップ、または解析済みのデータ。単語も入っていれば、単語も読み込みます)</p>
       <input id="file" type="file" accept=".csv,.txt,.json">
+    </div>
+    <div class="card">
+      <h2>単語を登録する</h2>
+      <p class="sub">登録済みの英文の「単語・熟語」から、まとめて取り出せます(意味・発音記号・頻出度・難易度・グループ・例文つき)。</p>
+      <button id="btnWordsFrom" class="pri">英文から単語を取り出す</button>
+      <p class="sub" style="margin-top:12px">または、貼り付け。1行に1語。「単語,意味」の形でも書けます。</p>
+      <textarea id="pasteW" rows="4" placeholder="agenda,議題&#10;reimburse,~を払い戻す"></textarea>
+      <div class="row">
+        <input id="pasteWGroup" type="text" placeholder="グループ名(任意)">
+        <button id="btnPasteW">追加</button>
+      </div>
     </div>
     <div class="card">
       <h2>登録済み</h2>
@@ -52,6 +63,10 @@
   <!-- 学習対象選択 -->
   <section id="tab-pick" class="tab" hidden>
     <div class="card">
+      <div class="seg unit" id="segUnit" role="group" aria-label="学習する単位">
+        <button data-u="sentence">英文</button>
+        <button data-u="word">単語</button>
+      </div>
       <div class="filters">
         <input id="fq" type="search" placeholder="英文・和訳で検索">
         <select id="fgroup" aria-label="グループ"></select>
@@ -83,6 +98,39 @@
   <section id="tab-study" class="tab" hidden>
     <div id="studyEmpty" class="card" hidden>
       <p>学習する英文が選ばれていません。「学習対象選択」で選んでください。</p>
+    </div>
+    <div id="wordBox" hidden>
+      <div class="bar card">
+        <div class="seg" id="segWAudio" role="group" aria-label="音声">
+          <button data-a="word" title="スペース">▶ 発音を聞く</button>
+          <button data-a="ex" title="E">▶ 例文を聞く</button>
+        </div>
+        <label class="inl">速さ
+          <select id="wrate"><option value="0.7">0.7</option><option value="0.85">0.85</option><option value="1" selected>1.0</option><option value="1.15">1.15</option></select>
+        </label>
+        <div class="seg aux" id="segWAux" role="group" aria-label="補助">
+          <button data-x="ipa" title="I">IPA</button>
+          <button data-x="meaning" title="M">意味</button>
+          <button data-x="ex" title="X">例文</button>
+          <button data-x="toeic" title="T">TOEIC</button>
+        </div>
+      </div>
+      <article class="card sentence">
+        <div class="nav">
+          <button id="wPrev" aria-label="前へ">←</button>
+          <span id="wPos" class="sub"></span>
+          <button id="wNext" aria-label="次へ">→</button>
+        </div>
+        <div id="wDisp"></div>
+        <div id="wAux"></div>
+        <div class="row">
+          <label class="inl">状態
+            <select id="wStSel"><option value="new">未学習</option><option value="learning">学習中</option><option value="mastered">覚えた</option></select>
+          </label>
+          <span id="wStInfo" class="sub"></span>
+        </div>
+      </article>
+      <p class="sub keys">ショートカット: ← → 前後 / スペース 発音を聞く / E 例文を聞く / S 止める / I M X T 補助</p>
     </div>
     <div id="studyBox" hidden>
       <div class="bar card">

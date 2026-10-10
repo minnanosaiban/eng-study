@@ -127,5 +127,42 @@ const Clean = (() => {
     return c;
   }
 
-  return { clip, norm, POS, STATUS, ipa, words, phrases, slash, vocab, grammar, toeic, quiz, level, date, uid, sentence, fill };
+  // 単語1件。word(または text)が無い・空なら null。
+  // freq = TOEIC頻出度 1〜3、level = 難易度 600/730/860。試作の単語は、level に頻出度を入れていたので、freq が無いときは level(1〜3)を頻出度とみなす
+  function word(o, { keepState = false } = {}) {
+    if (!o || typeof (o.word ?? o.text) !== "string") return null;
+    const text = clip(o.word ?? o.text, 100);
+    if (!text) return null;
+    const hasFreq = o.freq != null, lv = +o.level;
+    const freq = Math.min(3, Math.max(0, Math.floor(hasFreq ? +o.freq || 0 : (lv >= 1 && lv <= 3 ? lv : 0))));
+    const w = {
+      id: uid(), type: "word", text, ipa: ipa(o.ipa), ja: clip(o.meaning ?? o.ja, 300), pos: clip(o.pos, 40),
+      freq, level: level(o.level), note: clip(o.note, 500), toeic: clip(o.toeic, 500), ex: clip(o.ex, 500),
+      groups: [...new Set((Array.isArray(o.groups) ? o.groups : []).map(g => clip(g, 40)).filter(Boolean))].slice(0, 20),
+      status: "new", review_count: 0, last_reviewed: null, added: Date.now()
+    };
+    if (keepState) {
+      if (has(STATUS, o.status)) w.status = o.status;
+      w.review_count = Math.max(0, Math.floor(+o.review_count || 0));
+      w.last_reviewed = date(o.last_reviewed);
+    }
+    return w;
+  }
+
+  // 英文の単語欄(vocab)から、単語の一覧を作る。難易度・グループ・例文は、その英文のものを引き継ぐ
+  function wordsOf(s) {
+    return (s.vocab || []).map(v => ({ word: v.word, pos: v.pos, meaning: v.meaning, note: v.note, ipa: v.ipa, freq: v.level, toeic: v.toeic, level: s.level, groups: s.groups, ex: s.text }));
+  }
+
+  // すでにある単語に、足りないものだけを足す。足したら true(状態・復習回数は上書きしない)
+  function fillWord(ex, add) {
+    let c = false;
+    for (const k of ["ipa", "ja", "pos", "note", "toeic", "ex"]) if (!ex[k] && add[k]) { ex[k] = add[k]; c = true }
+    for (const k of ["freq", "level"]) if (!ex[k] && add[k]) { ex[k] = add[k]; c = true }
+    const g = [...new Set([...(ex.groups || []), ...(add.groups || [])])];
+    if (g.length !== (ex.groups || []).length) { ex.groups = g; c = true }
+    return c;
+  }
+
+  return { word, wordsOf, fillWord, clip, norm, POS, STATUS, ipa, words, phrases, slash, vocab, grammar, toeic, quiz, level, date, uid, sentence, fill };
 })();

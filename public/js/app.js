@@ -1,21 +1,26 @@
-// 画面の動き。登録 → 学習対象選択 → 英文学習(英文だけ。意味句・IU・単語の単位は、あとで足す)
+// 画面の動き。登録 → 学習対象選択 → 学習。学習の単位は、英文と単語(意味句・IU は、あとで足す)
 (() => {
   const $ = s => document.querySelector(s);
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const today = () => new Date().toISOString().slice(0, 10);
 
-  let rows = [];                 // 英文の表(全部)
-  let sel = new Set();           // 選択中の id
-  let study = { ids: [], i: 0 }; // 学習セット
-  let prefs = { disp: "full", aux: { ipa: false, ja: true, grammar: false, vocab: false, toeic: false, quiz: false }, rate: 1 };
-  let tab = "reg";
+  let rows = [];                                   // 英文の表
+  let words = [];                                  // 単語の表
+  let sel = { sentence: new Set(), word: new Set() }; // 単位ごとの選択中の id
+  let unit = "sentence";                           // 学習対象選択で見ている単位
+  let study = { unit: "sentence", ids: [], i: 0 }; // 学習セット
+  let prefs = { disp: "full", aux: { ipa: false, ja: true, grammar: false, vocab: false, toeic: false, quiz: false }, waux: { ipa: true, ex: true, toeic: false }, rate: 1 };
+  let tab = "reg", wReveal = false;
+  const UN = { sentence: { kind: "sentences", name: "英文" }, word: { kind: "words", name: "単語" } };
+  const tbl = u => (u === "word" ? words : rows);
 
-  function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("show"), 2600) }
+  function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("show"), 2800) }
   const savePrefs = () => Store.setMeta("prefs", prefs).catch(() => {});
+  const saveStudy = () => Store.setMeta("study", study).catch(() => {});
 
   // ---------- 取り込み ----------
-  // 同じ英文があれば、足りないものだけ足す。なければ追加。{n:追加, u:足した}
-  async function importList(list, { keepState = false } = {}) {
+  // 同じ英文があれば、足りないものだけ足す。なければ追加
+  async function importSentences(list, { keepState = false } = {}) {
     const have = new Map(rows.map(r => [r.text.toLowerCase(), r]));
     let n = 0, u = 0; const touched = [];
     for (const o of list) {
@@ -25,33 +30,52 @@
       if (ex) { if (Clean.fill(ex, s)) { u++; touched.push(ex) } continue }
       rows.push(s); have.set(s.text.toLowerCase(), s); n++; touched.push(s);
     }
-    if (touched.length) await Store.put(touched);
+    if (touched.length) await Store.put(touched, "sentences");
+    return { n, u };
+  }
+  async function importWords(list, { keepState = false } = {}) {
+    const have = new Map(words.map(w => [w.text.toLowerCase(), w]));
+    let n = 0, u = 0; const touched = [];
+    for (const o of list) {
+      const w = Clean.word(o, { keepState });
+      if (!w) continue;
+      const ex = have.get(w.text.toLowerCase());
+      if (ex) { if (Clean.fillWord(ex, w)) { u++; touched.push(ex) } continue }
+      words.push(w); have.set(w.text.toLowerCase(), w); n++; touched.push(w);
+    }
+    if (touched.length) await Store.put(touched, "words");
     return { n, u };
   }
 
-  // ファイルの中身 → 英文の一覧(groups は名前にそろえる)
+  // ファイルの中身 → { sentences, words }(groups は名前にそろえる)
   function parseFile(name, text) {
     if (/\.json$/i.test(name)) {
       const d = JSON.parse(text);
       const gname = Object.create(null);
       for (const g of Array.isArray(d.groups) ? d.groups : []) if (g && typeof g.name === "string") gname[g.id] = g.name;
+      const fix = i => ({ ...i, groups: Array.isArray(i.groups) ? i.groups : (Array.isArray(i.gids) ? i.gids.map(g => gname[g]).filter(Boolean) : []) });
       const items = Array.isArray(d) ? d : Array.isArray(d.sentences) ? d.sentences : Array.isArray(d.items) ? d.items : [];
-      return items.map(i => ({ ...i, groups: Array.isArray(i.groups) ? i.groups : (Array.isArray(i.gids) ? i.gids.map(g => gname[g]).filter(Boolean) : []) }));
+      return { sentences: items.map(fix), words: (Array.isArray(d.words) ? d.words : []).map(fix) };
     }
     if (/\.csv$/i.test(name)) {
-      return text.split(/\r?\n/).map(l => l.trim()).filter(Boolean).map(l => {
-        const m = l.match(/^"((?:[^"]|"")*)"\s*,?\s*(.*)$/) || l.match(/^([^,]*),?\s*(.*)$/);
-        const t = (m[1] || "").replace(/""/g, '"').trim(), g = (m[2] || "").replace(/^"|"$/g, "");
-        return { text: t, groups: g.split(/[、,]/).map(x => x.trim()).filter(Boolean) };
-      }).filter(o => o.text && !/^(英文|text|sentence)$/i.test(o.text));
+      return {
+        sentences: text.split(/\r?\n/).map(l => l.trim()).filter(Boolean).map(l => {
+          const m = l.match(/^"((?:[^"]|"")*)"\s*,?\s*(.*)$/) || l.match(/^([^,]*),?\s*(.*)$/);
+          const t = (m[1] || "").replace(/""/g, '"').trim(), g = (m[2] || "").replace(/^"|"$/g, "");
+          return { text: t, groups: g.split(/[、,]/).map(x => x.trim()).filter(Boolean) };
+        }).filter(o => o.text && !/^(英文|text|sentence)$/i.test(o.text)), words: []
+      };
     }
-    return text.split(/\r?\n/).map(l => l.trim()).filter(Boolean).map(t => ({ text: t }));
+    return { sentences: text.split(/\r?\n/).map(l => l.trim()).filter(Boolean).map(t => ({ text: t })), words: [] };
   }
 
-  async function addFromText(list, label, opts) {
-    const r = await importList(list, opts);
+  async function addFrom(data, label, opts) {
+    const a = await importSentences(data.sentences || [], opts), b = await importWords(data.words || [], opts);
     renderAll();
-    toast(`${label}: ${r.n} 文を追加${r.u ? `、${r.u} 文に足りない項目を追加` : ""}`);
+    const msg = [];
+    if (a.n || a.u) msg.push(`英文 ${a.n} 文を追加${a.u ? `、${a.u} 文に足りない項目を追加` : ""}`);
+    if (b.n || b.u) msg.push(`単語 ${b.n} 語を追加${b.u ? `、${b.u} 語に足りない項目を追加` : ""}`);
+    toast(`${label}: ${msg.join(" / ") || "追加するものはありませんでした"}`);
   }
 
   // ---------- タブ ----------
@@ -67,48 +91,62 @@
 
   // ---------- 登録 ----------
   function renderReg() {
-    const lv = rows.filter(r => r.ja).length;
-    $("#regInfo").textContent = rows.length ? `英文 ${rows.length} 文(うち、和訳などの解析つき ${lv} 文)` : "まだ英文がありません。";
+    const a = rows.filter(r => r.ja).length, ipa = words.filter(w => w.ipa).length;
+    $("#regInfo").textContent = (rows.length || words.length)
+      ? `英文 ${rows.length} 文(うち、和訳などの解析つき ${a} 文) ・ 単語 ${words.length} 語(うち、発音記号つき ${ipa} 語)`
+      : "まだ英文も単語もありません。";
   }
   $("#btnSamples").onclick = async e => {
     const b = e.currentTarget; b.disabled = true;
     try {
-      let list = [];
+      const all = { sentences: [], words: [] };
       for (const f of ["toeic-sentences-analyzed.json", "toeic-sentences-2-analyzed.json"]) {
         const r = await fetch("samples/" + f); if (!r.ok) throw new Error(f + " を読めません");
-        list = list.concat(parseFile(f, await r.text()));
+        const d = parseFile(f, await r.text()); all.sentences.push(...d.sentences); all.words.push(...d.words);
       }
-      await addFromText(list, "サンプル");
+      await addFrom(all, "サンプル");
     } catch (err) { toast("読み込みに失敗しました: " + err.message) } finally { b.disabled = false }
   };
   $("#btnPaste").onclick = async () => {
     const g = $("#pasteGroup").value.trim(), lines = $("#paste").value.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
     if (!lines.length) return toast("英文を入力してください");
-    await addFromText(lines.map(text => ({ text, groups: g ? [g] : [] })), "貼り付け");
+    await addFrom({ sentences: lines.map(text => ({ text, groups: g ? [g] : [] })) }, "貼り付け");
     $("#paste").value = "";
+  };
+  $("#btnPasteW").onclick = async () => {
+    const g = $("#pasteWGroup").value.trim(), lines = $("#pasteW").value.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+    if (!lines.length) return toast("単語を入力してください");
+    const list = lines.map(l => { const m = l.match(/^([^,\t、]+)[,\t、]?\s*(.*)$/); return { word: m[1].trim(), meaning: m[2], groups: g ? [g] : [] } });
+    await addFrom({ words: list }, "貼り付け");
+    $("#pasteW").value = "";
+  };
+  $("#btnWordsFrom").onclick = async () => {
+    if (!rows.length) return toast("先に、英文を登録してください");
+    await addFrom({ words: rows.flatMap(Clean.wordsOf) }, "英文から取り出し");
   };
   $("#file").onchange = async e => {
     const f = e.target.files[0]; if (!f) return;
-    try { await addFromText(parseFile(f.name, await f.text()), f.name, { keepState: /\.json$/i.test(f.name) }) }
+    try { await addFrom(parseFile(f.name, await f.text()), f.name, { keepState: /\.json$/i.test(f.name) }) }
     catch (err) { toast("読み込めませんでした: " + err.message) }
     e.target.value = "";
   };
   $("#btnExport").onclick = () => {
-    const blob = new Blob([JSON.stringify({ sentences: rows }, null, 1)], { type: "application/json" });
+    const blob = new Blob([JSON.stringify({ sentences: rows, words }, null, 1)], { type: "application/json" });
     const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `eng-study-backup-${today()}.json`; a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 2000);
   };
   $("#btnClear").onclick = async () => {
-    if (!rows.length || !confirm(`英文 ${rows.length} 文をすべて削除します。よろしいですか?`)) return;
-    await Store.del(rows.map(r => r.id)); rows = []; sel.clear(); study = { ids: [], i: 0 }; await Store.setMeta("study", study);
+    if (!(rows.length || words.length) || !confirm(`英文 ${rows.length} 文と単語 ${words.length} 語を、すべて削除します。よろしいですか?`)) return;
+    await Store.del(rows.map(r => r.id), "sentences"); await Store.del(words.map(w => w.id), "words");
+    rows = []; words = []; sel = { sentence: new Set(), word: new Set() }; study = { unit: "sentence", ids: [], i: 0 }; await saveStudy();
     renderAll(); toast("削除しました");
   };
 
   // ---------- 学習対象選択 ----------
-  const allGroups = () => [...new Set(rows.flatMap(r => r.groups || []))].sort();
+  const allGroups = () => [...new Set([...rows, ...words].flatMap(r => r.groups || []))].sort();
   function filtered() {
     const q = $("#fq").value.trim().toLowerCase(), g = $("#fgroup").value, st = $("#fstatus").value, lv = $("#flevel").value;
-    return rows.filter(r =>
+    return tbl(unit).filter(r =>
       (!q || r.text.toLowerCase().includes(q) || (r.ja || "").includes(q)) &&
       (!g || (r.groups || []).includes(g)) &&
       (!st || (st === "not-mastered" ? r.status !== "mastered" : r.status === st)) &&
@@ -119,36 +157,56 @@
     $("#fgroup").innerHTML = `<option value="">グループ: すべて</option>` + allGroups().map(g => `<option>${esc(g)}</option>`).join("");
     $("#fgroup").value = allGroups().includes(cur) ? cur : "";
   }
+  function pickRow(r) {
+    const tags = `${r.level ? `<span class="tag">${r.level}</span>` : ""}<span class="tag">${esc(Clean.STATUS[r.status])}</span>${(r.groups || []).map(g => `<span class="tag">${esc(g)}</span>`).join("")}`;
+    const body = unit === "word"
+      ? `<b>${esc(r.text)}</b> ${r.ipa ? `<span class="ipa">/${esc(r.ipa)}/</span>` : ""} <span class="m">${esc(r.pos)} ${"★".repeat(r.freq || 0)}</span><span class="m"><br>${esc(r.ja)}</span>`
+      : `${esc(r.text)}<span class="m"><br>${esc(r.ja)}</span>`;
+    return `<label class="row-i"><input type="checkbox" data-id="${r.id}" ${sel[unit].has(r.id) ? "checked" : ""}><span class="t">${body}<span class="m"><br>${tags}</span></span></label>`;
+  }
   function renderPick() {
+    document.querySelectorAll("#segUnit button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.u === unit)));
     renderGroupSelect();
-    const list = filtered();
-    $("#pickList").innerHTML = list.length ? list.map(r => `<label class="row-i"><input type="checkbox" data-id="${r.id}" ${sel.has(r.id) ? "checked" : ""}>
-      <span class="t">${esc(r.text)}<span class="m"><br>${esc(r.ja)}</span>
-      <span class="m"><br>${r.level ? `<span class="tag">${r.level}</span>` : ""}<span class="tag">${esc(Clean.STATUS[r.status])}</span>${(r.groups || []).map(g => `<span class="tag">${esc(g)}</span>`).join("")}</span></span></label>`).join("")
-      : `<p class="sub">${rows.length ? "条件に合う英文がありません。" : "英文がありません。「登録」で入れてください。"}</p>`;
+    const list = filtered(), n = tbl(unit).length;
+    $("#pickList").innerHTML = list.length ? list.map(pickRow).join("")
+      : `<p class="sub">${n ? "条件に合うものがありません。" : `${UN[unit].name}がありません。「登録」で入れてください。`}</p>`;
     pickInfo(list.length);
   }
   function pickInfo(shown) {
-    $("#pickInfo").textContent = `表示 ${shown ?? filtered().length} 文 / 全 ${rows.length} 文 ・ 選択中 ${sel.size} 文`;
-    $("#btnStart").disabled = sel.size === 0;
+    $("#pickInfo").textContent = `表示 ${shown ?? filtered().length} 件 / 全 ${tbl(unit).length} 件 ・ 選択中 ${sel[unit].size} 件`;
+    $("#btnStart").disabled = sel[unit].size === 0;
   }
-  $("#pickList").onchange = e => { const c = e.target.closest("input[data-id]"); if (!c) return; c.checked ? sel.add(c.dataset.id) : sel.delete(c.dataset.id); pickInfo() };
+  $("#segUnit").onclick = e => { const b = e.target.closest("button[data-u]"); if (b) { unit = b.dataset.u; renderPick() } };
+  $("#pickList").onchange = e => { const c = e.target.closest("input[data-id]"); if (!c) return; c.checked ? sel[unit].add(c.dataset.id) : sel[unit].delete(c.dataset.id); pickInfo() };
   ["#fq", "#fgroup", "#fstatus", "#flevel"].forEach(s => $(s).addEventListener("input", renderPick));
-  $("#btnAll").onclick = () => { filtered().forEach(r => sel.add(r.id)); renderPick() };
-  $("#btnNone").onclick = () => { sel.clear(); renderPick() };
+  $("#btnAll").onclick = () => { filtered().forEach(r => sel[unit].add(r.id)); renderPick() };
+  $("#btnNone").onclick = () => { sel[unit].clear(); renderPick() };
   $("#btnRand").onclick = () => {
     const n = Math.max(1, Math.min(200, +$("#randN").value || 10)), pool = filtered().map(r => r.id);
     for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]] }
-    sel = new Set(pool.slice(0, n)); renderPick(); toast(`${sel.size} 文を選びました`);
+    sel[unit] = new Set(pool.slice(0, n)); renderPick(); toast(`${sel[unit].size} 件を選びました`);
   };
   $("#btnStart").onclick = async () => {
-    // 表の並び順のまま、選んだ英文を学習セットにする
-    study = { ids: rows.filter(r => sel.has(r.id)).map(r => r.id), i: 0 };
-    await Store.setMeta("study", study); setTab("study");
+    // 表の並び順のまま、選んだものを学習セットにする
+    study = { unit, ids: tbl(unit).filter(r => sel[unit].has(r.id)).map(r => r.id), i: 0 };
+    wReveal = false; await saveStudy(); setTab("study");
   };
 
+  // ---------- 学習(共通) ----------
+  const cur = () => tbl(study.unit).find(r => r.id === study.ids[study.i]);
+  function renderStudy() {
+    const r = cur(), isW = study.unit === "word";
+    $("#studyEmpty").hidden = !!r; $("#studyBox").hidden = !r || isW; $("#wordBox").hidden = !r || !isW;
+    if (!r) return;
+    if (isW) renderWord(r); else renderSentence(r);
+  }
+  function go(d) { const n = study.i + d; if (n < 0 || n >= study.ids.length) return; stopAudio(); study.i = n; wReveal = false; saveStudy(); renderStudy() }
+  $("#btnPrev").onclick = $("#wPrev").onclick = () => go(-1);
+  $("#btnNext").onclick = $("#wNext").onclick = () => go(1);
+  function setRate(v) { prefs.rate = +v; $("#rate").value = $("#wrate").value = String(prefs.rate); savePrefs() }
+  $("#rate").onchange = e => setRate(e.target.value); $("#wrate").onchange = e => setRate(e.target.value);
+
   // ---------- 英文学習 ----------
-  const cur = () => rows.find(r => r.id === study.ids[study.i]);
   const LEG = [["n", "名詞"], ["pron", "代名詞"], ["v", "動詞"], ["aux", "助動詞"], ["adj", "形容詞"], ["adv", "副詞"], ["prep", "前置詞"], ["conj", "接続詞・関係詞"], ["det", "冠詞・限定詞"]];
   const NUM = "⑴⑵⑶⑷⑸⑹⑺⑻⑼⑽⑾⑿";
   function phClass(f) {
@@ -159,17 +217,14 @@
     return "o";
   }
   // 音声で読み上げる区切り。区切りの形があればそれ、なければスラッシュリーディング、なければ文全体
-  function chunksOf(r) { return r.phrases ? r.phrases.map(p => p.t) : r.slash ? r.slash.map(p => p.en) : [r.text] }
+  const chunksOf = r => (r.phrases ? r.phrases.map(p => p.t) : r.slash ? r.slash.map(p => p.en) : [r.text]);
 
-  function renderStudy() {
-    const r = cur();
-    $("#studyEmpty").hidden = !!r; $("#studyBox").hidden = !r;
-    if (!r) return;
+  function renderSentence(r) {
     $("#pos").textContent = `${study.i + 1} / ${study.ids.length}`;
     $("#btnPrev").disabled = study.i === 0; $("#btnNext").disabled = study.i >= study.ids.length - 1;
     document.querySelectorAll("#segDisp button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.d === prefs.disp)));
     document.querySelectorAll("#segAux button").forEach(b => b.setAttribute("aria-pressed", String(!!prefs.aux[b.dataset.x])));
-    $("#rate").value = String(prefs.rate);
+    $("#rate").value = $("#wrate").value = String(prefs.rate);
     $("#stSel").value = r.status;
     $("#stInfo").textContent = r.review_count ? `復習 ${r.review_count} 回 ・ 最終 ${r.last_reviewed || "-"}` : "";
     renderDisp(r); renderAux(r);
@@ -192,14 +247,13 @@
 
   function renderAux(r) {
     const a = prefs.aux; let h = "";
-    if (a.ja && prefs.disp !== "slash") h += `<div class="blk"><h3>和訳</h3>${r.ja ? esc(r.ja) : '<span class="sub">なし</span>'}</div>`;
-    if (a.ja && prefs.disp === "slash" && r.ja) h += `<div class="blk"><h3>和訳</h3>${esc(r.ja)}</div>`;
+    if (a.ja) h += `<div class="blk"><h3>和訳</h3>${r.ja ? esc(r.ja) : '<span class="sub">なし</span>'}</div>`;
     if (a.ipa) {
       const v = (r.vocab || []).filter(x => x.ipa);
       h += `<div class="blk"><h3>発音記号(単語・熟語)</h3>${v.length ? v.map(x => `<div><b>${esc(x.word)}</b> <span class="ipa">/${esc(x.ipa)}/</span></div>`).join("") : '<span class="sub">なし</span>'}</div>`;
     }
     if (a.grammar) h += `<div class="blk"><h3>文法</h3>${(r.grammar || []).length ? r.grammar.map(g => `<div><b>・${esc(g.point)}</b><div class="sub">${esc(g.explanation)}</div></div>`).join("") : '<span class="sub">なし</span>'}</div>`;
-    if (a.vocab) h += `<div class="blk"><h3>単語・熟語</h3>${(r.vocab || []).length ? `<table class="v">${r.vocab.map(x => `<tr><td><b>${esc(x.word)}</b>${a.ipa && x.ipa ? `<div class="ipa">/${esc(x.ipa)}/</div>` : ""}<div class="sub">${"★".repeat(x.level || 0)}</div></td><td class="sub">${esc(x.pos)}</td><td>${esc(x.meaning)}<div class="sub">${esc(x.note)}</div>${x.toeic ? `<div class="sub">TOEIC: ${esc(x.toeic)}</div>` : ""}</td></tr>`).join("")}</table>` : '<span class="sub">なし</span>'}</div>`;
+    if (a.vocab) h += `<div class="blk"><div class="row" style="margin:0"><h3 class="grow">単語・熟語</h3>${(r.vocab || []).length ? '<button id="vAddAll" class="sm">全て単語へ</button>' : ""}</div>${(r.vocab || []).length ? `<table class="v">${r.vocab.map((x, i) => `<tr><td><b>${esc(x.word)}</b>${a.ipa && x.ipa ? `<div class="ipa">/${esc(x.ipa)}/</div>` : ""}<div class="sub">${"★".repeat(x.level || 0)}</div></td><td class="sub">${esc(x.pos)}</td><td>${esc(x.meaning)}<div class="sub">${esc(x.note)}</div>${x.toeic ? `<div class="sub">TOEIC: ${esc(x.toeic)}</div>` : ""}</td><td><button class="sm" data-wadd="${i}">${words.some(w => w.text.toLowerCase() === x.word.toLowerCase()) ? "登録済" : "＋単語"}</button></td></tr>`).join("")}</table>` : '<span class="sub">なし</span>'}</div>`;
     if (a.toeic) {
       const t = r.toeic;
       h += `<div class="blk"><h3>TOEIC の観点</h3>${t ? `<span class="tag">${esc(t.part)}</span><span class="tag">${esc(t.scene)}</span>${t.points.map(p => `<div><b>・${esc(p.type)}</b> <span class="sub">${esc(p.detail)}</span></div>`).join("")}${t.paraphrase.length ? `<div class="sub">言い換え: ${t.paraphrase.map(esc).join(" / ")}</div>` : ""}` : '<span class="sub">なし</span>'}</div>`;
@@ -212,28 +266,61 @@
   }
 
   $("#aux").onclick = async e => {
-    const b = e.target.closest("button[data-q]"), r = cur();
+    const r = cur();
+    const add = e.target.closest("button[data-wadd],#vAddAll");
+    if (add && r) { // 単語・熟語から、単語の表へ
+      const all = Clean.wordsOf(r), list = add.id === "vAddAll" ? all : [all[+add.dataset.wadd]];
+      const res = await importWords(list); renderAll(); toast(`単語 ${res.n} 語を追加しました${res.u ? `(${res.u} 語は、足りない項目を追加)` : ""}`); return;
+    }
+    const b = e.target.closest("button[data-q]");
     if (!b || !r || !r.quiz || b.parentElement.dataset.done) return;
     const i = +b.dataset.q, ok = i === r.quiz.answer;
     b.parentElement.dataset.done = "1";
     b.parentElement.querySelectorAll("button[data-q]").forEach(x => { if (+x.dataset.q === r.quiz.answer) x.classList.add("ok"); else if (x === b) x.classList.add("ng") });
     $("#qres").textContent = (ok ? "正解。" : "不正解。") + r.quiz.explanation;
-    r.review_count++; r.last_reviewed = today(); await Store.put(r); // 4択に答えると、復習1回
+    r.review_count++; r.last_reviewed = today(); await Store.put(r, "sentences"); // 4択に答えると、復習1回
     $("#stInfo").textContent = `復習 ${r.review_count} 回 ・ 最終 ${r.last_reviewed}`;
   };
 
-  function go(d) { const n = study.i + d; if (n < 0 || n >= study.ids.length) return; stopAudio(); study.i = n; Store.setMeta("study", study); renderStudy() }
-  $("#btnPrev").onclick = () => go(-1); $("#btnNext").onclick = () => go(1);
   $("#segDisp").onclick = e => { const b = e.target.closest("button[data-d]"); if (b) setDisp(b.dataset.d) };
   $("#segAux").onclick = e => { const b = e.target.closest("button[data-x]"); if (b) toggleAux(b.dataset.x) };
   function setDisp(d) { prefs.disp = d; savePrefs(); renderStudy() }
   function toggleAux(x) { prefs.aux[x] = !prefs.aux[x]; savePrefs(); renderStudy() }
-  $("#stSel").onchange = async e => { const r = cur(); if (r) { r.status = e.target.value; await Store.put(r) } };
-  $("#rate").onchange = e => { prefs.rate = +e.target.value; savePrefs() };
+  $("#stSel").onchange = async e => { const r = cur(); if (r) { r.status = e.target.value; await Store.put(r, "sentences") } };
+
+  // ---------- 単語学習 ----------
+  function renderWord(w) {
+    $("#wPos").textContent = `${study.i + 1} / ${study.ids.length}`;
+    $("#wPrev").disabled = study.i === 0; $("#wNext").disabled = study.i >= study.ids.length - 1;
+    document.querySelectorAll("#segWAux button").forEach(b => {
+      const x = b.dataset.x; b.setAttribute("aria-pressed", String(x === "meaning" ? wReveal : !!prefs.waux[x]));
+    });
+    $("#wrate").value = String(prefs.rate);
+    $("#wStSel").value = w.status;
+    $("#wStInfo").textContent = w.review_count ? `復習 ${w.review_count} 回 ・ 最終 ${w.last_reviewed || "-"}` : "";
+    const a = prefs.waux;
+    $("#wDisp").innerHTML = `<div class="word">${esc(w.text)}</div>${a.ipa && w.ipa ? `<div class="ipa">/${esc(w.ipa)}/</div>` : ""}<div class="sub meta">${esc(w.pos)} ${"★".repeat(w.freq || 0)} ${w.level ? `<span class="tag">${w.level}</span>` : ""}${(w.groups || []).map(g => `<span class="tag">${esc(g)}</span>`).join("")}</div>`;
+    let h = `<div class="blk">${wReveal ? `<h3>意味</h3>${esc(w.ja) || '<span class="sub">なし</span>'}${w.note ? `<div class="sub">${esc(w.note)}</div>` : ""}` : `<button class="hide-btn" id="wShow">意味を見る(M)</button>`}</div>`;
+    if (a.ex) h += `<div class="blk"><h3>例文</h3>${w.ex ? esc(w.ex) : '<span class="sub">なし</span>'}</div>`;
+    if (a.toeic) h += `<div class="blk"><h3>TOEIC での使われ方</h3>${w.toeic ? esc(w.toeic) : '<span class="sub">なし</span>'}</div>`;
+    $("#wAux").innerHTML = h;
+  }
+  async function revealMeaning(on) {
+    const w = cur(); if (!w) return;
+    if (on && !wReveal) { w.review_count++; w.last_reviewed = today(); await Store.put(w, "words") } // 隠した意味を見る = 復習1回
+    wReveal = on; renderWord(w);
+  }
+  $("#wAux").onclick = e => { if (e.target.closest("#wShow")) revealMeaning(true) };
+  $("#segWAux").onclick = e => {
+    const b = e.target.closest("button[data-x]"); if (!b) return;
+    if (b.dataset.x === "meaning") return revealMeaning(!wReveal);
+    prefs.waux[b.dataset.x] = !prefs.waux[b.dataset.x]; savePrefs(); renderStudy();
+  };
+  $("#wStSel").onchange = async e => { const w = cur(); if (w) { w.status = e.target.value; await Store.put(w, "words") } };
 
   // ---------- 音声(端末の読み上げ) ----------
   let playing = 0; // 世代番号。止める・次へ行くと増やして、前の読み上げを無効にする
-  function stopAudio() { playing++; try { speechSynthesis.cancel() } catch {} const r = cur(); if (r && tab === "study") renderDisp(r) }
+  function stopAudio() { playing++; try { speechSynthesis.cancel() } catch {} const r = cur(); if (r && tab === "study" && study.unit === "sentence") renderDisp(r) }
   function say(text) {
     return new Promise(res => {
       if (!("speechSynthesis" in window)) return res();
@@ -248,6 +335,8 @@
     const r = cur(); if (!r) return;
     if (!("speechSynthesis" in window)) return toast("この端末では、読み上げが使えません");
     stopAudio(); const me = playing;
+    if (mode === "word") return say(r.text);
+    if (mode === "ex") { if (r.ex) await say(r.ex); else toast("例文がありません"); return }
     if (mode === "once") { await say(r.text); return }
     const ch = chunksOf(r);
     if (prefs.disp === "full" || prefs.disp === "pos") { prefs.disp = r.phrases ? "phrases" : r.slash ? "slash" : "full"; renderStudy() }
@@ -258,16 +347,27 @@
     if (me === playing) renderDisp(r);
   }
   $("#segAudio").onclick = e => { const b = e.target.closest("button[data-a]"); if (b) play(b.dataset.a) };
+  $("#segWAudio").onclick = e => { const b = e.target.closest("button[data-a]"); if (b) play(b.dataset.a) };
   $("#btnStop").onclick = stopAudio;
 
   // ---------- ショートカット ----------
   document.addEventListener("keydown", e => {
     if (tab !== "study" || e.ctrlKey || e.metaKey || e.altKey) return;
-    if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.closest("button") && e.key === " ") return;
-    const k = e.key.toLowerCase(), map = { "1": "full", "2": "slash", "3": "phrases", "4": "pos" }, ax = { i: "ipa", j: "ja", g: "grammar", v: "vocab", t: "toeic", q: "quiz" };
-    if (k === "arrowleft") go(-1); else if (k === "arrowright") go(1);
-    else if (k === " ") { e.preventDefault(); play("once") } else if (k === "c") play("chunks"); else if (k === "s") stopAudio();
-    else if (map[k]) setDisp(map[k]); else if (ax[k]) toggleAux(ax[k]); else return;
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || (e.target.closest("button") && e.key === " ")) return;
+    const k = e.key.toLowerCase();
+    if (k === "arrowleft") return go(-1);
+    if (k === "arrowright") return go(1);
+    if (k === "s") return stopAudio();
+    if (study.unit === "word") {
+      const ax = { i: "ipa", x: "ex", t: "toeic" };
+      if (k === " ") { e.preventDefault(); play("word") } else if (k === "e") play("ex");
+      else if (k === "m") revealMeaning(!wReveal);
+      else if (ax[k]) { prefs.waux[ax[k]] = !prefs.waux[ax[k]]; savePrefs(); renderStudy() }
+      return;
+    }
+    const map = { "1": "full", "2": "slash", "3": "phrases", "4": "pos" }, ax = { i: "ipa", j: "ja", g: "grammar", v: "vocab", t: "toeic", q: "quiz" };
+    if (k === " ") { e.preventDefault(); play("once") } else if (k === "c") play("chunks");
+    else if (map[k]) setDisp(map[k]); else if (ax[k]) toggleAux(ax[k]);
   });
 
   function renderAll() { renderReg(); if (tab === "pick") renderPick(); if (tab === "study") renderStudy() }
@@ -275,11 +375,14 @@
   // ---------- 起動 ----------
   (async () => {
     try {
-      rows = await Store.all();
+      rows = await Store.all("sentences"); words = await Store.all("words");
       const p = await Store.getMeta("prefs", null);
-      if (p && typeof p === "object") prefs = { ...prefs, ...p, aux: { ...prefs.aux, ...(p.aux || {}) } };
+      if (p && typeof p === "object") prefs = { ...prefs, ...p, aux: { ...prefs.aux, ...(p.aux || {}) }, waux: { ...prefs.waux, ...(p.waux || {}) } };
       const s = await Store.getMeta("study", null);
-      if (s && Array.isArray(s.ids)) { const ok = new Set(rows.map(r => r.id)); study = { ids: s.ids.filter(id => ok.has(id)), i: Math.max(0, +s.i || 0) }; if (study.i >= study.ids.length) study.i = 0 }
+      if (s && Array.isArray(s.ids)) {
+        const u = s.unit === "word" ? "word" : "sentence", ok = new Set(tbl(u).map(r => r.id));
+        study = { unit: u, ids: s.ids.filter(id => ok.has(id)), i: Math.max(0, +s.i || 0) }; if (study.i >= study.ids.length) study.i = 0;
+      }
     } catch (e) { toast("保存先(IndexedDB)を開けませんでした: " + e.message) }
     renderAll();
   })();
