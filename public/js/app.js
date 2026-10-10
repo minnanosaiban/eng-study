@@ -10,7 +10,7 @@
   let sel = { sentence: new Set(), meaning: new Set(), iu: new Set(), word: new Set() }; // 単位ごとの選択中の id
   let unit = "sentence";                           // 学習対象選択で見ている単位
   let study = { unit: "sentence", ids: [], i: 0 }; // 学習セット
-  let prefs = { disp: "full", aux: { ipa: false, ja: true, grammar: false, vocab: false, toeic: false, quiz: false }, waux: { ipa: true, ex: true, toeic: false, tr: false }, rate: 1 };
+  let prefs = { disp: "full", aux: { ipa: false, ja: true, grammar: false, vocab: false, toeic: false, quiz: false }, waux: { ipa: true, ex: true, toeic: false, tr: false }, sh: { gap: 1, rep: 1 }, rate: 1 };
   let tab = "reg", wReveal = false;
   const UN = { sentence: { kind: "sentences", name: "英文" }, meaning: { kind: "chunks", name: "意味句" }, iu: { kind: "chunks", name: "IU" }, word: { kind: "words", name: "単語" } };
   const tbl = u => (u === "word" ? words : u === "sentence" ? rows : chunks.filter(c => c.type === u));
@@ -233,7 +233,7 @@
     if (!r) return;
     if (isW) renderCard(r); else renderSentence(r);
   }
-  function go(d) { const n = study.i + d; if (n < 0 || n >= study.ids.length) return; stopAudio(); study.i = n; wReveal = false; saveStudy(); renderStudy() }
+  function go(d) { const n = study.i + d; if (n < 0 || n >= study.ids.length) return; stopAudio(); dictOn = false; study.i = n; wReveal = false; saveStudy(); renderStudy() }
   $("#btnPrev").onclick = $("#wPrev").onclick = () => go(-1);
   $("#btnNext").onclick = $("#wNext").onclick = () => go(1);
   function setRate(v) { prefs.rate = +v; $("#rate").value = $("#wrate").value = String(prefs.rate); savePrefs() }
@@ -258,6 +258,8 @@
     document.querySelectorAll("#segDisp button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.d === prefs.disp)));
     document.querySelectorAll("#segAux button").forEach(b => b.setAttribute("aria-pressed", String(!!prefs.aux[b.dataset.x])));
     $("#rate").value = $("#wrate").value = String(prefs.rate);
+    $("#shGap").value = String(prefs.sh.gap); $("#shRep").value = String(prefs.sh.rep);
+    $("#dict").hidden = !dictOn; $("#disp").hidden = dictOn; $("#legend").hidden = dictOn;
     $("#stSel").value = r.status;
     $("#stInfo").textContent = r.review_count ? `復習 ${r.review_count} 回 ・ 最終 ${r.last_reviewed || "-"}` : "";
     renderDisp(r); renderAux(r);
@@ -268,6 +270,7 @@
     const hl = i => (i === now ? " now" : "");
     if (d === "slash" && r.slash) h = r.slash.map((s, i) => `<span class="sl"><span class="seg-i${hl(i)}" data-c="${i}">${esc(s.en)}</span>${prefs.aux.ja ? `<span class="ja">${esc(s.ja)}</span>` : ""}</span>`).join("");
     else if (d === "phrases" && r.phrases) h = r.phrases.map((p, i) => `<span class="ph"><span class="no">${NUM[i] || i + 1}</span><span class="seg-i cl-${phClass(p.f)}${hl(i)}" data-c="${i}">${esc(p.t)}</span> <span class="lab">${esc(p.f)}</span></span>`).join("");
+    else if (d === "iu" && r.iu) h = r.iu.map((x, i) => `<span class="ph"><span class="no">${NUM[i] || i + 1}</span><span class="seg-i cl-v${hl(i)}" data-c="${i}">${esc(x.t)}</span>${prefs.aux.ipa && x.ipa ? ` <span class="ipa">/${esc(x.ipa)}/</span>` : ""}</span>`).join("");
     else if (d === "pos" && r.words) {
       h = r.words.map(w => `<span class="w w-${w.p}">${esc(w.w)}</span>`).join("");
       legend = LEG.map(([k, n]) => `<span><i style="background:var(--pc-${k})"></i>${n}</span>`).join("");
@@ -317,7 +320,9 @@
 
   $("#segDisp").onclick = e => { const b = e.target.closest("button[data-d]"); if (b) setDisp(b.dataset.d) };
   $("#segAux").onclick = e => { const b = e.target.closest("button[data-x]"); if (b) toggleAux(b.dataset.x) };
-  function setDisp(d) { prefs.disp = d; savePrefs(); renderStudy() }
+  $("#shGap").onchange = e => { prefs.sh.gap = +e.target.value; savePrefs() };
+  $("#shRep").onchange = e => { prefs.sh.rep = +e.target.value; savePrefs() };
+  function setDisp(d) { dictOn = false; prefs.disp = d; savePrefs(); renderStudy() }
   function toggleAux(x) { prefs.aux[x] = !prefs.aux[x]; savePrefs(); renderStudy() }
   $("#stSel").onchange = async e => { const r = cur(); if (r) { r.status = e.target.value; await Store.put(r, "sentences") } };
 
@@ -325,8 +330,8 @@
   // 単位ごとの、ボタンの並び。aux = 補助(入り切り)、audio = 読み上げ
   const CARD = {
     word: { aux: [["ipa", "IPA", "I"], ["meaning", "意味", "M"], ["ex", "例文", "X"], ["toeic", "TOEIC", "T"]], audio: [["word", "▶ 発音を聞く", "スペース"], ["ex", "▶ 例文を聞く", "E"]], keys: "← → 前後 / スペース 発音を聞く / E 例文を聞く / S 止める / I M X T 補助" },
-    meaning: { aux: [["ipa", "IPA", "I"], ["meaning", "和訳", "M"], ["ex", "文の中で見る", "X"], ["tr", "文の和訳", "J"]], audio: [["word", "▶ この意味句を聞く", "スペース"], ["ex", "▶ 文を聞く", "E"]], keys: "← → 前後 / スペース この意味句を聞く / E 文を聞く / S 止める / I M X J 補助" },
-    iu: { aux: [["ipa", "IPA", "I"], ["ex", "文の中で見る", "X"], ["tr", "文の和訳", "J"]], audio: [["word", "▶ この IU を聞く", "スペース"], ["ex", "▶ 文を聞く", "E"]], keys: "← → 前後 / スペース この IU を聞く / E 文を聞く / S 止める / I X J 補助" }
+    meaning: { aux: [["ipa", "IPA", "I"], ["meaning", "和訳", "M"], ["ex", "文の中で見る", "X"], ["tr", "文の和訳", "J"]], audio: [["word", "▶ この意味句を聞く", "スペース"], ["ex", "▶ 文を聞く", "E"], ["shadow1", "🗣 聞いて、まねする", "R"]], keys: "← → 前後 / スペース この意味句を聞く / E 文を聞く / R 聞いて、まねする / S 止める / I M X J 補助" },
+    iu: { aux: [["ipa", "IPA", "I"], ["ex", "文の中で見る", "X"], ["tr", "文の和訳", "J"]], audio: [["word", "▶ この IU を聞く", "スペース"], ["ex", "▶ 文を聞く", "E"], ["shadow1", "🗣 聞いて、まねする", "R"]], keys: "← → 前後 / スペース この IU を聞く / E 文を聞く / R 聞いて、まねする / S 止める / I X J 補助" }
   };
   const btnHtml = (list, attr) => list.map(([k, t, key]) => `<button ${attr}="${k}" title="${key}">${t}</button>`).join("");
   const unitOfCard = r => (r.type === "meaning" || r.type === "iu" ? r.type : "word");
@@ -385,11 +390,16 @@
 
   // ---------- 音声(端末の読み上げ) ----------
   let playing = 0; // 世代番号。止める・次へ行くと増やして、前の読み上げを無効にする
-  function stopAudio() { playing++; try { speechSynthesis.cancel() } catch {} const r = cur(); if (r && tab === "study" && study.unit === "sentence") renderDisp(r) }
-  function say(text) {
+  let dictOn = false, dictChecked = false;
+  const sleep = (ms, me) => new Promise(res => { const t0 = Date.now(), iv = setInterval(() => { if (me !== playing || Date.now() - t0 >= ms) { clearInterval(iv); res() } }, 80) });
+  const sayTimed = async (text, rate) => { const t0 = performance.now(); await say(text, rate); return performance.now() - t0 };
+  const pst = msg => { const e = $(isCard(study.unit) ? "#wPstatus" : "#pstatus"); e.hidden = !msg; e.textContent = msg || "" };
+  async function countReview(r, kind) { r.review_count++; r.last_reviewed = today(); await Store.put(r, kind); }
+  function stopAudio() { playing++; pst(null); try { speechSynthesis.cancel() } catch {} const r = cur(); if (r && tab === "study" && study.unit === "sentence") renderDisp(r) }
+  function say(text, rate = prefs.rate) {
     return new Promise(res => {
       if (!("speechSynthesis" in window)) return res();
-      const u = new SpeechSynthesisUtterance(text); u.lang = "en-US"; u.rate = prefs.rate;
+      const u = new SpeechSynthesisUtterance(text); u.lang = "en-US"; u.rate = rate;
       const v = speechSynthesis.getVoices().find(x => /^en[-_]US/i.test(x.lang)) || speechSynthesis.getVoices().find(x => /^en/i.test(x.lang));
       if (v) u.voice = v;
       u.onend = u.onerror = () => res();
@@ -401,6 +411,13 @@
     if (!("speechSynthesis" in window)) return toast("この端末では、読み上げが使えません");
     stopAudio(); const me = playing;
     if (mode === "word") return say(r.text);
+    if (mode === "shadow1") { // 聞いて、まねする(意味句・IU)
+      pst("聞く…"); const ms = await sayTimed(r.text); if (me !== playing) return;
+      const wait = Practice.gap(ms, r.text, prefs.sh.gap, prefs.rate); pst(`声に出して、まねしてください…(${(wait / 1000).toFixed(1)}秒)`);
+      await sleep(wait, me); if (me === playing) pst(null); return;
+    }
+    if (mode === "dict") { dictOn ? dictEnd() : dictStart(); return }
+    if (mode === "shadow") return shadow(r, me);
     if (mode === "ex") { if (r.ex) await say(r.ex); else toast("例文がありません"); return }
     if (mode === "once") { await say(r.text); return }
     const ch = chunksOf(r);
@@ -411,6 +428,37 @@
     }
     if (me === playing) renderDisp(r);
   }
+  // シャドーイング: 区切り(IU があれば IU)ごとに、聞く → 同じ長さの無音(まねする時間)。区切りは、設定の回数だけ繰り返す
+  async function shadow(r, me) {
+    const ch = r.iu ? r.iu.map(x => x.t) : chunksOf(r), rep = prefs.sh.rep;
+    const want = r.iu ? "iu" : r.phrases ? "phrases" : r.slash ? "slash" : "full";
+    if (prefs.disp !== want) { prefs.disp = want; savePrefs(); renderStudy() }
+    for (let i = 0; i < ch.length; i++) for (let k = 1; k <= rep; k++) {
+      if (me !== playing) return;
+      renderDisp(r, i); pst(`聞く(${i + 1} / ${ch.length}${rep > 1 ? `・${k}回目` : ""})`);
+      const ms = await sayTimed(ch[i]); if (me !== playing) return;
+      const wait = Practice.gap(ms, ch[i], prefs.sh.gap, prefs.rate);
+      pst(`声に出して、まねしてください…(${(wait / 1000).toFixed(1)}秒)`);
+      await sleep(wait, me);
+    }
+    if (me === playing) { pst(null); renderDisp(r); await countReview(r, "sentences"); renderStudy(); toast("シャドーイングが終わりました(復習+1)") }
+  }
+
+  // 聞き取り練習: 英文を隠して聞き、書いて、語ごとに答え合わせ
+  function dictStart() { dictOn = true; dictChecked = false; $("#dIn").value = ""; $("#dRes").innerHTML = ""; renderStudy(); $("#dIn").focus(); const r = cur(); if (r) say(r.text) }
+  function dictEnd() { dictOn = false; stopAudio(); renderStudy() }
+  async function dictCheck() {
+    const r = cur(); if (!r) return;
+    const d = Practice.diff(r.text, $("#dIn").value);
+    const w = o => o.k === "ok" ? `<span class="d-w d-ok">${esc(o.t)}</span>` : o.k === "miss" ? `<span class="d-w d-miss">${esc(o.t)}</span>`
+      : o.k === "ext" ? `<span class="d-w d-ext">${esc(o.a)}</span>` : `<span class="d-w d-sub">${esc(o.t)}<small>${esc(o.a)}</small></span>`;
+    $("#dRes").innerHTML = `<span class="sc">正解 ${d.ok} / ${d.total} 語${d.ok === d.total && d.ops.every(o => o.k === "ok") ? "(全部合っています)" : ""} ・ 緑=合っていた / 赤の取り消し線=聞き取れなかった / 赤+小さい字=書き間違い / 波線=余分</span>${d.ops.map(w).join("")}<div class="sub">原文: ${esc(r.text)}</div>${r.ja ? `<div class="sub">${esc(r.ja)}</div>` : ""}`;
+    if (!dictChecked) { dictChecked = true; await countReview(r, "sentences"); $("#stInfo").textContent = `復習 ${r.review_count} 回 ・ 最終 ${r.last_reviewed}` } // 答え合わせをすると、復習1回
+  }
+  $("#dPlay").onclick = () => { stopAudio(); const r = cur(); if (r) say(r.text) };
+  $("#dSlow").onclick = () => { stopAudio(); const r = cur(); if (r) say(r.text, 0.7) };
+  $("#dEnd").onclick = dictEnd;
+  $("#dCheck").onclick = dictCheck;
   $("#segAudio").onclick = e => { const b = e.target.closest("button[data-a]"); if (b) play(b.dataset.a) };
   $("#segWAudio").onclick = e => { if (e.target.closest("#wStop")) return stopAudio(); const b = e.target.closest("button[data-a]"); if (b) play(b.dataset.a) };
   $("#btnStop").onclick = stopAudio;
@@ -425,13 +473,13 @@
     if (k === "s") return stopAudio();
     if (isCard(study.unit)) {
       const ax = { i: "ipa", x: "ex", t: "toeic", j: "tr" }, has = n => CARD[study.unit].aux.some(x => x[0] === n);
-      if (k === " ") { e.preventDefault(); play("word") } else if (k === "e") play("ex");
+      if (k === " ") { e.preventDefault(); play("word") } else if (k === "e") play("ex"); else if (k === "r" && study.unit !== "word") play("shadow1");
       else if (k === "m") revealMeaning(!wReveal);
       else if (ax[k] && has(ax[k])) { prefs.waux[ax[k]] = !prefs.waux[ax[k]]; savePrefs(); renderStudy() }
       return;
     }
-    const map = { "1": "full", "2": "slash", "3": "phrases", "4": "pos" }, ax = { i: "ipa", j: "ja", g: "grammar", v: "vocab", t: "toeic", q: "quiz" };
-    if (k === " ") { e.preventDefault(); play("once") } else if (k === "c") play("chunks");
+    const map = { "1": "full", "2": "slash", "3": "phrases", "4": "pos", "5": "iu" }, ax = { i: "ipa", j: "ja", g: "grammar", v: "vocab", t: "toeic", q: "quiz" };
+    if (k === " ") { e.preventDefault(); play("once") } else if (k === "c") play("chunks"); else if (k === "r") play("shadow"); else if (k === "d") play("dict");
     else if (map[k]) setDisp(map[k]); else if (ax[k]) toggleAux(ax[k]);
   });
 
@@ -509,7 +557,7 @@
       await AI.load();
       rows = await Store.all("sentences"); words = await Store.all("words"); chunks = await Store.all("chunks");
       const p = await Store.getMeta("prefs", null);
-      if (p && typeof p === "object") prefs = { ...prefs, ...p, aux: { ...prefs.aux, ...(p.aux || {}) }, waux: { ...prefs.waux, ...(p.waux || {}) } };
+      if (p && typeof p === "object") prefs = { ...prefs, ...p, aux: { ...prefs.aux, ...(p.aux || {}) }, waux: { ...prefs.waux, ...(p.waux || {}) }, sh: { ...prefs.sh, ...(p.sh || {}) } };
       const s = await Store.getMeta("study", null);
       if (s && Array.isArray(s.ids)) {
         const u = UN[s.unit] ? s.unit : "sentence", ok = new Set(tbl(u).map(r => r.id));

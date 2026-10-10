@@ -152,6 +152,7 @@
           <button id="wNext" aria-label="次へ">→</button>
         </div>
         <div id="wDisp"></div>
+        <div id="wPstatus" class="pstatus" hidden></div>
         <div id="wAux"></div>
         <div class="row">
           <label class="inl">状態
@@ -170,14 +171,23 @@
           <button data-d="slash" title="2">スラッシュ</button>
           <button data-d="phrases" title="3">区切りの形</button>
           <button data-d="pos" title="4">品詞の色</button>
+          <button data-d="iu" title="5">IU</button>
         </div>
         <div class="seg" id="segAudio" role="group" aria-label="音声">
           <button data-a="once" title="スペース">▶ 1回聞く</button>
           <button data-a="chunks" title="C">▶ 区切りごと</button>
+          <button data-a="shadow" title="R">🗣 シャドーイング</button>
+          <button data-a="dict" title="D">✍ 聞き取り</button>
           <button id="btnStop" title="S">■</button>
         </div>
         <label class="inl">速さ
           <select id="rate"><option value="0.7">0.7</option><option value="0.85">0.85</option><option value="1" selected>1.0</option><option value="1.15">1.15</option></select>
+        </label>
+        <label class="inl">間
+          <select id="shGap" title="シャドーイングで、まねする時間(読み上げの長さの何倍か)"><option value="0.8">0.8倍</option><option value="1" selected>1倍</option><option value="1.5">1.5倍</option><option value="2">2倍</option></select>
+        </label>
+        <label class="inl">繰り返し
+          <select id="shRep" title="シャドーイングで、同じ区切りを何回繰り返すか"><option value="1" selected>1回</option><option value="2">2回</option><option value="3">3回</option></select>
         </label>
         <div class="seg aux" id="segAux" role="group" aria-label="補助">
           <button data-x="ipa" title="I">IPA</button>
@@ -196,6 +206,14 @@
           <button id="btnNext" aria-label="次へ">→</button>
         </div>
         <div id="disp"></div>
+        <div id="pstatus" class="pstatus" hidden></div>
+        <div id="dict" class="dict" hidden>
+          <div class="sub">英文を隠しています。聞いて、聞こえた英文を書いてください。</div>
+          <div class="row wrap"><button id="dPlay" class="pri">▶ 聞く</button><button id="dSlow">▶ ゆっくり聞く</button><button id="dEnd">やめる</button></div>
+          <textarea id="dIn" rows="3" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="聞こえた英文を、ここに書く"></textarea>
+          <div class="row"><button id="dCheck" class="pri">答え合わせ</button></div>
+          <div id="dRes"></div>
+        </div>
         <div id="legend" class="legend"></div>
         <div id="aux"></div>
         <div class="row">
@@ -205,7 +223,7 @@
           <span id="stInfo" class="sub"></span>
         </div>
       </article>
-      <p class="sub keys">ショートカット: ← → 前後 / スペース 1回聞く / C 区切りごと / S 止める / 1〜4 表示 / I J G V T Q 補助</p>
+      <p class="sub keys">ショートカット: ← → 前後 / スペース 1回聞く / C 区切りごと / R シャドーイング / D 聞き取り / S 止める / 1〜5 表示 / I J G V T Q 補助</p>
     </div>
   </section>
 </main>
@@ -224,6 +242,7 @@
 
 <script src="js/clean.js"></script>
 <script src="js/store.js"></script>
+<script src="js/practice.js"></script>
 <script src="js/ai.js"></script>
 <script src="vendor/qrcode.js"></script>
 <script src="js/sync.js"></script>

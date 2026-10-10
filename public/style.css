@@ -97,3 +97,13 @@ summary{cursor:pointer;color:var(--sub);margin-top:8px}
 .sect h3{font-size:14px;margin:0 0 4px}
 #syncStatus{margin-left:auto}
 code{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:0 4px;font-size:.9em}
+.pstatus{margin:6px 0;padding:6px 12px;border-radius:8px;background:var(--hl);font-size:14px}
+.dict{margin:8px 0;padding:10px 12px;border:1px dashed var(--line);border-radius:10px}
+#dRes{margin-top:10px;font-size:19px;line-height:2}
+#dRes .sc{font-size:14px;color:var(--sub);display:block;margin-bottom:4px}
+.d-ok{color:var(--pc-adj)}
+.d-miss{color:var(--danger);text-decoration:line-through}
+.d-ext{color:var(--pc-prep);text-decoration:underline wavy}
+.d-sub{color:var(--danger)}
+.d-sub small{display:block;font-size:12px;color:var(--sub);line-height:1.2}
+.d-w{display:inline-block;margin-right:.35em;vertical-align:top}
