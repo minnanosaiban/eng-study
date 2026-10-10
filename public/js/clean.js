@@ -165,12 +165,13 @@ const Clean = (() => {
       id: uid(), type: "word", text, ipa: ipa(o.ipa), ja: clip(o.meaning ?? o.ja, 300), pos: clip(o.pos, 40),
       freq, level: level(o.level), note: clip(o.note, 500), toeic: clip(o.toeic, 500), ex: clip(o.ex, 500),
       groups: [...new Set((Array.isArray(o.groups) ? o.groups : []).map(g => clip(g, 40)).filter(Boolean))].slice(0, 20),
-      status: "new", review_count: 0, last_reviewed: null, added: Date.now()
+      status: "new", review_count: 0, last_reviewed: null, mistakes: [], added: Date.now()
     };
     if (keepState) {
       if (has(STATUS, o.status)) w.status = o.status;
       w.review_count = Math.max(0, Math.floor(+o.review_count || 0));
       w.last_reviewed = date(o.last_reviewed);
+      w.mistakes = mistakes(o.mistakes);
     }
     return w;
   }

@@ -10,7 +10,7 @@
   let sel = { sentence: new Set(), meaning: new Set(), iu: new Set(), word: new Set() }; // 単位ごとの選択中の id
   let unit = "sentence";                           // 学習対象選択で見ている単位
   let study = { unit: "sentence", ids: [], i: 0 }; // 学習セット
-  let prefs = { disp: "full", aux: { ipa: false, ja: true, grammar: false, vocab: false, toeic: false, quiz: false, rec: false }, waux: { ipa: true, ex: true, toeic: false, tr: false }, sh: { gap: 1, rep: 1 }, rate: 1 };
+  let prefs = { disp: "full", aux: { ipa: false, ja: true, grammar: false, vocab: false, toeic: false, quiz: false, rec: false }, waux: { ipa: true, ex: true, toeic: false, tr: false, quiz: false }, sh: { gap: 1, rep: 1 }, rate: 1 };
   let tab = "reg", wReveal = false;
   const UN = { sentence: { kind: "sentences", name: "英文" }, meaning: { kind: "chunks", name: "意味句" }, iu: { kind: "chunks", name: "IU" }, word: { kind: "words", name: "単語" } };
   const tbl = u => (u === "word" ? words : u === "sentence" ? rows : chunks.filter(c => c.type === u));
@@ -181,7 +181,7 @@
       (!g || (r.groups || []).includes(g)) &&
       (!st || (st === "not-mastered" ? r.status !== "mastered" : r.status === st)) &&
       (!lv || String(r.level) === lv) &&
-      (unit !== "sentence" || !$("#fmis").value || (r.mistakes || []).length > 0));
+      ((unit !== "sentence" && unit !== "word") || !$("#fmis").value || (r.mistakes || []).length > 0));
   }
   function renderGroupSelect() {
     const cur = $("#fgroup").value;
@@ -201,7 +201,7 @@
   function renderPick() {
     document.querySelectorAll("#segUnit button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.u === unit)));
     document.querySelectorAll(".chunk-only").forEach(e => { e.hidden = !(unit === "meaning" || unit === "iu") });
-    document.querySelectorAll(".sent-only").forEach(e => { e.hidden = unit !== "sentence" });
+    document.querySelectorAll(".sent-only").forEach(e => { e.hidden = unit !== "sentence" && unit !== "word" });
     renderGroupSelect();
     const list = filtered(), n = tbl(unit).length;
     $("#pickList").innerHTML = list.length ? list.map(pickRow).join("")
@@ -236,7 +236,7 @@
     if (!r) return;
     if (isW) renderCard(r); else renderSentence(r);
   }
-  function go(d) { const n = study.i + d; if (n < 0 || n >= study.ids.length) return; stopAudio(); dictOn = false; study.i = n; wReveal = false; saveStudy(); renderStudy() }
+  function go(d) { const n = study.i + d; if (n < 0 || n >= study.ids.length) return; stopAudio(); dictOn = false; wq = null; study.i = n; wReveal = false; saveStudy(); renderStudy() }
   $("#btnPrev").onclick = $("#wPrev").onclick = () => go(-1);
   $("#btnNext").onclick = $("#wNext").onclick = () => go(1);
   function setRate(v) { prefs.rate = +v; $("#rate").value = $("#wrate").value = String(prefs.rate); savePrefs() }
@@ -341,7 +341,7 @@
   // ---------- 単語・意味句・IU の学習(1枚のカード) ----------
   // 単位ごとの、ボタンの並び。aux = 補助(入り切り)、audio = 読み上げ
   const CARD = {
-    word: { aux: [["ipa", "IPA", "I"], ["meaning", "意味", "M"], ["ex", "例文", "X"], ["toeic", "TOEIC", "T"]], audio: [["word", "▶ 発音を聞く", "スペース"], ["ex", "▶ 例文を聞く", "E"]], keys: "← → 前後 / スペース 発音を聞く / E 例文を聞く / S 止める / I M X T 補助" },
+    word: { aux: [["ipa", "IPA", "I"], ["meaning", "意味", "M"], ["ex", "例文", "X"], ["toeic", "TOEIC", "T"], ["quiz", "4択", "Q"]], audio: [["word", "▶ 発音を聞く", "スペース"], ["ex", "▶ 例文を聞く", "E"]], keys: "← → 前後 / スペース 発音を聞く / E 例文を聞く / S 止める / I M X T Q 補助" },
     meaning: { aux: [["ipa", "IPA", "I"], ["meaning", "和訳", "M"], ["ex", "文の中で見る", "X"], ["tr", "文の和訳", "J"]], audio: [["word", "▶ この意味句を聞く", "スペース"], ["ex", "▶ 文を聞く", "E"], ["shadow1", "🗣 聞いて、まねする", "R"]], keys: "← → 前後 / スペース この意味句を聞く / E 文を聞く / R 聞いて、まねする / S 止める / I M X J 補助" },
     iu: { aux: [["ipa", "IPA", "I"], ["ex", "文の中で見る", "X"], ["tr", "文の和訳", "J"]], audio: [["word", "▶ この IU を聞く", "スペース"], ["ex", "▶ 文を聞く", "E"], ["shadow1", "🗣 聞いて、まねする", "R"]], keys: "← → 前後 / スペース この IU を聞く / E 文を聞く / R 聞いて、まねする / S 止める / I X J 補助" }
   };
@@ -367,10 +367,12 @@
     $("#wrate").value = String(prefs.rate);
     $("#wStSel").value = w.status;
     $("#wDone").hidden = u !== "iu";
-    $("#wStInfo").textContent = w.review_count ? `復習 ${w.review_count} 回 ・ 最終 ${w.last_reviewed || "-"}` : "";
+    $("#wStInfo").textContent = infoText(w);
     const tags = (w.groups || []).map(g => `<span class="tag">${esc(g)}</span>`).join("");
     const lv = w.level ? `<span class="tag">${w.level}</span>` : "";
     const ipa = a.ipa && w.ipa ? `<div class="ipa">/${esc(w.ipa)}/</div>` : "";
+    if (!chunk && a.quiz) { if (!wq || wq.id !== w.id) wq = { id: w.id, q: WordQuiz.make(w, words, prefs.wqKind || undefined), done: false } } else if (!chunk) wq = null;
+    const hide = !chunk && a.quiz && wq && wq.q && !wq.done; // 答えるまでは、答えが見えるもの(単語・意味・例文)を隠す
     let h = "";
     if (chunk) {
       $("#wDisp").innerHTML = `<div class="word" style="font-size:24px">${esc(w.text)}</div>${ipa}<div class="sub meta"><span class="tag">${Clean.CTYPE[u]}</span><span class="tag">${w.idx + 1}/${w.n}番目</span><span class="tag">${w.text.split(" ").length}語</span>${lv}${tags}</div>`;
@@ -378,13 +380,43 @@
       if (a.ex) h += `<div class="blk"><h3>文の中で</h3>${inContext(w)}</div>`;
       if (a.tr) { const p = rowOf(w.ex); h += `<div class="blk"><h3>文の和訳</h3>${p && p.ja ? esc(p.ja) : '<span class="sub">なし</span>'}</div>` }
     } else {
-      $("#wDisp").innerHTML = `<div class="word">${esc(w.text)}</div>${ipa}<div class="sub meta">${esc(w.pos)} ${"★".repeat(w.freq || 0)} ${lv}${tags}</div>`;
-      h += `<div class="blk">${wReveal ? `<h3>意味</h3>${esc(w.ja) || '<span class="sub">なし</span>'}${w.note ? `<div class="sub">${esc(w.note)}</div>` : ""}` : `<button class="hide-btn" id="wShow">意味を見る(M)</button>`}</div>`;
-      if (a.ex) h += `<div class="blk"><h3>例文</h3>${w.ex ? esc(w.ex) : '<span class="sub">なし</span>'}</div>`;
-      if (a.toeic) h += `<div class="blk"><h3>TOEIC での使われ方</h3>${w.toeic ? esc(w.toeic) : '<span class="sub">なし</span>'}</div>`;
+      $("#wDisp").innerHTML = `<div class="word">${hide && wq.q.kind !== "en2ja" ? "？" : esc(w.text)}</div>${hide && wq.q.kind !== "en2ja" ? "" : ipa}<div class="sub meta">${esc(w.pos)} ${"★".repeat(w.freq || 0)} ${lv}${tags}</div>`;
+      if (!hide) h += `<div class="blk">${wReveal ? `<h3>意味</h3>${esc(w.ja) || '<span class="sub">なし</span>'}${w.note ? `<div class="sub">${esc(w.note)}</div>` : ""}` : `<button class="hide-btn" id="wShow">意味を見る(M)</button>`}</div>`;
+      if (a.ex && !hide) h += `<div class="blk"><h3>例文</h3>${w.ex ? esc(w.ex) : '<span class="sub">なし</span>'}</div>`;
+      if (a.toeic && !hide) h += `<div class="blk"><h3>TOEIC での使われ方</h3>${w.toeic ? esc(w.toeic) : '<span class="sub">なし</span>'}</div>`;
     }
+    if (!chunk && a.quiz) h += wqHtml(w);
     $("#wAux").innerHTML = h;
   }
+  // ---------- 単語の4択(単語の表から、機械的に作る) ----------
+  let wq = null; // { id, q, done }
+  function wqHtml(w) {
+    const opt = Object.entries(WordQuiz.KINDS).map(([k, t]) => `<option value="${k}" ${prefs.wqKind === k ? "selected" : ""}>${t}</option>`).join("");
+    const head = `<h3>4択問題</h3><label class="inl">形 <select id="wqKind"><option value="">自動</option>${opt}</select></label>`;
+    const q = wq && wq.q;
+    if (!q) return `<div class="blk">${head}<p class="sub">問題を作れません(誤答にする単語が、4語以上要ります。意味が空の単語は、意味の問題を作れません)。</p></div>`;
+    const ask = q.kind === "en2ja" ? `「<b>${esc(q.prompt)}</b>」${q.ipa ? ` <span class="ipa">/${esc(q.ipa)}/</span>` : ""} の意味は?`
+      : q.kind === "ja2en" ? `「<b>${esc(q.prompt)}</b>」を英語で言うと?`
+      : `${esc(q.prompt)}${q.hint ? `<div class="sub">意味: ${esc(q.hint)}</div>` : ""}`;
+    return `<div class="blk">${head}<div style="margin:6px 0">${ask}</div>${q.choices.map((c, i) => `<button class="choice" data-wq="${i}">${"ABCD"[i]}. ${esc(c)}</button>`).join("")}<div id="wqRes" class="sub"></div><div class="row"><button id="wqNext" class="sm">次の問題</button></div></div>`;
+  }
+  async function wqAnswer(i) {
+    const w = cur(); if (!w || !wq || !wq.q || wq.done || wq.id !== w.id) return;
+    const ok = i === wq.q.answer; wq.done = true;
+    document.querySelectorAll("[data-wq]").forEach(x => { if (+x.dataset.wq === wq.q.answer) x.classList.add("ok"); else if (+x.dataset.wq === i) x.classList.add("ng") });
+    await countReview(w, "words"); // 答えると、復習1回
+    if (!ok) { await addMistake(w, "語彙", "quiz", "words"); toast("間違いを記録しました(分類: 語彙)") }
+    renderCard(w); // 答えたあとは、意味・例文も見せる(選んだ結果は、そのまま残す)
+    document.querySelectorAll("[data-wq]").forEach(x => { if (+x.dataset.wq === wq.q.answer) x.classList.add("ok"); else if (+x.dataset.wq === i && !ok) x.classList.add("ng"); x.disabled = true });
+    $("#wqRes").textContent = (ok ? "正解。" : "不正解。") + "「" + w.text + "」= " + (w.ja || "");
+  }
+  function wqNext() { const w = cur(); if (!w) return; wq = { id: w.id, q: WordQuiz.make(w, words, prefs.wqKind || undefined), done: false }; renderCard(w) }
+  $("#wAux").addEventListener("click", e => {
+    const b = e.target.closest("[data-wq]"); if (b) wqAnswer(+b.dataset.wq);
+    else if (e.target.closest("#wqNext")) wqNext();
+  });
+  $("#wAux").addEventListener("change", e => { if (e.target.id === "wqKind") { prefs.wqKind = e.target.value; savePrefs(); wqNext() } });
+
   const cardKind = () => UN[study.unit].kind;
   async function revealMeaning(on) {
     const w = cur(); if (!w || w.type === "iu") return;
@@ -483,7 +515,7 @@
     if (k === "arrowright") return go(1);
     if (k === "s") return stopAudio();
     if (isCard(study.unit)) {
-      const ax = { i: "ipa", x: "ex", t: "toeic", j: "tr" }, has = n => CARD[study.unit].aux.some(x => x[0] === n);
+      const ax = { i: "ipa", x: "ex", t: "toeic", j: "tr", q: "quiz" }, has = n => CARD[study.unit].aux.some(x => x[0] === n);
       if (k === " ") { e.preventDefault(); play("word") } else if (k === "e") play("ex"); else if (k === "r" && study.unit !== "word") play("shadow1");
       else if (k === "m") revealMeaning(!wReveal);
       else if (ax[k] && has(ax[k])) { prefs.waux[ax[k]] = !prefs.waux[ax[k]]; savePrefs(); renderStudy() }
@@ -506,14 +538,14 @@
     e[u] = (e[u] || 0) + 1; Store.setMeta("log", Stats.prune(reviewLog)).catch(() => {});
   }
   // 間違いを記録する(分類・日付・どこで間違えたか)
-  async function addMistake(r, cat, src) { (r.mistakes ||= []).push({ cat: Clean.catOf(cat), date: Stats.ymd(), src }); await Store.put(r, "sentences") }
+  async function addMistake(r, cat, src, kind = "sentences") { (r.mistakes ||= []).push({ cat: Clean.catOf(cat), date: Stats.ymd(), src }); await Store.put(r, kind) }
   const SRC = { quiz: "4択", dict: "聞き取り", manual: "手動" };
   const infoText = r => [r.review_count ? `復習 ${r.review_count} 回 ・ 最終 ${r.last_reviewed || "-"}` : "", (r.mistakes || []).length ? `間違い ${r.mistakes.length} 件` : ""].filter(Boolean).join(" ・ ");
 
   // 学習セットを作って、学習を始める
   async function startSet(u, ids) {
     if (!ids.length) return toast("対象がありません");
-    study = { unit: u, ids, i: 0 }; wReveal = false; dictOn = false; await saveStudy(); setTab("study");
+    study = { unit: u, ids, i: 0 }; wReveal = false; dictOn = false; wq = null; await saveStudy(); setTab("study");
   }
 
   function renderRec() {
@@ -537,6 +569,8 @@
     const list = cat ? rows.filter(r => cat.ids.includes(r.id)) : [];
     $("#recWeakList").innerHTML = cat ? `<div class="row"><b>${esc(weakCat)}</b><span class="sub">の英文 ${list.length} 文</span><span class="grow"></span><button id="wkGo" class="pri">この分類の英文を復習する</button></div>`
       + list.map(r => `<div class="row-i"><span class="t">${esc(r.text)}<span class="m"><br>${esc(r.ja)}</span></span></div>`).join("") : "";
+    const wm = Stats.mistaken(words, weakDays || null);
+    $("#recWordMis").innerHTML = wm.length ? `<span class="sub">単語の間違い(語彙): ${wm.length} 語(上の期間)</span><span class="grow"></span><button id="wmGo">間違えた単語を復習する</button>` : '<span class="sub">この期間に、間違えた単語は、ありません。</span>';
     $("#rvMisInfo").textContent = `${Stats.mistaken(rows, weakDays || null).length} 文`;
   }
   $("#segWeak").onclick = e => { const b = e.target.closest("button[data-w]"); if (b) { weakDays = +b.dataset.w; weakCat = null; renderRec() } };
@@ -550,6 +584,7 @@
     const u = $("#rvUnit").value, n = Math.max(1, Math.min(200, +$("#rvN").value || 10));
     startSet(u, Stats.reviewOrder(tbl(u), n).map(r => r.id));
   };
+  $("#recWordMis").onclick = e => { if (e.target.closest("#wmGo")) startSet("word", Stats.mistaken(words, weakDays || null).map(w => w.id)) };
   $("#rvMis").onclick = () => startSet("sentence", Stats.mistaken(rows, weakDays || null).map(r => r.id));
 
   // ---------- AI で解析(Gemini API / コピペモード) ----------
