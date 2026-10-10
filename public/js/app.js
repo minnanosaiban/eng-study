@@ -2,7 +2,7 @@
 (() => {
   const $ = s => document.querySelector(s);
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const today = () => new Date().toISOString().slice(0, 10);
+  const today = () => Stats.ymd(); // 端末の日付(UTC ではなく)
 
   let rows = [];                                   // 英文の表
   let words = [];                                  // 単語の表
@@ -10,7 +10,7 @@
   let sel = { sentence: new Set(), meaning: new Set(), iu: new Set(), word: new Set() }; // 単位ごとの選択中の id
   let unit = "sentence";                           // 学習対象選択で見ている単位
   let study = { unit: "sentence", ids: [], i: 0 }; // 学習セット
-  let prefs = { disp: "full", aux: { ipa: false, ja: true, grammar: false, vocab: false, toeic: false, quiz: false }, waux: { ipa: true, ex: true, toeic: false, tr: false }, sh: { gap: 1, rep: 1 }, rate: 1 };
+  let prefs = { disp: "full", aux: { ipa: false, ja: true, grammar: false, vocab: false, toeic: false, quiz: false, rec: false }, waux: { ipa: true, ex: true, toeic: false, tr: false }, sh: { gap: 1, rep: 1 }, rate: 1 };
   let tab = "reg", wReveal = false;
   const UN = { sentence: { kind: "sentences", name: "英文" }, meaning: { kind: "chunks", name: "意味句" }, iu: { kind: "chunks", name: "IU" }, word: { kind: "words", name: "単語" } };
   const tbl = u => (u === "word" ? words : u === "sentence" ? rows : chunks.filter(c => c.type === u));
@@ -112,6 +112,7 @@
     if (t === "pick") renderPick();
     if (t === "study") renderStudy();
     if (t === "sync") Sync.render();
+    if (t === "rec") renderRec();
     window.scrollTo(0, 0);
   }
   $("#tabs").onclick = e => { const b = e.target.closest("button[data-tab]"); if (b) setTab(b.dataset.tab) };
@@ -179,7 +180,8 @@
       (!q || r.text.toLowerCase().includes(q) || (r.ja || "").includes(q)) &&
       (!g || (r.groups || []).includes(g)) &&
       (!st || (st === "not-mastered" ? r.status !== "mastered" : r.status === st)) &&
-      (!lv || String(r.level) === lv));
+      (!lv || String(r.level) === lv) &&
+      (unit !== "sentence" || !$("#fmis").value || (r.mistakes || []).length > 0));
   }
   function renderGroupSelect() {
     const cur = $("#fgroup").value;
@@ -199,6 +201,7 @@
   function renderPick() {
     document.querySelectorAll("#segUnit button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.u === unit)));
     document.querySelectorAll(".chunk-only").forEach(e => { e.hidden = !(unit === "meaning" || unit === "iu") });
+    document.querySelectorAll(".sent-only").forEach(e => { e.hidden = unit !== "sentence" });
     renderGroupSelect();
     const list = filtered(), n = tbl(unit).length;
     $("#pickList").innerHTML = list.length ? list.map(pickRow).join("")
@@ -211,7 +214,7 @@
   }
   $("#segUnit").onclick = e => { const b = e.target.closest("button[data-u]"); if (b) { unit = b.dataset.u; renderPick() } };
   $("#pickList").onchange = e => { const c = e.target.closest("input[data-id]"); if (!c) return; c.checked ? sel[unit].add(c.dataset.id) : sel[unit].delete(c.dataset.id); pickInfo() };
-  ["#fq", "#fgroup", "#fstatus", "#flevel", "#flen", "#fpos"].forEach(s => $(s).addEventListener("input", renderPick));
+  ["#fq", "#fgroup", "#fstatus", "#flevel", "#flen", "#fpos", "#fmis"].forEach(s => $(s).addEventListener("input", renderPick));
   $("#btnAll").onclick = () => { filtered().forEach(r => sel[unit].add(r.id)); renderPick() };
   $("#btnNone").onclick = () => { sel[unit].clear(); renderPick() };
   $("#btnRand").onclick = () => {
@@ -261,7 +264,7 @@
     $("#shGap").value = String(prefs.sh.gap); $("#shRep").value = String(prefs.sh.rep);
     $("#dict").hidden = !dictOn; $("#disp").hidden = dictOn; $("#legend").hidden = dictOn;
     $("#stSel").value = r.status;
-    $("#stInfo").textContent = r.review_count ? `復習 ${r.review_count} 回 ・ 最終 ${r.last_reviewed || "-"}` : "";
+    $("#stInfo").textContent = infoText(r);
     renderDisp(r); renderAux(r);
   }
 
@@ -298,11 +301,19 @@
       const q = r.quiz;
       h += `<div class="blk"><h3>4択問題</h3>${q ? `<div>${esc(q.question)}</div>${q.choices.map((c, i) => `<button class="choice" data-q="${i}">${"ABCD"[i]}. ${esc(c)}</button>`).join("")}<div id="qres" class="sub"></div>` : '<span class="sub">なし</span>'}</div>`;
     }
+    if (a.rec) {
+      const ms = r.mistakes || [];
+      h += '<div class="blk"><h3>間違いの記録</h3><div class="mis">' + (ms.length ? ms.map((m, i) => '<span class="tag">' + esc(m.cat) + ' ・ ' + esc(m.date || '日付なし') + ' ・ ' + esc(SRC[m.src] || '手動') + '<button data-mdel="' + i + '" title="この記録を消す" aria-label="この記録を消す">×</button></span>').join('') : '<span class="sub">間違いの記録は、ありません。</span>') + '</div>'
+        + '<div class="row"><select id="mCat" aria-label="分類">' + Clean.CATS.map(c => '<option>' + esc(c) + '</option>').join('') + '</select><button id="mAdd">＋ 間違いを記録</button></div></div>';
+    }
     $("#aux").innerHTML = h;
   }
 
   $("#aux").onclick = async e => {
     const r = cur();
+    const md = e.target.closest("[data-mdel]");
+    if (md && r) { r.mistakes.splice(+md.dataset.mdel, 1); await Store.put(r, "sentences"); renderAux(r); $("#stInfo").textContent = infoText(r); return }
+    if (e.target.closest("#mAdd") && r) { await addMistake(r, $("#mCat").value, "manual"); renderAux(r); $("#stInfo").textContent = infoText(r); return }
     const add = e.target.closest("button[data-wadd],#vAddAll");
     if (add && r) { // 単語・熟語から、単語の表へ
       const all = Clean.wordsOf(r), list = add.id === "vAddAll" ? all : [all[+add.dataset.wadd]];
@@ -314,8 +325,9 @@
     b.parentElement.dataset.done = "1";
     b.parentElement.querySelectorAll("button[data-q]").forEach(x => { if (+x.dataset.q === r.quiz.answer) x.classList.add("ok"); else if (x === b) x.classList.add("ng") });
     $("#qres").textContent = (ok ? "正解。" : "不正解。") + r.quiz.explanation;
-    r.review_count++; r.last_reviewed = today(); await Store.put(r, "sentences"); // 4択に答えると、復習1回
-    $("#stInfo").textContent = `復習 ${r.review_count} 回 ・ 最終 ${r.last_reviewed}`;
+    await countReview(r, "sentences"); // 4択に答えると、復習1回
+    if (!ok) { await addMistake(r, r.quiz.type, "quiz"); toast("間違いを記録しました(分類: " + Clean.catOf(r.quiz.type) + ")"); if (prefs.aux.rec) renderAux(r) } // 間違えたら、分類つきで記録
+    $("#stInfo").textContent = infoText(r);
   };
 
   $("#segDisp").onclick = e => { const b = e.target.closest("button[data-d]"); if (b) setDisp(b.dataset.d) };
@@ -376,7 +388,7 @@
   const cardKind = () => UN[study.unit].kind;
   async function revealMeaning(on) {
     const w = cur(); if (!w || w.type === "iu") return;
-    if (on && !wReveal) { w.review_count++; w.last_reviewed = today(); await Store.put(w, cardKind()) } // 隠した意味を見る = 復習1回
+    if (on && !wReveal) await countReview(w, cardKind()); // 隠した意味を見る = 復習1回
     wReveal = on; renderCard(w);
   }
   $("#wAux").onclick = e => { if (e.target.closest("#wShow")) revealMeaning(true) };
@@ -386,7 +398,7 @@
     prefs.waux[b.dataset.x] = !prefs.waux[b.dataset.x]; savePrefs(); renderStudy();
   };
   $("#wStSel").onchange = async e => { const w = cur(); if (w) { w.status = e.target.value; await Store.put(w, cardKind()) } };
-  $("#wDone").onclick = async () => { const w = cur(); if (!w) return; w.review_count++; w.last_reviewed = today(); await Store.put(w, cardKind()); renderCard(w) }; // IU は、声に出して練習したら、復習1回
+  $("#wDone").onclick = async () => { const w = cur(); if (!w) return; await countReview(w, cardKind()); renderCard(w) }; // IU は、声に出して練習したら、復習1回
 
   // ---------- 音声(端末の読み上げ) ----------
   let playing = 0; // 世代番号。止める・次へ行くと増やして、前の読み上げを無効にする
@@ -394,7 +406,6 @@
   const sleep = (ms, me) => new Promise(res => { const t0 = Date.now(), iv = setInterval(() => { if (me !== playing || Date.now() - t0 >= ms) { clearInterval(iv); res() } }, 80) });
   const sayTimed = async (text, rate) => { const t0 = performance.now(); await say(text, rate); return performance.now() - t0 };
   const pst = msg => { const e = $(isCard(study.unit) ? "#wPstatus" : "#pstatus"); e.hidden = !msg; e.textContent = msg || "" };
-  async function countReview(r, kind) { r.review_count++; r.last_reviewed = today(); await Store.put(r, kind); }
   function stopAudio() { playing++; pst(null); try { speechSynthesis.cancel() } catch {} const r = cur(); if (r && tab === "study" && study.unit === "sentence") renderDisp(r) }
   function say(text, rate = prefs.rate) {
     return new Promise(res => {
@@ -453,7 +464,7 @@
     const w = o => o.k === "ok" ? `<span class="d-w d-ok">${esc(o.t)}</span>` : o.k === "miss" ? `<span class="d-w d-miss">${esc(o.t)}</span>`
       : o.k === "ext" ? `<span class="d-w d-ext">${esc(o.a)}</span>` : `<span class="d-w d-sub">${esc(o.t)}<small>${esc(o.a)}</small></span>`;
     $("#dRes").innerHTML = `<span class="sc">正解 ${d.ok} / ${d.total} 語${d.ok === d.total && d.ops.every(o => o.k === "ok") ? "(全部合っています)" : ""} ・ 緑=合っていた / 赤の取り消し線=聞き取れなかった / 赤+小さい字=書き間違い / 波線=余分</span>${d.ops.map(w).join("")}<div class="sub">原文: ${esc(r.text)}</div>${r.ja ? `<div class="sub">${esc(r.ja)}</div>` : ""}`;
-    if (!dictChecked) { dictChecked = true; await countReview(r, "sentences"); $("#stInfo").textContent = `復習 ${r.review_count} 回 ・ 最終 ${r.last_reviewed}` } // 答え合わせをすると、復習1回
+    if (!dictChecked) { dictChecked = true; await countReview(r, "sentences"); if (d.ops.some(o => o.k !== "ok")) await addMistake(r, "聞き取り", "dict"); $("#stInfo").textContent = infoText(r); if (prefs.aux.rec) renderAux(r) } // 答え合わせをすると、復習1回
   }
   $("#dPlay").onclick = () => { stopAudio(); const r = cur(); if (r) say(r.text) };
   $("#dSlow").onclick = () => { stopAudio(); const r = cur(); if (r) say(r.text, 0.7) };
@@ -478,10 +489,68 @@
       else if (ax[k] && has(ax[k])) { prefs.waux[ax[k]] = !prefs.waux[ax[k]]; savePrefs(); renderStudy() }
       return;
     }
-    const map = { "1": "full", "2": "slash", "3": "phrases", "4": "pos", "5": "iu" }, ax = { i: "ipa", j: "ja", g: "grammar", v: "vocab", t: "toeic", q: "quiz" };
+    const map = { "1": "full", "2": "slash", "3": "phrases", "4": "pos", "5": "iu" }, ax = { i: "ipa", j: "ja", g: "grammar", v: "vocab", t: "toeic", q: "quiz", k: "rec" };
     if (k === " ") { e.preventDefault(); play("once") } else if (k === "c") play("chunks"); else if (k === "r") play("shadow"); else if (k === "d") play("dict");
     else if (map[k]) setDisp(map[k]); else if (ax[k]) toggleAux(ax[k]);
   });
+
+  // ---------- 記録と復習 ----------
+  let reviewLog = {};          // { "2026-10-10": {sentence, word, chunk} } 日ごとの復習回数(この端末だけ。同期しない)
+  let weakDays = 7, weakCat = null;
+  const KIND_UNIT = { sentences: "sentence", words: "word", chunks: "chunk" };
+
+  // 復習を1回数える(回数・最終復習日・日ごとの記録)
+  async function countReview(r, kind) {
+    r.review_count++; r.last_reviewed = today(); await Store.put(r, kind);
+    const d = Stats.ymd(), e = reviewLog[d] || (reviewLog[d] = {}), u = KIND_UNIT[kind];
+    e[u] = (e[u] || 0) + 1; Store.setMeta("log", Stats.prune(reviewLog)).catch(() => {});
+  }
+  // 間違いを記録する(分類・日付・どこで間違えたか)
+  async function addMistake(r, cat, src) { (r.mistakes ||= []).push({ cat: Clean.catOf(cat), date: Stats.ymd(), src }); await Store.put(r, "sentences") }
+  const SRC = { quiz: "4択", dict: "聞き取り", manual: "手動" };
+  const infoText = r => [r.review_count ? `復習 ${r.review_count} 回 ・ 最終 ${r.last_reviewed || "-"}` : "", (r.mistakes || []).length ? `間違い ${r.mistakes.length} 件` : ""].filter(Boolean).join(" ・ ");
+
+  // 学習セットを作って、学習を始める
+  async function startSet(u, ids) {
+    if (!ids.length) return toast("対象がありません");
+    study = { unit: u, ids, i: 0 }; wReveal = false; dictOn = false; await saveStudy(); setTab("study");
+  }
+
+  function renderRec() {
+    // 学習の状況
+    const head = "<tr><th></th><th>未学習</th><th>学習中</th><th>覚えた</th><th>復習の合計</th></tr>";
+    $("#recStatus").innerHTML = head + ["sentence", "meaning", "iu", "word"].map(u => {
+      const t = tbl(u), c = s => t.filter(r => r.status === s).length;
+      return `<tr><td><b>${UN[u].name}</b></td><td>${c("new")}</td><td>${c("learning")}</td><td>${c("mastered")}</td><td>${t.reduce((a, r) => a + (r.review_count || 0), 0)} 回</td></tr>`;
+    }).join("");
+    // 復習の記録
+    const days = Stats.lastDays(reviewLog, 14), sum = n => days.slice(-n).reduce((a, d) => a + d.total, 0), max = Math.max(1, ...days.map(d => d.total));
+    $("#recSummary").textContent = `今日 ${sum(1)} 回 ・ 直近7日 ${sum(7)} 回 ・ 直近14日 ${sum(14)} 回 ・ 連続 ${Stats.streak(reviewLog)} 日`;
+    $("#recBars").innerHTML = days.map(d => `<div class="b ${d.total ? "" : "zero"}" title="${d.date}: 英文 ${d.sentence} / 意味句・IU ${d.chunk} / 単語 ${d.word}"><span>${d.total || ""}</span><i style="height:${Math.round((d.total / max) * 70)}px"></i><span>${+d.date.slice(8)}</span></div>`).join("");
+    // 弱点
+    document.querySelectorAll("#segWeak button").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.w === weakDays || (!weakDays && b.dataset.w === "0"))));
+    const wk = Stats.weak(rows, weakDays || null), top = Math.max(1, ...wk.map(x => x.n));
+    if (weakCat && !wk.some(x => x.cat === weakCat)) weakCat = null;
+    $("#recWeak").innerHTML = wk.length ? wk.map(x => `<div class="wk ${x.cat === weakCat ? "on" : ""}" data-cat="${esc(x.cat)}"><span class="lab">${esc(x.cat)}</span><span class="bar2"><i style="width:${Math.round((x.n / top) * 100)}%"></i></span><span class="n">${x.n} 件</span></div>`).join("")
+      : '<p class="sub">この期間の間違いの記録は、ありません。4択に間違える、聞き取りで間違える、または、英文の「間違いの記録」で手動で追加すると、ここに集計されます。</p>';
+    const cat = weakCat && wk.find(x => x.cat === weakCat);
+    const list = cat ? rows.filter(r => cat.ids.includes(r.id)) : [];
+    $("#recWeakList").innerHTML = cat ? `<div class="row"><b>${esc(weakCat)}</b><span class="sub">の英文 ${list.length} 文</span><span class="grow"></span><button id="wkGo" class="pri">この分類の英文を復習する</button></div>`
+      + list.map(r => `<div class="row-i"><span class="t">${esc(r.text)}<span class="m"><br>${esc(r.ja)}</span></span></div>`).join("") : "";
+    $("#rvMisInfo").textContent = `${Stats.mistaken(rows, weakDays || null).length} 文`;
+  }
+  $("#segWeak").onclick = e => { const b = e.target.closest("button[data-w]"); if (b) { weakDays = +b.dataset.w; weakCat = null; renderRec() } };
+  $("#recWeak").onclick = e => { const x = e.target.closest(".wk"); if (x) { weakCat = weakCat === x.dataset.cat ? null : x.dataset.cat; renderRec() } };
+  $("#recWeakList").onclick = e => {
+    if (!e.target.closest("#wkGo")) return;
+    const cat = Stats.weak(rows, weakDays || null).find(x => x.cat === weakCat);
+    if (cat) startSet("sentence", rows.filter(r => cat.ids.includes(r.id)).map(r => r.id));
+  };
+  $("#rvGo").onclick = () => {
+    const u = $("#rvUnit").value, n = Math.max(1, Math.min(200, +$("#rvN").value || 10));
+    startSet(u, Stats.reviewOrder(tbl(u), n).map(r => r.id));
+  };
+  $("#rvMis").onclick = () => startSet("sentence", Stats.mistaken(rows, weakDays || null).map(r => r.id));
 
   // ---------- AI で解析(Gemini API / コピペモード) ----------
   // 足りない解析がある英文
@@ -549,12 +618,13 @@
   $("#btnAI").onclick = runAI;
   $("#btnAIStop").onclick = () => { aiStop = true };
 
-  function renderAll() { renderReg(); renderAI(); if (tab === "pick") renderPick(); if (tab === "study") renderStudy() }
+  function renderAll() { if (tab === "rec") renderRec(); renderReg(); renderAI(); if (tab === "pick") renderPick(); if (tab === "study") renderStudy() }
 
   // ---------- 起動 ----------
   (async () => {
     try {
       await AI.load();
+      reviewLog = await Store.getMeta("log", {}) || {};
       rows = await Store.all("sentences"); words = await Store.all("words"); chunks = await Store.all("chunks");
       const p = await Store.getMeta("prefs", null);
       if (p && typeof p === "object") prefs = { ...prefs, ...p, aux: { ...prefs.aux, ...(p.aux || {}) }, waux: { ...prefs.waux, ...(p.waux || {}) }, sh: { ...prefs.sh, ...(p.sh || {}) } };

@@ -96,6 +96,15 @@ const Clean = (() => {
     return { question, choices, answer: ans, type: clip(q.type, 40) || "その他", explanation: clip(q.explanation, 1200) };
   }
 
+  // 間違いの分類。AI が4択に付ける分類に、「聞き取り」(聞き取り練習で間違えたとき)を足したもの
+  const CATS = ["品詞", "時制", "助動詞", "受動態", "前置詞", "接続詞", "関係詞", "不定詞・動名詞", "分詞", "比較", "語彙", "構文把握", "その他", "聞き取り"];
+  const catOf = c => (CATS.includes(c) ? c : "その他");
+  // 間違いの記録: [{cat, date, src}]。src = quiz(4択)/ dict(聞き取り)/ manual(手動)
+  function mistakes(list) {
+    if (!Array.isArray(list)) return [];
+    return list.slice(0, 300).filter(m => m && typeof m === "object").map(m => ({ cat: catOf(m.cat), date: date(m.date) || "", src: ["quiz", "dict", "manual"].includes(m.src) ? m.src : "manual" }));
+  }
+
   function level(v) { const n = +v; return [600, 730, 860].includes(n) ? n : null; }
   function date(s) { return typeof s === "string" && /^\d{4}-\d{2}-\d{2}$/.test(s) ? s : null; }
   // 作った順に並ぶ id(IndexedDB は id 順に返すので、同じ瞬間に作ったものも、作った順になる)
@@ -112,7 +121,7 @@ const Clean = (() => {
     const s = {
       id: uid(), type: "sentence", text,
       ja: clip(a.translation ?? a.ja, 500), level: level(o.level), groups,
-      status: "new", review_count: 0, last_reviewed: null, verified: !(a.translation || a.ja), added: Date.now(),
+      status: "new", review_count: 0, last_reviewed: null, mistakes: [], verified: !(a.translation || a.ja), added: Date.now(),
       words: words(a.words, text), phrases: phrases(a.phrases, text), slash: slash(a.slash, text), iu: iu(a.iu, text),
       vocab: vocab(a.vocab), grammar: grammar(a.grammar), toeic: toeic(a.toeic), quiz: quiz(o.quiz)
     };
@@ -120,6 +129,7 @@ const Clean = (() => {
       if (has(STATUS, o.status)) s.status = o.status;
       s.review_count = Math.max(0, Math.floor(+o.review_count || 0));
       s.last_reviewed = date(o.last_reviewed);
+      s.mistakes = mistakes(o.mistakes);
       if (typeof o.verified === "boolean") s.verified = o.verified;
     }
     return s;
@@ -214,5 +224,5 @@ const Clean = (() => {
     return c;
   }
 
-  return { iu, chunk, chunkKey, chunksOf, fillChunk, CTYPE, word, wordsOf, fillWord, clip, norm, POS, STATUS, ipa, words, phrases, slash, vocab, grammar, toeic, quiz, level, date, uid, sentence, fill };
+  return { CATS, catOf, mistakes, iu, chunk, chunkKey, chunksOf, fillChunk, CTYPE, word, wordsOf, fillWord, clip, norm, POS, STATUS, ipa, words, phrases, slash, vocab, grammar, toeic, quiz, level, date, uid, sentence, fill };
 })();

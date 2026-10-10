@@ -13,6 +13,7 @@
     <button role="tab" data-tab="reg" aria-selected="true">登録</button>
     <button role="tab" data-tab="pick" aria-selected="false">学習対象選択</button>
     <button role="tab" data-tab="study" aria-selected="false">学習</button>
+    <button role="tab" data-tab="rec" aria-selected="false">記録</button>
     <button role="tab" data-tab="sync" aria-selected="false">同期</button>
   </nav>
   <span id="syncStatus" class="sub" hidden></span>
@@ -82,6 +83,41 @@
     <p class="sub">登録の経路のうち、Gemini API・コピペモード・受信箱は、これから作ります。</p>
   </section>
 
+  <!-- 記録と復習 -->
+  <section id="tab-rec" class="tab" hidden>
+    <div class="card">
+      <h2>学習の状況</h2>
+      <table class="v" id="recStatus"></table>
+    </div>
+    <div class="card">
+      <h2>復習の記録</h2>
+      <p id="recSummary" class="sub"></p>
+      <div id="recBars" class="bars"></div>
+      <p class="sub">復習は、4択に答える・意味や和訳を見る・シャドーイングを終える・聞き取りの答え合わせをする・「練習した」を押す、のたびに1回と数えます。この記録は、この端末だけのものです(同期されません)。</p>
+    </div>
+    <div class="card">
+      <h2>弱点(間違いの分類)</h2>
+      <div class="seg" id="segWeak" role="group" aria-label="期間">
+        <button data-w="7">直近7日</button><button data-w="30">直近30日</button><button data-w="0">全期間</button>
+      </div>
+      <div id="recWeak"></div>
+      <div id="recWeakList" class="list"></div>
+    </div>
+    <div class="card">
+      <h2>復習を始める</h2>
+      <p class="sub">覚えた以外から、復習が少ない順(一度も復習していないものが先)に選びます。</p>
+      <div class="row wrap">
+        <select id="rvUnit" aria-label="単位"><option value="sentence">英文</option><option value="meaning">意味句</option><option value="iu">IU</option><option value="word">単語</option></select>
+        <input id="rvN" type="number" min="1" max="200" value="10" class="num"> 件
+        <button id="rvGo" class="pri">この条件で復習を始める</button>
+      </div>
+      <div class="row wrap">
+        <button id="rvMis">間違えた英文を復習する(上の期間)</button>
+        <span id="rvMisInfo" class="sub"></span>
+      </div>
+    </div>
+  </section>
+
   <!-- 同期・受信箱 -->
   <section id="tab-sync" class="tab" hidden>
     <div class="card">
@@ -112,6 +148,9 @@
         </select>
         <select id="fpos" aria-label="文中の位置" class="chunk-only">
           <option value="">位置: すべて</option><option value="first">文頭</option><option value="mid">文中</option><option value="last">文末</option>
+        </select>
+        <select id="fmis" aria-label="間違い" class="sent-only">
+          <option value="">間違い: すべて</option><option value="yes">間違いあり</option>
         </select>
         <select id="flevel" aria-label="難易度">
           <option value="">難易度: すべて</option><option value="600">600</option><option value="730">730</option><option value="860">860</option>
@@ -196,6 +235,7 @@
           <button data-x="vocab" title="V">単語・熟語</button>
           <button data-x="toeic" title="T">TOEIC</button>
           <button data-x="quiz" title="Q">4択</button>
+          <button data-x="rec" title="K">間違いの記録</button>
         </div>
       </div>
 
@@ -223,7 +263,7 @@
           <span id="stInfo" class="sub"></span>
         </div>
       </article>
-      <p class="sub keys">ショートカット: ← → 前後 / スペース 1回聞く / C 区切りごと / R シャドーイング / D 聞き取り / S 止める / 1〜5 表示 / I J G V T Q 補助</p>
+      <p class="sub keys">ショートカット: ← → 前後 / スペース 1回聞く / C 区切りごと / R シャドーイング / D 聞き取り / S 止める / 1〜5 表示 / I J G V T Q K 補助</p>
     </div>
   </section>
 </main>
@@ -243,6 +283,7 @@
 <script src="js/clean.js"></script>
 <script src="js/store.js"></script>
 <script src="js/practice.js"></script>
+<script src="js/stats.js"></script>
 <script src="js/ai.js"></script>
 <script src="vendor/qrcode.js"></script>
 <script src="js/sync.js"></script>
