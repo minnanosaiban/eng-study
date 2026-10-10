@@ -10,7 +10,7 @@
   let sel = { sentence: new Set(), meaning: new Set(), iu: new Set(), word: new Set() }; // 単位ごとの選択中の id
   let unit = "sentence";                           // 学習対象選択で見ている単位
   let study = { unit: "sentence", ids: [], i: 0 }; // 学習セット
-  let prefs = { disp: "full", aux: { ipa: false, ja: true, grammar: false, vocab: false, toeic: false, quiz: false, rec: false }, waux: { ipa: true, ex: true, toeic: false, tr: false, quiz: false }, sh: { gap: 1, rep: 1 }, rate: 1 };
+  let prefs = { disp: "full", aux: { ipa: false, ja: true, grammar: false, vocab: false, toeic: false, quiz: false, rec: false }, waux: { ipa: true, ex: true, toeic: false, tr: false, quiz: false }, sh: { gap: 1, rep: 1 }, posOn: false, rate: 1 };
   let tab = "reg", wReveal = false;
   const UN = { sentence: { kind: "sentences", name: "英文" }, meaning: { kind: "chunks", name: "意味句" }, iu: { kind: "chunks", name: "IU" }, word: { kind: "words", name: "単語" } };
   const tbl = u => (u === "word" ? words : u === "sentence" ? rows : chunks.filter(c => c.type === u));
@@ -296,6 +296,7 @@
     $("#btnPrev").disabled = study.i === 0; $("#btnNext").disabled = study.i >= study.ids.length - 1;
     document.querySelectorAll("#segDisp button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.d === prefs.disp)));
     document.querySelectorAll("#segAux button").forEach(b => b.setAttribute("aria-pressed", String(!!prefs.aux[b.dataset.x])));
+    $("#btnPos").setAttribute("aria-pressed", String(!!prefs.posOn)); $("#btnPos").textContent = (prefs.posOn ? "☑ " : "☐ ") + "品詞の色";
     $("#rate").value = $("#wrate").value = String(prefs.rate);
     $("#shGap").value = String(prefs.sh.gap); $("#shRep").value = String(prefs.sh.rep);
     $("#dict").hidden = !dictOn; $("#disp").hidden = dictOn; $("#legend").hidden = dictOn; $("#dispNote").hidden = dictOn;
@@ -309,32 +310,32 @@
     full: "英文を、そのまま表示します。",
     slash: "【意味】意味のまとまりで区切り、各区切りに日本語訳を付けています。前から順に意味を取る練習用です(スラッシュリーディング)。",
     phrases: "【文法】文法の単位(主語+動詞・前置詞句・関係詞節など)で区切り、各区切りに形の名前を付けています。文の組み立てを確かめる用です。",
-    pos: "【品詞】語ごとの品詞を、色と下線で表しています。",
     iu: "【音】息継ぎの切れ目(一息で読む単位。イントネーション・ユニット)で区切っています。シャドーイングは、この区切りで進みます。",
     links: "【音】くっついて聞こえやすい語のまとまりを示しています。聞き取りの練習用です。"
   };
   function renderDisp(r, now = -1) {
     const d = prefs.disp; let h = "", legend = "";
     const hl = i => (i === now ? " now" : "");
-    if (d === "slash" && r.slash) h = r.slash.map((s, i) => `<span class="sl"><span class="seg-i${hl(i)}" data-c="${i}">${esc(s.en)}</span>${prefs.aux.ja ? `<span class="ja">${esc(s.ja)}</span>` : ""}</span>`).join("");
-    else if (d === "phrases" && r.phrases) h = r.phrases.map((p, i) => `<span class="ph"><span class="no">${NUM[i] || i + 1}</span><span class="seg-i cl-${phClass(p.f)}${hl(i)}" data-c="${i}">${esc(p.t)}</span> <span class="lab">${esc(p.f)}</span></span>`).join("");
-    else if (d === "iu" && r.iu) h = r.iu.map((x, i) => `<span class="ph"><span class="no">${NUM[i] || i + 1}</span><span class="seg-i cl-v${hl(i)}" data-c="${i}">${esc(x.t)}</span>${prefs.aux.ipa && x.ipa ? ` <span class="ipa">/${esc(x.ipa)}/</span>` : ""}</span>`).join("");
+    // 品詞の色(どの見方にも重ねる)。区切りをつなぐと原文に戻るので、語の並びの順に、品詞を当てる。文字の色だけで表す(区切りの下線と重ならないように)
+    const pw = prefs.posOn && r.words ? r.words : null; let ti = 0;
+    const P = text => !pw ? esc(text) : text.split(" ").filter(Boolean).map(t => { const w = pw[ti++]; return w && w.w === t ? '<span class="pw pw-' + w.p + '">' + esc(t) + "</span>" : esc(t) }).join(" ");
+    if (d === "slash" && r.slash) h = r.slash.map((s, i) => `<span class="sl"><span class="seg-i${hl(i)}" data-c="${i}">${P(s.en)}</span>${prefs.aux.ja ? `<span class="ja">${esc(s.ja)}</span>` : ""}</span>`).join("");
+    else if (d === "phrases" && r.phrases) h = r.phrases.map((p, i) => `<span class="ph"><span class="no">${NUM[i] || i + 1}</span><span class="seg-i cl-${phClass(p.f)}${hl(i)}" data-c="${i}">${P(p.t)}</span> <span class="lab">${esc(p.f)}</span></span>`).join("");
+    else if (d === "iu" && r.iu) h = r.iu.map((x, i) => `<span class="ph"><span class="no">${NUM[i] || i + 1}</span><span class="seg-i cl-v${hl(i)}" data-c="${i}">${P(x.t)}</span>${prefs.aux.ipa && x.ipa ? ` <span class="ipa">/${esc(x.ipa)}/</span>` : ""}</span>`).join("");
     else if (d === "links") {
       if (!Pron.ready) { h = esc(r.text) + '<div class="sub">発音辞書を読み込み中…</div>'; Pron.load().then(ok => { if (ok && prefs.disp === "links" && cur() === r) renderStudy() }) }
       else {
         h = Pron.links(r.text).map((g, i) => g.linked
-          ? `<span class="lk${hl(i)}" data-c="${i}">${esc(g.t)}${g.ipa ? `<span class="lk-ipa ipa">/${esc(g.ipa)}/</span>` : ""}</span>`
-          : `<span class="lk-s${hl(i)}">${esc(g.t)}</span>`).join("");
+          ? `<span class="lk${hl(i)}" data-c="${i}">${P(g.t)}${g.ipa ? `<span class="lk-ipa ipa">/${esc(g.ipa)}/</span>` : ""}</span>`
+          : `<span class="lk-s${hl(i)}">${P(g.t)}</span>`).join("");
         legend = '<span>下線の所 = つながって聞こえやすい語のまとまり(発音記号の ‿ は、つながる所)</span><span>規則で作れるもの(連結・弱い語のくっつき)だけです。脱落・はじき音などは表せません</span>';
       }
-    } else if (d === "pos" && r.words) {
-      h = r.words.map(w => `<span class="w w-${w.p}">${esc(w.w)}</span>`).join("");
-      legend = LEG.map(([k, n]) => `<span><i style="background:var(--pc-${k})"></i>${n}</span>`).join("");
     } else {
-      h = `<span class="seg-i" data-c="0">${esc(r.text)}</span>`;
+      h = `<span class="seg-i" data-c="0">${P(r.text)}</span>`;
       if (d !== "full") h += `<div class="sub">この英文には、この表示のデータがありません。</div>`;
     }
-    $("#dispNote").textContent = DISP_NOTE[d] || "";
+    if (pw) legend += LEG.map(([k, n]) => `<span><i style="background:var(--pc-${k})"></i>${n}</span>`).join("");
+    $("#dispNote").textContent = (DISP_NOTE[d] || "") + (prefs.posOn && !r.words ? " (この英文には、品詞の情報がないので、品詞の色は付きません)" : "");
     $("#disp").innerHTML = h; $("#legend").innerHTML = legend;
   }
 
@@ -384,6 +385,7 @@
     $("#stInfo").textContent = infoText(r);
   };
 
+  $("#btnPos").onclick = () => { prefs.posOn = !prefs.posOn; savePrefs(); renderStudy() };
   $("#segDisp").onclick = e => { const b = e.target.closest("button[data-d]"); if (b) setDisp(b.dataset.d) };
   $("#segAux").onclick = e => { const b = e.target.closest("button[data-x]"); if (b) toggleAux(b.dataset.x) };
   $("#shGap").onchange = e => { prefs.sh.gap = +e.target.value; savePrefs() };
@@ -610,7 +612,7 @@
   // ---------- ショートカット ----------
   document.addEventListener("keydown", e => {
     if (tab !== "study" || e.ctrlKey || e.metaKey || e.altKey) return;
-    if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || (e.target.closest("button") && e.key === " ")) return;
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || (e.target.closest && e.target.closest("button") && e.key === " ")) return;
     const k = e.key.toLowerCase();
     if (k === "arrowleft") return go(-1);
     if (k === "arrowright") return go(1);
@@ -622,8 +624,9 @@
       else if (ax[k] && has(ax[k])) { prefs.waux[ax[k]] = !prefs.waux[ax[k]]; savePrefs(); renderStudy() }
       return;
     }
-    const map = { "1": "full", "2": "slash", "3": "phrases", "4": "pos", "5": "iu", "6": "links" }, ax = { i: "ipa", j: "ja", g: "grammar", v: "vocab", t: "toeic", q: "quiz", k: "rec" };
+    const map = { "1": "full", "2": "slash", "3": "phrases", "5": "iu", "6": "links" }, ax = { i: "ipa", j: "ja", g: "grammar", v: "vocab", t: "toeic", q: "quiz", k: "rec" };
     if (k === " ") { e.preventDefault(); play("once") } else if (k === "c") play("chunks"); else if (k === "r") play("shadow"); else if (k === "l") play("links"); else if (k === "d") play("dict");
+    else if (k === "4") { prefs.posOn = !prefs.posOn; savePrefs(); renderStudy() }
     else if (map[k]) setDisp(map[k]); else if (ax[k]) toggleAux(ax[k]);
   });
 
@@ -794,6 +797,7 @@
       rows = await Store.all("sentences"); words = await Store.all("words"); chunks = await Store.all("chunks");
       const p = await Store.getMeta("prefs", null);
       if (p && typeof p === "object") prefs = { ...prefs, ...p, aux: { ...prefs.aux, ...(p.aux || {}) }, waux: { ...prefs.waux, ...(p.waux || {}) }, sh: { ...prefs.sh, ...(p.sh || {}) } };
+      if (prefs.disp === "pos") { prefs.disp = "full"; prefs.posOn = true } // 古い設定: 見方「品詞の色」は、入り切りに変わった
       const s = await Store.getMeta("study", null);
       if (s && Array.isArray(s.ids)) {
         const u = UN[s.unit] ? s.unit : "sentence", ok = new Set(tbl(u).map(r => r.id));
