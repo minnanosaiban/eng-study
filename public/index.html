@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>英語学習</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <h1>英語学習</h1>
+  <nav id="tabs" role="tablist">
+    <button role="tab" data-tab="reg" aria-selected="true">登録</button>
+    <button role="tab" data-tab="pick" aria-selected="false">学習対象選択</button>
+    <button role="tab" data-tab="study" aria-selected="false">英文学習</button>
+  </nav>
+</header>
+
+<main>
+  <!-- 登録 -->
+  <section id="tab-reg" class="tab">
+    <div class="card">
+      <h2>すぐ試す</h2>
+      <p class="sub">TOEIC風のオリジナル英文 90文(和訳・区切り・品詞・単語の発音記号・4択つき)を入れます。API は要りません。</p>
+      <button id="btnSamples" class="pri">サンプル英文を入れる</button>
+    </div>
+    <div class="card">
+      <h2>英文を貼り付ける</h2>
+      <p class="sub">1行に1文。解析(和訳・区切りなど)は、まだ付きません。</p>
+      <textarea id="paste" rows="5" placeholder="Candidates are advised to bring copies of their certificates to the interview."></textarea>
+      <div class="row">
+        <input id="pasteGroup" type="text" placeholder="グループ名(任意)">
+        <button id="btnPaste">追加</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>ファイルから読み込む</h2>
+      <p class="sub">.csv(1列目=英文、2列目=グループ名。「、」で複数)/ .txt(1行=1文)/ .json(バックアップ、または解析済みのデータ)</p>
+      <input id="file" type="file" accept=".csv,.txt,.json">
+    </div>
+    <div class="card">
+      <h2>登録済み</h2>
+      <p id="regInfo" class="sub"></p>
+      <div class="row">
+        <button id="btnExport">バックアップ保存</button>
+        <button id="btnClear" class="danger">すべて削除</button>
+      </div>
+    </div>
+    <p class="sub">登録の経路のうち、Gemini API・コピペモード・受信箱は、これから作ります。</p>
+  </section>
+
+  <!-- 学習対象選択 -->
+  <section id="tab-pick" class="tab" hidden>
+    <div class="card">
+      <div class="filters">
+        <input id="fq" type="search" placeholder="英文・和訳で検索">
+        <select id="fgroup" aria-label="グループ"></select>
+        <select id="fstatus" aria-label="状態">
+          <option value="">状態: すべて</option>
+          <option value="not-mastered" selected>状態: 覚えた以外</option>
+          <option value="new">未学習</option><option value="learning">学習中</option><option value="mastered">覚えた</option>
+        </select>
+        <select id="flevel" aria-label="難易度">
+          <option value="">難易度: すべて</option><option value="600">600</option><option value="730">730</option><option value="860">860</option>
+        </select>
+      </div>
+      <div class="row wrap">
+        <button id="btnAll">表示中を全選択</button>
+        <button id="btnNone">選択を解除</button>
+        <span class="grow"></span>
+        <label class="inl">ランダム <input id="randN" type="number" min="1" max="200" value="10" class="num"> 件</label>
+        <button id="btnRand">選ぶ</button>
+      </div>
+      <p id="pickInfo" class="sub"></p>
+      <div class="row">
+        <button id="btnStart" class="pri">この英文で学習を始める</button>
+      </div>
+    </div>
+    <div id="pickList" class="list"></div>
+  </section>
+
+  <!-- 英文学習 -->
+  <section id="tab-study" class="tab" hidden>
+    <div id="studyEmpty" class="card" hidden>
+      <p>学習する英文が選ばれていません。「学習対象選択」で選んでください。</p>
+    </div>
+    <div id="studyBox" hidden>
+      <div class="bar card">
+        <div class="seg" id="segDisp" role="group" aria-label="英文表示">
+          <button data-d="full" title="1">全文</button>
+          <button data-d="slash" title="2">スラッシュ</button>
+          <button data-d="phrases" title="3">区切りの形</button>
+          <button data-d="pos" title="4">品詞の色</button>
+        </div>
+        <div class="seg" id="segAudio" role="group" aria-label="音声">
+          <button data-a="once" title="スペース">▶ 1回聞く</button>
+          <button data-a="chunks" title="C">▶ 区切りごと</button>
+          <button id="btnStop" title="S">■</button>
+        </div>
+        <label class="inl">速さ
+          <select id="rate"><option value="0.7">0.7</option><option value="0.85">0.85</option><option value="1" selected>1.0</option><option value="1.15">1.15</option></select>
+        </label>
+        <div class="seg aux" id="segAux" role="group" aria-label="補助">
+          <button data-x="ipa" title="I">IPA</button>
+          <button data-x="ja" title="J">和訳</button>
+          <button data-x="grammar" title="G">文法</button>
+          <button data-x="vocab" title="V">単語・熟語</button>
+          <button data-x="toeic" title="T">TOEIC</button>
+          <button data-x="quiz" title="Q">4択</button>
+        </div>
+      </div>
+
+      <article class="card sentence">
+        <div class="nav">
+          <button id="btnPrev" aria-label="前へ">←</button>
+          <span id="pos" class="sub"></span>
+          <button id="btnNext" aria-label="次へ">→</button>
+        </div>
+        <div id="disp"></div>
+        <div id="legend" class="legend"></div>
+        <div id="aux"></div>
+        <div class="row">
+          <label class="inl">状態
+            <select id="stSel"><option value="new">未学習</option><option value="learning">学習中</option><option value="mastered">覚えた</option></select>
+          </label>
+          <span id="stInfo" class="sub"></span>
+        </div>
+      </article>
+      <p class="sub keys">ショートカット: ← → 前後 / スペース 1回聞く / C 区切りごと / S 止める / 1〜4 表示 / I J G V T Q 補助</p>
+    </div>
+  </section>
+</main>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="js/clean.js"></script>
+<script src="js/store.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
