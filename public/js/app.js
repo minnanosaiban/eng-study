@@ -10,7 +10,7 @@
   let sel = { sentence: new Set(), meaning: new Set(), iu: new Set(), word: new Set() }; // 単位ごとの選択中の id
   let unit = "sentence";                           // 学習対象選択で見ている単位
   let study = { unit: "sentence", ids: [], i: 0 }; // 学習セット
-  let prefs = { view: { iu: false, slash: false }, gramOn: false, aux: { ipa: false, ja: true, toeic: false, quiz: false, rec: false }, waux: { ipa: true, ex: true, toeic: false, tr: false, quiz: false }, sh: { gap: 1, rep: 1 }, posOn: false, rate: 1 };
+  let prefs = { view: { slash: false }, gramOn: false, aux: { ipa: false, ja: true, toeic: false, quiz: false, rec: false }, waux: { ipa: true, ex: true, toeic: false, tr: false, quiz: false }, sh: { gap: 1, rep: 1 }, posOn: false, rate: 1 };
   let tab = "reg", wReveal = false;
   const UN = { sentence: { kind: "sentences", name: "英文" }, meaning: { kind: "chunks", name: "意味句" }, iu: { kind: "chunks", name: "IU" }, word: { kind: "words", name: "単語" } };
   const tbl = u => (u === "word" ? words : u === "sentence" ? rows : chunks.filter(c => c.type === u));
@@ -303,19 +303,18 @@
 
   // 区切りの見方(表示の入り切り)。全文の下に、出している見方が、この並びで縦に並ぶ。それぞれに、何を基準に区切っているかの説明を付ける
   const VIEWS = [
-    { k: "iu", note: "【音区切り】息継ぎの切れ目(一息で読む単位。イントネーション・ユニット)で区切っています。シャドーイングは、この区切りで進みます。" },
     { k: "links", note: "【IPA:音のつながり】くっついて聞こえやすい語のまとまりを示しています。下線の所 = つながって聞こえやすい。発音記号の ‿ は、つながる所。規則で作れるもの(連結・弱い語のくっつき)だけで、脱落・はじき音などは表せません。" },
-    { k: "slash", note: "【意味区切り】意味のまとまりで / で区切っています。区切りごとの日本語訳は、補助の「和訳」(J)で出し入れできます。前から順に意味を取る練習用です(スラッシュリーディング)。" }
+    { k: "slash", note: "【意味区切り】意味のまとまりで / で区切っています。区切りごとの訳は「和訳」(J)、発音記号は「IPA」(I)で出し入れできます。シャドーイングと「区切って聞く」も、この区切りで進みます。前から順に意味を取る練習用です(スラッシュリーディング)。" }
   ];
-  // 区切って聞く・シャドーイングが使う区切り。forShadow: シャドーイング(音区切り → 文法 → 意味の順)。そうでなければ、出している区切り(音 → 意味 → 文法)、何も出していなければ、文法 → 意味 → 音
+  // 区切って聞く・シャドーイングが使う区切り。forShadow: シャドーイング(意味 → 文法 → 音の順)。そうでなければ、出している区切り(意味 → 文法)、何も出していなければ、意味 → 文法 → 音
   function chunkSrc(r, forShadow) {
     const avail = { iu: r.iu && r.iu.map(x => x.t), slash: r.slash && r.slash.map(x => x.en), phrases: r.phrases && r.phrases.map(x => x.t) };
-    const key = forShadow ? ["iu", "phrases", "slash"].find(k => avail[k])
-      : ["iu", "slash", "phrases"].find(k => (k === "phrases" ? prefs.gramOn : prefs.view[k]) && avail[k]) || ["phrases", "slash", "iu"].find(k => avail[k]);
+    const key = forShadow ? ["slash", "phrases", "iu"].find(k => avail[k])
+      : ["slash", "phrases"].find(k => (k === "phrases" ? prefs.gramOn : prefs.view[k]) && avail[k]) || ["slash", "phrases", "iu"].find(k => avail[k]);
     return key ? { key, list: avail[key] } : { key: null, list: [r.text] };
   }
   // その見方を、表示に出す(出ていなければ)
-  function showView(k) { if (k === "phrases") { if (!prefs.gramOn) { prefs.gramOn = true; savePrefs(); renderStudy() } } else if (k && !prefs.view[k]) { prefs.view[k] = true; savePrefs(); renderStudy() } }
+  function showView(k) { if (k === "iu") return; if (k === "phrases") { if (!prefs.gramOn) { prefs.gramOn = true; savePrefs(); renderStudy() } } else if (k && !prefs.view[k]) { prefs.view[k] = true; savePrefs(); renderStudy() } }
 
   // 文法(ひとまとめ): 品詞ボタン + 文構造(S V O C M・節・文型・時制)+ 文法区切り + 文法の解説
   function gramBlock(r, mkP, now, nowView, pw) {
@@ -349,8 +348,8 @@
       const P = mkP(), hl = i => (nowView === v.k && i === now ? " now" : "");
       let body;
       if (v.k === "slash" && r.slash) body = r.slash.map((s, i) => `${i ? '<span class="slsep">/</span>' : ""}<span class="seg-i${hl(i)}" data-c="${i}">${P(s.en)}</span>`).join("")
+        + (prefs.aux.ipa && r.slash.some(s => s.ipa) ? '<div class="sljas">' + r.slash.filter(s => s.ipa).map(s => `<div class="ja"><b>${esc(s.en)}</b> <span class="ipa">/${esc(s.ipa)}/</span></div>`).join("") + "</div>" : "")
         + (prefs.aux.ja ? '<div class="sljas">' + r.slash.map(s => `<div class="ja"><b>${esc(s.en)}</b> ${esc(s.ja)}</div>`).join("") + "</div>" : "");
-      else if (v.k === "iu" && r.iu) body = r.iu.map((x, i) => `<span class="ph"><span class="no">${NUM[i] || i + 1}</span><span class="seg-i cl-v${hl(i)}" data-c="${i}">${P(x.t)}</span>${prefs.aux.ipa && x.ipa ? ` <span class="ipa">/${esc(x.ipa)}/</span>` : ""}</span>`).join("");
       else if (v.k === "links") {
         if (!Pron.ready) { body = '<div class="sub">発音辞書を読み込み中…</div>'; Pron.load().then(ok => { if (ok && prefs.aux.ipa && cur() === r) renderStudy() }) }
         else body = Pron.links(r.text).map((g, i) => g.linked
@@ -605,7 +604,7 @@
       else if (ax[k] && has(ax[k])) { prefs.waux[ax[k]] = !prefs.waux[ax[k]]; savePrefs(); renderStudy() }
       return;
     }
-    const map = { "1": "slash", "4": "iu" }, ax = { i: "ipa", j: "ja", t: "toeic", q: "quiz", k: "rec" };
+    const map = { "1": "slash" }, ax = { i: "ipa", j: "ja", t: "toeic", q: "quiz", k: "rec" };
     if (k === " ") { e.preventDefault(); play("once") } else if (k === "c") play("chunks"); else if (k === "r") play("shadow"); else if (k === "l") play("links");
     else if (k === "2" || k === "g") toggleGram(); else if (k === "3") togglePos(); else if (k === "0") clearViews();
     else if (map[k]) toggleView(map[k]); else if (ax[k]) toggleAux(ax[k]);
@@ -787,6 +786,8 @@
       delete prefs.aux.vocab;
       if (p && p.view && p.view.links) prefs.aux.ipa = true; // 音のつながりを、「IPA」にまとめた
       delete prefs.view.links;
+      if (p && p.view && p.view.iu) prefs.view.slash = true; // 音区切りを、「意味区切り」にまとめた
+      delete prefs.view.iu;
       const s = await Store.getMeta("study", null);
       if (s && Array.isArray(s.ids)) {
         const u = UN[s.unit] ? s.unit : "sentence", ok = new Set(tbl(u).map(r => r.id));
