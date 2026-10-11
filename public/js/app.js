@@ -332,7 +332,7 @@
     } else h += '<div class="sub">この英文には、文構造のデータがありません(「サンプル英文を入れる」をもう一度押すか、AI で解析し直すと付きます)。</div>';
     h += '<h4 class="gh">文法区切り</h4>';
     const P2 = mkP();
-    h += r.phrases && r.phrases.length ? r.phrases.map((p, i) => `<span class="ph"><span class="no">${NUM[i] || i + 1}</span><span class="seg-i cl-${phClass(p.f)}${hl(i)}" data-c="${i}">${P2(p.t)}</span> <span class="lab">${esc(p.f)}</span></span>`).join("") : '<div class="sub">この英文には、文法区切りのデータがありません。</div>';
+    h += r.phrases && r.phrases.length ? r.phrases.map((p, i) => `<span class="ph"><span class="no">${NUM[i] || i + 1}</span><span class="seg-i cl-${phClass(p.f)}${hl(i)}${sl("phrases", i)}" data-c="${i}">${P2(p.t)}</span> <span class="lab">${esc(p.f)}</span></span>`).join("") : '<div class="sub">この英文には、文法区切りのデータがありません。</div>';
     h += '<h4 class="gh">文法の解説</h4>';
     h += (r.grammar || []).length ? r.grammar.map(g => `<div><b>・${esc(g.point)}</b><div class="sub">${esc(g.explanation)}</div></div>`).join("") : '<div class="sub">なし</div>';
     { const t = r.toeic;
@@ -341,6 +341,8 @@
     }
     return h + "</div>";
   }
+
+  const sl = (key, i) => { const r = cur(); return selC && r && selC.id === r.id && selC.key === key && selC.i === i ? " sel" : "" };
 
   function renderDisp(r, now = -1, nowView = null) {
     // 品詞の色(どの見方にも重ねる)。区切りをつなぐと原文に戻るので、語の並びの順に、品詞を当てる。文字の色だけで表す(区切りの下線と重ならないように)
@@ -351,7 +353,7 @@
       if (!(v.k === "links" ? prefs.aux.ipa : prefs.view[v.k])) continue;
       const P = mkP(), hl = i => (nowView === v.k && i === now ? " now" : "");
       let body;
-      if (v.k === "slash" && r.slash) body = r.slash.map((s, i) => `${i ? '<span class="slsep">/</span>' : ""}<span class="seg-i${hl(i)}" data-c="${i}">${P(s.en)}</span>`).join("")
+      if (v.k === "slash" && r.slash) body = r.slash.map((s, i) => `${i ? '<span class="slsep">/</span>' : ""}<span class="seg-i${hl(i)}${sl(v.k, i)}" data-c="${i}">${P(s.en)}</span>`).join("")
         + (prefs.aux.ipa && r.slash.some(s => s.ipa) ? '<div class="sljas">' + r.slash.filter(s => s.ipa).map(s => `<div class="ja"><b>${esc(s.en)}</b> <span class="ipa">/${esc(s.ipa)}/</span></div>`).join("") + "</div>" : "")
         + (prefs.aux.ja ? '<div class="sljas">' + r.slash.map(s => `<div class="ja"><b>${esc(s.en)}</b> ${esc(s.ja)}</div>`).join("") + "</div>" : "");
       else if (v.k === "links") {
@@ -417,7 +419,16 @@
   function toggleView(k) { prefs.view[k] = !prefs.view[k]; savePrefs(); renderStudy() }
   function toggleGram() { prefs.gramOn = !prefs.gramOn; savePrefs(); renderStudy() }
   function togglePos() { if (!prefs.gramOn) { prefs.gramOn = true; prefs.posOn = true } else prefs.posOn = !prefs.posOn; savePrefs(); renderStudy() }
-  $("#disp").onclick = e => { if (e.target.closest("#posBtn")) togglePos() };
+  // 区切りをクリック → その区切りだけを、設定の回数、続けて聞く(もう一度クリックで解除)
+  $("#disp").onclick = e => {
+    if (e.target.closest("#posBtn")) return togglePos();
+    const c = e.target.closest("[data-c]"), v = c && c.closest("[data-view]"), r = cur();
+    if (!c || !r || !(v.dataset.view === "slash" || v.dataset.view === "gram")) return;
+    if (!("speechSynthesis" in window)) return toast("この端末では、読み上げが使えません");
+    const key = v.dataset.view === "gram" ? "phrases" : "slash", i = +c.dataset.c;
+    if (selC && selC.id === r.id && selC.key === key && selC.i === i) { selC = null; stopAudio(); return }
+    selC = { id: r.id, key, i }; stopAudio(); playSel(r, key, i, playing);
+  };
   function clearViews() { for (const k of Object.keys(prefs.view)) prefs.view[k] = false; prefs.gramOn = false; savePrefs(); renderStudy() }
   function toggleAux(x) { prefs.aux[x] = !prefs.aux[x]; savePrefs(); renderStudy() }
   $("#stSel").onchange = async e => { const r = cur(); if (r) { r.status = e.target.value; await Store.put(r, "sentences") } };
@@ -517,6 +528,7 @@
   $("#wDone").onclick = async () => { const w = cur(); if (!w) return; await countReview(w, cardKind()); renderCard(w) }; // IU は、声に出して練習したら、復習1回
 
   // ---------- 音声(端末の読み上げ) ----------
+  let selC = null; // 選んだ区切り { id: 英文の id, key: "slash" | "phrases", i: 番号 }
   let playing = 0; // 世代番号。止める・次へ行くと増やして、前の読み上げを無効にする
   const sleep = (ms, me) => new Promise(res => { const t0 = Date.now(), iv = setInterval(() => { if (me !== playing || Date.now() - t0 >= ms) { clearInterval(iv); res() } }, 80) });
   const sayTimed = async (text, rate) => { const t0 = performance.now(); await say(text, rate); return performance.now() - t0 };
@@ -546,6 +558,7 @@
     if (mode === "links") return playLinks(r, me);
     if (mode === "ex") { if (r.ex) await say(r.ex); else toast("例文がありません"); return }
     if (mode === "once") { await say(r.text); return }
+    if (selC && selC.id === r.id) return playSel(r, selC.key, selC.i, me); // 選んだ区切りがあれば、それだけを繰り返す
     const { key, list: ch } = chunkSrc(r, false); showView(key); // 読む区切りを、表示に出す
     const rep = prefs.sh.rep; // 繰り返し: 同じ区切りを、設定の回数だけ続けて聞く
     for (let i = 0; i < ch.length; i++) for (let k = 1; k <= rep; k++) {
@@ -553,6 +566,18 @@
       renderDisp(r, i, key); pst(`聞く${rep > 1 ? `(${k}回目)` : ""}`);
       await say(ch[i]); if (me !== playing) return;
       if (rep > 1 && k < rep) await sleep(400, me);
+    }
+    if (me === playing) { pst(null); renderDisp(r) }
+  }
+  // 選んだ区切りを、繰り返しの回数だけ、続けて聞く
+  async function playSel(r, key, i, me) {
+    const t = key === "phrases" ? (r.phrases || []).map(x => x.t)[i] : (r.slash || []).map(x => x.en)[i], rep = prefs.sh.rep;
+    if (!t) return;
+    for (let k = 1; k <= rep; k++) {
+      if (me !== playing) return;
+      renderDisp(r, i, key); pst(`聞く${rep > 1 ? `(${k}回目)` : ""}`);
+      await say(t); if (me !== playing) return;
+      if (k < rep) await sleep(400, me);
     }
     if (me === playing) { pst(null); renderDisp(r) }
   }
