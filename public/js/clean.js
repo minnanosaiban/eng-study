@@ -75,6 +75,18 @@ const Clean = (() => {
     return g.slice(0, 12).filter(x => x && x.point).map(x => ({ point: clip(x.point, 100), explanation: clip(x.explanation, 800) }));
   }
 
+  // 文構造: 主節の要素(S V O C M)・節・文型・時制
+  function structure(a) {
+    const o = {};
+    o.elements = (Array.isArray(a.elements) ? a.elements : []).slice(0, 20).filter(x => x && typeof x.text === "string" && x.text.trim())
+      .map(x => ({ text: clip(x.text, 300), role: ["S", "V", "O", "C", "M"].includes(x.role) ? x.role : "M", note: clip(x.note, 300) }));
+    o.clauses = (Array.isArray(a.clauses) ? a.clauses : []).slice(0, 12).filter(x => x && typeof x.text === "string" && x.text.trim())
+      .map(x => ({ text: clip(x.text, 500), kind: clip(x.kind, 40), role: clip(x.role, 200) }));
+    o.pattern = a.pattern && typeof a.pattern === "object" && !Array.isArray(a.pattern) && a.pattern.type ? { type: clip(a.pattern.type, 60), explanation: clip(a.pattern.explanation, 800) } : null;
+    o.tense = a.tense && typeof a.tense === "object" && !Array.isArray(a.tense) && a.tense.name ? { name: clip(a.tense.name, 100), explanation: clip(a.tense.explanation, 800) } : null;
+    return o;
+  }
+
   function toeic(t) {
     if (!t || typeof t !== "object" || Array.isArray(t)) return null;
     return {
@@ -123,7 +135,7 @@ const Clean = (() => {
       ja: clip(a.translation ?? a.ja, 500), level: level(o.level), groups,
       status: "new", review_count: 0, last_reviewed: null, mistakes: [], verified: !(a.translation || a.ja), added: Date.now(),
       words: words(a.words, text), phrases: phrases(a.phrases, text), slash: slash(a.slash, text), iu: iu(a.iu, text),
-      vocab: vocab(a.vocab), grammar: grammar(a.grammar), toeic: toeic(a.toeic), quiz: quiz(o.quiz)
+      vocab: vocab(a.vocab), grammar: grammar(a.grammar), toeic: toeic(a.toeic), quiz: quiz(o.quiz), ...structure(a)
     };
     if (keepState) {
       if (has(STATUS, o.status)) s.status = o.status;
@@ -142,6 +154,7 @@ const Clean = (() => {
     set("ja", add.ja); set("words", add.words); set("phrases", add.phrases); set("slash", add.slash); set("iu", add.iu);
     if (ex.slash && add.slash && ex.slash.length === add.slash.length) ex.slash.forEach((x, i) => { if (!x.ipa && add.slash[i].ipa && x.en === add.slash[i].en) { x.ipa = add.slash[i].ipa; c = true } });
     if (ex.iu && add.iu && ex.iu.length === add.iu.length) ex.iu.forEach((x, i) => { if (!x.ipa && add.iu[i].ipa && x.t === add.iu[i].t) { x.ipa = add.iu[i].ipa; c = true } });
+    set("elements", add.elements); set("clauses", add.clauses); set("pattern", add.pattern); set("tense", add.tense);
     set("grammar", add.grammar); set("toeic", add.toeic); set("quiz", add.quiz); set("level", add.level);
     set("vocab", add.vocab && add.vocab.length ? add.vocab : null);
     if (ex.vocab && add.vocab) { // 発音記号が無い単語にだけ足す

@@ -102,7 +102,7 @@
       <h2>復習の記録</h2>
       <p id="recSummary" class="sub"></p>
       <div id="recBars" class="bars"></div>
-      <p class="sub">復習は、4択に答える・意味や和訳を見る・シャドーイングを終える・聞き取りの答え合わせをする・「練習した」を押す、のたびに1回と数えます。この記録は、この端末だけのものです(同期されません)。</p>
+      <p class="sub">復習は、4択に答える・意味や和訳を見る・シャドーイングを終える・「練習した」を押す、のたびに1回と数えます。この記録は、この端末だけのものです(同期されません)。</p>
     </div>
     <div class="card">
       <h2>弱点(間違いの分類)</h2>
@@ -224,7 +224,6 @@
             <button data-a="chunks" title="出している区切り(なければ、文法 → 意味の区切り)を、1区切りずつ読む(C)">▶ 区切って聞く</button>
             <button data-a="shadow" title="音区切りごとに、聞く → まねする時間(R)">🗣 シャドーイング</button>
             <button data-a="links" title="つながって聞こえる所を、ゆっくり → ふつうの速さで聞き比べる(L)">🔗 音のつながり</button>
-            <button data-a="dict" title="英文を隠して聞き、書き取る(D)">✍ 聞き取り</button>
             <button id="btnStop" title="止める(S)">■ 止める</button>
           </div>
         </div>
@@ -250,9 +249,7 @@
             <button data-v="iu" title="一息で読む単位(音の切れ目)で区切る(4)">音区切り</button>
             <button data-v="links" title="くっついて聞こえる語のまとまりを示す(5)">音のつながり</button>
             <button data-v="slash" title="意味のまとまりで区切り、日本語訳を付ける(1)">意味区切り</button>
-            <button data-v="phrases" title="文法の単位で区切り、形の名前を付ける(2)">文法区切り</button>
-            <button data-p="pos" title="語ごとの品詞を、文字の色で表す。どの表示にも重ねられる(3)">品詞</button>
-            <button data-x="grammar" title="文法の解説(G)">文法</button>
+            <button data-g="gram" title="文構造(S V O C M)・文法区切り・文法の解説。中の「品詞」で、品詞の色付け(2 / G)">文法</button>
             <button data-x="vocab" title="単語・熟語(V)">単語・熟語</button>
             <button data-x="toeic" title="TOEIC の観点(T)">TOEIC解説</button>
             <button data-x="quiz" title="4択問題(Q)">4択問題</button>
@@ -269,16 +266,6 @@
         </div>
         <div id="disp"></div>
         <div id="pstatus" class="pstatus" hidden></div>
-        <div id="dict" class="dict" hidden>
-          <div class="sub">英文を隠しています。聞いて、聞こえた英文を書いてください。</div>
-          <div class="row wrap"><button id="dPlay" class="pri">▶ 聞く</button><button id="dSlow">▶ ゆっくり聞く</button><button id="dEnd">やめる</button></div>
-          <label class="inl"><input type="checkbox" id="dGap"> つながり部分だけ空欄にする(穴あき)</label>
-          <div id="dGapBox" class="gapbox" hidden></div>
-          <textarea id="dIn" rows="3" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="聞こえた英文を、ここに書く"></textarea>
-          <div class="row"><button id="dCheck" class="pri">答え合わせ</button></div>
-          <div id="dRes"></div>
-        </div>
-        <div id="legend" class="legend"></div>
         <div id="aux"></div>
         <div class="row">
           <label class="inl">状態
@@ -288,7 +275,7 @@
           <span id="stInfo" class="sub"></span>
         </div>
       </article>
-      <p class="sub keys">ショートカット: ← → 前後 / スペース 1回聞く / C 区切りごと / R シャドーイング / D 聞き取り / S 止める / 1 意味区切り・2 文法区切り・3 品詞・4 音区切り・5 音のつながり(入り切り。0 で区切りを全部消す)/ L つながりを聞く / I J G V T Q K 補助</p>
+      <p class="sub keys">ショートカット: ← → 前後 / スペース 1回聞く / C 区切りごと / R シャドーイング / S 止める / 1 意味区切り・2 文法・3 品詞(文法の中)・4 音区切り・5 音のつながり(入り切り。0 で区切りを全部消す)/ L つながりを聞く / I J V T Q K 補助</p>
     </div>
   </section>
 </main>
