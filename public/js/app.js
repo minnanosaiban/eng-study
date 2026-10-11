@@ -330,7 +330,7 @@
       if (r.tense) h += `<div class="gp"><b>${esc(r.tense.name)}</b> <span class="sub">${esc(r.tense.explanation)}</span></div>`;
       if (r.clauses && r.clauses.length) h += '<table class="cls">' + r.clauses.map(c => `<tr><td><b>${esc(c.kind)}</b></td><td>${esc(c.text)}</td><td class="sub">${esc(c.role)}</td></tr>`).join("") + "</table>";
     } else h += '<div class="sub">この英文には、文構造のデータがありません(「サンプル英文を入れる」をもう一度押すか、AI で解析し直すと付きます)。</div>';
-    h += '<h4 class="gh">文法区切り</h4>';
+    h += '<h4 class="gh">文法区切り <button class="vplay" data-k="phrases" title="文法区切りを、頭から順に聞く">▶</button></h4>';
     const P2 = mkP();
     h += r.phrases && r.phrases.length ? r.phrases.map((p, i) => `<span class="ph"><span class="no">${NUM[i] || i + 1}</span><span class="seg-i cl-${phClass(p.f)}${hl(i)}${sl("phrases", i)}" data-c="${i}">${P2(p.t)}</span> <span class="lab">${esc(p.f)}</span></span>`).join("") : '<div class="sub">この英文には、文法区切りのデータがありません。</div>';
     h += '<h4 class="gh">文法の解説</h4>';
@@ -348,12 +348,12 @@
     // 品詞の色(どの見方にも重ねる)。区切りをつなぐと原文に戻るので、語の並びの順に、品詞を当てる。文字の色だけで表す(区切りの下線と重ならないように)
     const pw = prefs.gramOn && prefs.posOn && r.words ? r.words : null;
     const mkP = () => { let ti = 0; return text => !pw ? esc(text) : text.split(" ").filter(Boolean).map(t => { const w = pw[ti++]; return w && w.w === t ? '<span class="pw pw-' + w.p + '">' + esc(t) + "</span>" : esc(t) }).join(" ") };
-    let html = '<div class="fulltext">' + mkP()(r.text) + "</div>"; // いちばん上は、いつも全文
+    let html = '<div class="fulltext" title="クリックで全文を聞く(スペース)">' + mkP()(r.text) + "</div>"; // いちばん上は、いつも全文
     for (const v of VIEWS) {
       if (!(v.k === "links" ? prefs.aux.ipa : prefs.view[v.k])) continue;
       const P = mkP(), hl = i => (nowView === v.k && i === now ? " now" : "");
       let body;
-      if (v.k === "slash" && r.slash) body = r.slash.map((s, i) => `${i ? '<span class="slsep">/</span>' : ""}<span class="seg-i${hl(i)}${sl(v.k, i)}" data-c="${i}">${P(s.en)}</span>`).join("")
+      if (v.k === "slash" && r.slash) body = '<button class="vplay" data-k="slash" title="区切りを、頭から順に聞く(C)">▶</button>' + r.slash.map((s, i) => `${i ? '<span class="slsep">/</span>' : ""}<span class="seg-i${hl(i)}${sl(v.k, i)}" data-c="${i}">${P(s.en)}</span>`).join("")
         + (prefs.aux.ipa && r.slash.some(s => s.ipa) ? '<div class="sljas">' + r.slash.filter(s => s.ipa).map(s => `<div class="ja"><b>${esc(s.en)}</b> <span class="ipa">/${esc(s.ipa)}/</span></div>`).join("") + "</div>" : "")
         + (prefs.aux.ja ? '<div class="sljas">' + r.slash.map(s => `<div class="ja"><b>${esc(s.en)}</b> ${esc(s.ja)}</div>`).join("") + "</div>" : "");
       else if (v.k === "links") {
@@ -422,6 +422,14 @@
   // 区切りをクリック → その区切りだけを、設定の回数、続けて聞く(もう一度クリックで解除)
   $("#disp").onclick = e => {
     if (e.target.closest("#posBtn")) return togglePos();
+    const vp = e.target.closest(".vplay");
+    if (vp) { // 区切りの ▶ → その区切りを、頭から順に聞く(選んだ区切りは解除)
+      const r = cur(); if (!r) return;
+      if (!("speechSynthesis" in window)) return toast("この端末では、読み上げが使えません");
+      const key = vp.dataset.k, list = key === "phrases" ? (r.phrases || []).map(x => x.t) : (r.slash || []).map(x => x.en);
+      selC = null; stopAudio(); if (list.length) playAll(r, key, list, playing); return;
+    }
+    if (e.target.closest(".fulltext")) return play("once"); // 全文をクリック → 全文を1回聞く
     const c = e.target.closest("[data-c]"), v = c && c.closest("[data-view]"), r = cur();
     if (!c || !r || !(v.dataset.view === "slash" || v.dataset.view === "gram")) return;
     if (!("speechSynthesis" in window)) return toast("この端末では、読み上げが使えません");
@@ -557,10 +565,14 @@
     if (mode === "shadow") return shadow(r, me);
     if (mode === "links") return playLinks(r, me);
     if (mode === "ex") { if (r.ex) await say(r.ex); else toast("例文がありません"); return }
-    if (mode === "once") { await say(r.text); return }
+    if (mode === "once") { pst("聞く"); await say(r.text); if (me === playing) pst(null); return }
     if (selC && selC.id === r.id) return playSel(r, selC.key, selC.i, me); // 選んだ区切りがあれば、それだけを繰り返す
     const { key, list: ch } = chunkSrc(r, false); showView(key); // 読む区切りを、表示に出す
-    const rep = prefs.sh.rep; // 繰り返し: 同じ区切りを、設定の回数だけ続けて聞く
+    return playAll(r, key, ch, me);
+  }
+  // 区切りを、頭から順に聞く。繰り返し: 同じ区切りを、設定の回数だけ続けて聞く
+  async function playAll(r, key, ch, me) {
+    const rep = prefs.sh.rep;
     for (let i = 0; i < ch.length; i++) for (let k = 1; k <= rep; k++) {
       if (me !== playing) return;
       renderDisp(r, i, key); pst(`聞く${rep > 1 ? `(${k}回目)` : ""}`);
