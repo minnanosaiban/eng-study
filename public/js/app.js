@@ -10,7 +10,7 @@
   let sel = { sentence: new Set(), meaning: new Set(), iu: new Set(), word: new Set() }; // 単位ごとの選択中の id
   let unit = "sentence";                           // 学習対象選択で見ている単位
   let study = { unit: "sentence", ids: [], i: 0 }; // 学習セット
-  let prefs = { view: { slash: false }, gramOn: false, aux: { ipa: false, ja: true, quiz: false, rec: false }, waux: { ipa: true, ex: true, toeic: false, tr: false, quiz: false }, sh: { gap: 1, rep: 1 }, posOn: false, rate: 1 };
+  let prefs = { view: { slash: false }, gramOn: false, aux: { ipa: false, ja: true, quiz: false, rec: false }, waux: { ipa: true, ex: true, toeic: false, tr: false, quiz: false }, sh: { gap: 0, rep: 1 }, posOn: false, rate: 1 };
   let tab = "reg", wReveal = false;
   const UN = { sentence: { kind: "sentences", name: "英文" }, meaning: { kind: "chunks", name: "意味句" }, iu: { kind: "chunks", name: "IU" }, word: { kind: "words", name: "単語" } };
   const tbl = u => (u === "word" ? words : u === "sentence" ? rows : chunks.filter(c => c.type === u));
@@ -306,11 +306,10 @@
     { k: "links", note: "" },
     { k: "slash", note: "" }
   ];
-  // 区切って聞く・シャドーイングが使う区切り。forShadow: シャドーイング(意味 → 文法 → 音の順)。そうでなければ、出している区切り(意味 → 文法)、何も出していなければ、意味 → 文法 → 音
-  function chunkSrc(r, forShadow) {
+  // 区切りを順に聞く(C)が使う区切り。出している区切り(英文 → 文法)、何も出していなければ、英文 → 文法 → 音
+  function chunkSrc(r) {
     const avail = { iu: r.iu && r.iu.map(x => x.t), slash: r.slash && r.slash.map(x => x.en), phrases: r.phrases && r.phrases.map(x => x.t) };
-    const key = forShadow ? ["slash", "phrases", "iu"].find(k => avail[k])
-      : ["slash", "phrases"].find(k => (k === "phrases" ? prefs.gramOn : prefs.view[k]) && avail[k]) || ["slash", "phrases", "iu"].find(k => avail[k]);
+    const key = ["slash", "phrases"].find(k => (k === "phrases" ? prefs.gramOn : prefs.view[k]) && avail[k]) || ["slash", "phrases", "iu"].find(k => avail[k]);
     return key ? { key, list: avail[key] } : { key: null, list: [r.text] };
   }
   // その見方を、表示に出す(出ていなければ)
@@ -562,50 +561,35 @@
       const wait = Practice.gap(ms, r.text, prefs.sh.gap, prefs.rate); pst(`声に出して、まねしてください…(${(wait / 1000).toFixed(1)}秒)`);
       await sleep(wait, me); if (me === playing) pst(null); return;
     }
-    if (mode === "shadow") return shadow(r, me);
     if (mode === "links") return playLinks(r, me);
     if (mode === "ex") { if (r.ex) await say(r.ex); else toast("例文がありません"); return }
     if (mode === "once") { pst("聞く"); await say(r.text); if (me === playing) pst(null); return }
     if (selC && selC.id === r.id) return playSel(r, selC.key, selC.i, me); // 選んだ区切りがあれば、それだけを繰り返す
-    const { key, list: ch } = chunkSrc(r, false); showView(key); // 読む区切りを、表示に出す
+    const { key, list: ch } = chunkSrc(r); showView(key); // 読む区切りを、表示に出す
     return playAll(r, key, ch, me);
   }
-  // 区切りを、頭から順に聞く。繰り返し: 同じ区切りを、設定の回数だけ続けて聞く
-  async function playAll(r, key, ch, me) {
-    const rep = prefs.sh.rep;
-    for (let i = 0; i < ch.length; i++) for (let k = 1; k <= rep; k++) {
-      if (me !== playing) return;
-      renderDisp(r, i, key); pst(`聞く${rep > 1 ? `(${k}回目)` : ""}`);
-      await say(ch[i]); if (me !== playing) return;
-      if (rep > 1 && k < rep) await sleep(400, me);
-    }
-    if (me === playing) { pst(null); renderDisp(r) }
-  }
-  // 選んだ区切りを、繰り返しの回数だけ、続けて聞く
-  async function playSel(r, key, i, me) {
-    const t = key === "phrases" ? (r.phrases || []).map(x => x.t)[i] : (r.slash || []).map(x => x.en)[i], rep = prefs.sh.rep;
-    if (!t) return;
-    for (let k = 1; k <= rep; k++) {
-      if (me !== playing) return;
-      renderDisp(r, i, key); pst(`聞く${rep > 1 ? `(${k}回目)` : ""}`);
-      await say(t); if (me !== playing) return;
-      if (k < rep) await sleep(400, me);
-    }
-    if (me === playing) { pst(null); renderDisp(r) }
-  }
-  // シャドーイング: 区切り(IU があれば IU)ごとに、聞く → 同じ長さの無音(まねする時間)。区切りは、設定の回数だけ繰り返す
-  async function shadow(r, me) {
-    const { key, list: ch } = chunkSrc(r, true), rep = prefs.sh.rep;
-    showView(key);
-    for (let i = 0; i < ch.length; i++) for (let k = 1; k <= rep; k++) {
+  // 区切りを、頭から順に聞く(only があれば、その番号の区切りだけ)。繰り返し: 同じ区切りを、設定の回数だけ続けて聞く
+  // 間: 読み上げのあとに、まねする時間(同じ長さの無音)を置く。間を置いて最後まで聞いたら、復習+1
+  async function playAll(r, key, ch, me, only = null) {
+    const rep = prefs.sh.rep, gap = +prefs.sh.gap || 0, idx = only == null ? ch.map((_, i) => i) : [only];
+    for (const i of idx) for (let k = 1; k <= rep; k++) {
       if (me !== playing) return;
       renderDisp(r, i, key); pst(`聞く${rep > 1 ? `(${k}回目)` : ""}`);
       const ms = await sayTimed(ch[i]); if (me !== playing) return;
-      const wait = Practice.gap(ms, ch[i], prefs.sh.gap, prefs.rate);
-      pst(`声に出して、まねしてください…(${(wait / 1000).toFixed(1)}秒)`);
-      await sleep(wait, me);
+      if (gap) {
+        const wait = Practice.gap(ms, ch[i], gap, prefs.rate);
+        pst(`声に出して、まねしてください…(${(wait / 1000).toFixed(1)}秒)`);
+        await sleep(wait, me);
+      } else if (k < rep) await sleep(400, me);
     }
-    if (me === playing) { pst(null); renderDisp(r); await countReview(r, "sentences"); renderStudy(); toast("シャドーイングが終わりました(復習+1)") }
+    if (me !== playing) return;
+    pst(null); renderDisp(r);
+    if (gap && only == null) { await countReview(r, "sentences"); renderStudy(); toast("最後まで聞きました(復習+1)") }
+  }
+  // 選んだ区切りを、繰り返しの回数だけ、続けて聞く
+  function playSel(r, key, i, me) {
+    const list = key === "phrases" ? (r.phrases || []).map(x => x.t) : (r.slash || []).map(x => x.en);
+    if (list[i]) return playAll(r, key, list, me, i);
   }
 
   // つながりを聞く: つながって聞こえる所(2語以上のまとまり)を、ゆっくり → ふつうの速さの順に、聞き比べる
@@ -645,7 +629,7 @@
       return;
     }
     const map = { "1": "slash" }, ax = { i: "ipa", j: "ja", q: "quiz", k: "rec" };
-    if (k === " ") { e.preventDefault(); play("once") } else if (k === "c") play("chunks"); else if (k === "r") play("shadow"); else if (k === "l") play("links");
+    if (k === " ") { e.preventDefault(); play("once") } else if (k === "c") play("chunks"); else if (k === "l") play("links");
     else if (k === "2" || k === "g") toggleGram(); else if (k === "3") togglePos(); else if (k === "0") clearViews();
     else if (map[k]) toggleView(map[k]); else if (ax[k]) toggleAux(ax[k]);
   });
@@ -826,6 +810,8 @@
       delete prefs.aux.vocab;
       if (p && p.aux && p.aux.toeic) prefs.gramOn = true; // TOEIC解説を、「文法」にまとめた
       delete prefs.aux.toeic;
+      if (!p || !p.sh || p.sh.v !== 2) prefs.sh.gap = 0; // シャドーイングを、区切りの ▶ にまとめた(間の初期値は「なし」)
+      prefs.sh.v = 2;
       if (p && p.view && p.view.links) prefs.aux.ipa = true; // 音のつながりを、「IPA」にまとめた
       delete prefs.view.links;
       if (p && p.view && p.view.iu) prefs.view.slash = true; // 音区切りを、「意味区切り」にまとめた

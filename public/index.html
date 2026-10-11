@@ -102,7 +102,7 @@
       <h2>復習の記録</h2>
       <p id="recSummary" class="sub"></p>
       <div id="recBars" class="bars"></div>
-      <p class="sub">復習は、4択に答える・意味や和訳を見る・シャドーイングを終える・「練習した」を押す、のたびに1回と数えます。この記録は、この端末だけのものです(同期されません)。</p>
+      <p class="sub">復習は、4択に答える・意味や和訳を見る・「間」を入れて区切りを最後まで聞く(シャドーイング)・「練習した」を押す、のたびに1回と数えます。この記録は、この端末だけのものです(同期されません)。</p>
     </div>
     <div class="card">
       <h2>弱点(間違いの分類)</h2>
@@ -220,7 +220,6 @@
         <div class="rowl">
           <span class="lbl">聞く</span>
           <div class="seg" id="segAudio" role="group" aria-label="音声">
-            <button data-a="shadow" title="区切りごとに、聞く → まねする時間(R)">🗣 シャドーイング</button>
             <button data-a="links" title="つながって聞こえる所を、ゆっくり → ふつうの速さで聞き比べる(L)">🔗 音のつながり</button>
             <button id="btnStop" title="止める(S)">■ 止める</button>
           </div>
@@ -233,16 +232,16 @@
             <select id="rate"><option value="0.7">0.7</option><option value="0.85">0.85</option><option value="1" selected>1.0</option><option value="1.15">1.15</option></select>
           </label>
           <label class="inl">間
-            <select id="shGap" title="シャドーイングで、まねする時間(読み上げの長さの何倍か)"><option value="0.8">0.8倍</option><option value="1" selected>1倍</option><option value="1.5">1.5倍</option><option value="2">2倍</option></select>
+            <select id="shGap" title="区切りを読んだあとに置く、まねする時間(読み上げの長さの何倍か)。「なし」なら、続けて読む"><option value="0" selected>なし</option><option value="0.8">0.8倍</option><option value="1">1倍</option><option value="1.5">1.5倍</option><option value="2">2倍</option></select>
           </label>
           <label class="inl">繰り返し
-            <select id="shRep" title="区切りの ▶・クリックで選んだ区切り・シャドーイングで、同じ区切りを何回続けて繰り返すか"><option value="1" selected>1回</option><option value="2">2回</option><option value="3">3回</option><option value="4">4回</option><option value="5">5回</option><option value="6">6回</option><option value="7">7回</option><option value="8">8回</option><option value="9">9回</option><option value="10">10回</option></select>
+            <select id="shRep" title="区切りの ▶・クリックで選んだ区切りで、同じ区切りを何回続けて繰り返すか"><option value="1" selected>1回</option><option value="2">2回</option><option value="3">3回</option><option value="4">4回</option><option value="5">5回</option><option value="6">6回</option><option value="7">7回</option><option value="8">8回</option><option value="9">9回</option><option value="10">10回</option></select>
           </label>
         </div>
         <div class="rowl">
           <span class="lbl">表示</span>
           <div class="seg aux" id="segShow" role="group" aria-label="表示">
-            <button data-v="slash" title="意味のまとまりで / 区切る。和訳・IPA を入れると、区切りごとに付く。シャドーイングも、この区切りで進む(1)">英文</button>
+            <button data-v="slash" title="意味のまとまりで / 区切る。和訳・IPA を入れると、区切りごとに付く。区切りの先頭の ▶ は、この区切りで進む(1)">英文</button>
             <button data-x="ja" title="全文の和訳・区切りごとの訳・単語・熟語(J)">和訳</button>
             <button data-x="ipa" title="発音記号と、くっついて聞こえる語のまとまり(音のつながり)(I)">IPA</button>
             <button data-g="gram" title="文構造(S V O C M)・文法区切り・文法の解説・TOEIC解説。中の「品詞」で、品詞の色付け(2 / G)">文法</button>
@@ -269,7 +268,7 @@
           <span id="stInfo" class="sub"></span>
         </div>
       </article>
-      <p class="sub keys">ショートカット: ← → 前後 / スペース・全文をクリック 1回聞く / C 区切りを順に聞く / R シャドーイング / S 止める / 1 英文・2 文法・3 品詞(文法の中)(入り切り。0 で区切りを全部消す)/ L つながりを聞く / I J Q K 補助</p>
+      <p class="sub keys">ショートカット: ← → 前後 / スペース・全文をクリック 1回聞く / C 区切りを順に聞く / S 止める / 1 英文・2 文法・3 品詞(文法の中)(入り切り。0 で区切りを全部消す)/ L つながりを聞く / I J Q K 補助</p>
     </div>
   </section>
 </main>
