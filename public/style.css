@@ -149,3 +149,5 @@ code{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding
 .fulltext::after{content:" ▶";font-size:.6em;color:var(--sub)}
 .vplay{border:0;background:none;color:var(--sub);cursor:pointer;font-size:14px;padding:0 6px 0 0;vertical-align:baseline}
 .vplay:hover{color:var(--pri)}
+#selPlay{position:fixed;z-index:30;box-shadow:0 2px 8px rgba(0,0,0,.25);border-radius:999px;padding:4px 14px}
+#selPlay[hidden]{display:none}

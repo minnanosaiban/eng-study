@@ -347,7 +347,7 @@
     // 品詞の色(どの見方にも重ねる)。区切りをつなぐと原文に戻るので、語の並びの順に、品詞を当てる。文字の色だけで表す(区切りの下線と重ならないように)
     const pw = prefs.gramOn && prefs.posOn && r.words ? r.words : null;
     const mkP = () => { let ti = 0; return text => !pw ? esc(text) : text.split(" ").filter(Boolean).map(t => { const w = pw[ti++]; return w && w.w === t ? '<span class="pw pw-' + w.p + '">' + esc(t) + "</span>" : esc(t) }).join(" ") };
-    let html = '<div class="fulltext" title="クリックで全文を聞く(スペース)">' + mkP()(r.text) + "</div>"; // いちばん上は、いつも全文
+    let html = '<div class="fulltext" title="クリックで全文を聞く(スペース)。語をなぞって選ぶと、その部分だけ聞ける">' + mkP()(r.text) + "</div>"; // いちばん上は、いつも全文
     for (const v of VIEWS) {
       if (!(v.k === "links" ? prefs.aux.ipa : prefs.view[v.k])) continue;
       const P = mkP(), hl = i => (nowView === v.k && i === now ? " now" : "");
@@ -357,7 +357,7 @@
         + (prefs.aux.ja ? '<div class="sljas">' + r.slash.map(s => `<div class="ja"><b>${esc(s.en)}</b> ${esc(s.ja)}</div>`).join("") + "</div>" : "");
       else if (v.k === "links") {
         if (!Pron.ready) { body = '<div class="sub">発音辞書を読み込み中…</div>'; Pron.load().then(ok => { if (ok && prefs.aux.ipa && cur() === r) renderStudy() }) }
-        else body = Pron.links(r.text).map((g, i) => g.linked
+        else body = '<button class="vplay" data-k="links" title="つながって聞こえる所を、ゆっくり → ふつうの速さで聞き比べる(L)">▶</button>' + Pron.links(r.text).map((g, i) => g.linked
           ? `<span class="lk${hl(i)}" data-c="${i}">${P(g.t)}${g.ipa ? `<span class="lk-ipa ipa">/${esc(g.ipa)}/</span>` : ""}</span>`
           : `<span class="lk-s${hl(i)}">${P(g.t)}</span>`).join("");
       } else body = '<div class="sub">この英文には、この見方のデータがありません。</div>';
@@ -421,10 +421,12 @@
   // 区切りをクリック → その区切りだけを、設定の回数、続けて聞く(もう一度クリックで解除)
   $("#disp").onclick = e => {
     if (e.target.closest("#posBtn")) return togglePos();
+    if (disSel()) return; // 語をなぞって選んでいるときは、クリックの読み上げをしない
     const vp = e.target.closest(".vplay");
-    if (vp) { // 区切りの ▶ → その区切りを、頭から順に聞く(選んだ区切りは解除)
+    if (vp) { // 区切りの ▶ → その区切りを、頭から順に聞く(選んだ区切りは解除)。音のつながりの ▶ → 聞き比べ
       const r = cur(); if (!r) return;
       if (!("speechSynthesis" in window)) return toast("この端末では、読み上げが使えません");
+      if (vp.dataset.k === "links") { selC = null; play("links"); return }
       const key = vp.dataset.k, list = key === "phrases" ? (r.phrases || []).map(x => x.t) : (r.slash || []).map(x => x.en);
       selC = null; stopAudio(); if (list.length) playAll(r, key, list, playing); return;
     }
@@ -586,6 +588,36 @@
     pst(null); renderDisp(r);
     if (gap && only == null) { await countReview(r, "sentences"); renderStudy(); toast("最後まで聞きました(復習+1)") }
   }
+  // 英文の中の語を、なぞって(長押しして)選ぶと、「▶ 聞く」が出る。選んだ部分だけを、繰り返し・間の設定で聞く
+  function disSel() {
+    const sel = window.getSelection(), d = $("#disp");
+    if (!sel || sel.isCollapsed || !sel.rangeCount || !d.contains(sel.anchorNode) || !d.contains(sel.focusNode)) return "";
+    return sel.toString().replace(/\s+/g, " ").trim();
+  }
+  let selTimer = 0;
+  function selBtnUpdate() {
+    const b = $("#selPlay"), t = tab === "study" && study.unit === "sentence" ? disSel() : "";
+    if (!t) { b.hidden = true; return }
+    const rc = window.getSelection().getRangeAt(0).getBoundingClientRect();
+    b.hidden = false; b.style.top = Math.max(8, rc.bottom + 6) + "px"; b.style.left = Math.max(8, Math.min(rc.left, window.innerWidth - b.offsetWidth - 8)) + "px";
+  }
+  document.addEventListener("selectionchange", () => { clearTimeout(selTimer); selTimer = setTimeout(selBtnUpdate, 150) });
+  window.addEventListener("scroll", () => { if (!$("#selPlay").hidden) selBtnUpdate() }, { passive: true });
+  $("#selPlay").onpointerdown = e => e.preventDefault(); // 押しても、選択が消えないように
+  $("#selPlay").onclick = async () => {
+    const text = disSel(); if (!text) return;
+    if (!("speechSynthesis" in window)) return toast("この端末では、読み上げが使えません");
+    playing++; try { speechSynthesis.cancel() } catch {} const me = playing; // 表示は作り直さない(選択が消えるため)
+    const rep = prefs.sh.rep, gap = +prefs.sh.gap || 0;
+    for (let k = 1; k <= rep; k++) {
+      if (me !== playing) return;
+      pst(`聞く${rep > 1 ? `(${k}回目)` : ""}`);
+      const ms = await sayTimed(text); if (me !== playing) return;
+      if (gap) { const wait = Practice.gap(ms, text, gap, prefs.rate); pst(`声に出して、まねしてください…(${(wait / 1000).toFixed(1)}秒)`); await sleep(wait, me) }
+      else if (k < rep) await sleep(400, me);
+    }
+    if (me === playing) pst(null);
+  };
   // 選んだ区切りを、繰り返しの回数だけ、続けて聞く
   function playSel(r, key, i, me) {
     const list = key === "phrases" ? (r.phrases || []).map(x => x.t) : (r.slash || []).map(x => x.en);
@@ -609,7 +641,6 @@
     if (me === playing) { pst(null); renderDisp(r) }
   }
 
-  $("#segAudio").onclick = e => { const b = e.target.closest("button[data-a]"); if (b) play(b.dataset.a) };
   $("#segWAudio").onclick = e => { if (e.target.closest("#wStop")) return stopAudio(); const b = e.target.closest("button[data-a]"); if (b) play(b.dataset.a) };
   $("#btnStop").onclick = stopAudio;
 
