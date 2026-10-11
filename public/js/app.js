@@ -303,8 +303,8 @@
 
   // 区切りの見方(表示の入り切り)。全文の下に、出している見方が、この並びで縦に並ぶ。それぞれに、何を基準に区切っているかの説明を付ける
   const VIEWS = [
-    { k: "links", note: "【IPA:音のつながり】くっついて聞こえやすい語のまとまりを示しています。下線の所 = つながって聞こえやすい。発音記号の ‿ は、つながる所。規則で作れるもの(連結・弱い語のくっつき)だけで、脱落・はじき音などは表せません。" },
-    { k: "slash", note: "【意味区切り】意味のまとまりで / で区切っています。区切りごとの訳は「和訳」(J)、発音記号は「IPA」(I)で出し入れできます。シャドーイングと「区切って聞く」も、この区切りで進みます。前から順に意味を取る練習用です(スラッシュリーディング)。" }
+    { k: "links", note: "" },
+    { k: "slash", note: "" }
   ];
   // 区切って聞く・シャドーイングが使う区切り。forShadow: シャドーイング(意味 → 文法 → 音の順)。そうでなければ、出している区切り(意味 → 文法)、何も出していなければ、意味 → 文法 → 音
   function chunkSrc(r, forShadow) {
@@ -356,7 +356,7 @@
           ? `<span class="lk${hl(i)}" data-c="${i}">${P(g.t)}${g.ipa ? `<span class="lk-ipa ipa">/${esc(g.ipa)}/</span>` : ""}</span>`
           : `<span class="lk-s${hl(i)}">${P(g.t)}</span>`).join("");
       } else body = '<div class="sub">この英文には、この見方のデータがありません。</div>';
-      html += `<div class="view" data-view="${v.k}"><div class="vnote">${esc(v.note)}</div>${body}</div>`;
+      html += `<div class="view" data-view="${v.k}">${v.note ? `<div class="vnote">${esc(v.note)}</div>` : ""}${body}</div>`;
     }
     if (prefs.gramOn) html += gramBlock(r, mkP, now, nowView, pw);
     $("#disp").innerHTML = html;
@@ -364,11 +364,11 @@
 
   function renderAux(r) {
     const a = prefs.aux; let h = "";
-    if (a.ja) h += `<div class="blk"><h3>和訳</h3>${r.ja ? esc(r.ja) : '<span class="sub">なし</span>'}</div>`;
-    if (a.ja) h += `<div class="blk"><div class="row" style="margin:0"><h3 class="grow">単語・熟語</h3>${(r.vocab || []).length ? '<button id="vAddAll" class="sm">全て単語へ</button>' : ""}</div>${(r.vocab || []).length ? `<table class="v">${r.vocab.map((x, i) => `<tr><td><b>${esc(x.word)}</b>${a.ipa && x.ipa ? `<div class="ipa">/${esc(x.ipa)}/</div>` : ""}<div class="sub">${"★".repeat(x.level || 0)}</div></td><td class="sub">${esc(x.pos)}</td><td>${esc(x.meaning)}<div class="sub">${esc(x.note)}</div>${x.toeic ? `<div class="sub">TOEIC: ${esc(x.toeic)}</div>` : ""}</td><td><button class="sm" data-wadd="${i}">${words.some(w => w.text.toLowerCase() === x.word.toLowerCase()) ? "登録済" : "＋単語"}</button></td></tr>`).join("")}</table>` : '<span class="sub">なし</span>'}</div>`;
+    if (a.ja) h += `<div class="blk">${r.ja ? esc(r.ja) : '<span class="sub">なし</span>'}</div>`;
+    if (a.ja) h += `<div class="blk"><div class="row" style="margin:0"><span class="grow"></span>${(r.vocab || []).length ? '<button id="vAddAll" class="sm">全て単語へ</button>' : ""}</div>${(r.vocab || []).length ? `<table class="v">${r.vocab.map((x, i) => `<tr><td><b>${esc(x.word)}</b>${a.ipa && x.ipa ? `<div class="ipa">/${esc(x.ipa)}/</div>` : ""}<div class="sub">${"★".repeat(x.level || 0)}</div></td><td class="sub">${esc(x.pos)}</td><td>${esc(x.meaning)}<div class="sub">${esc(x.note)}</div>${x.toeic ? `<div class="sub">TOEIC: ${esc(x.toeic)}</div>` : ""}</td><td><button class="sm" data-wadd="${i}">${words.some(w => w.text.toLowerCase() === x.word.toLowerCase()) ? "登録済" : "＋単語"}</button></td></tr>`).join("")}</table>` : '<span class="sub">なし</span>'}</div>`;
     if (a.ipa) {
       const v = (r.vocab || []).filter(x => x.ipa);
-      h += `<div class="blk"><h3>発音記号(単語・熟語)</h3>${v.length ? v.map(x => `<div><b>${esc(x.word)}</b> <span class="ipa">/${esc(x.ipa)}/</span></div>`).join("") : '<span class="sub">なし</span>'}</div>`;
+      h += `<div class="blk">${v.length ? v.map(x => `<div><b>${esc(x.word)}</b> <span class="ipa">/${esc(x.ipa)}/</span></div>`).join("") : '<span class="sub">なし</span>'}</div>`;
     }
     if (a.toeic) {
       const t = r.toeic;
