@@ -320,7 +320,7 @@
   function gramBlock(r, mkP, now, nowView, pw) {
 
     const hl = i => (nowView === "phrases" && i === now ? " now" : "");
-    let h = '<div class="view gram" data-view="gram"><div class="gramhead"><div class="vnote">【文法】文の組み立て(文構造・文法区切り)と、文法の解説です。</div>'
+    let h = '<div class="view gram" data-view="gram"><div class="gramhead"><span style="flex:1"></span>'
       + `<button class="sm" id="posBtn" aria-pressed="${!!prefs.posOn}" title="語ごとの品詞を、文字の色で表す(3)">品詞</button></div>`;
     if (prefs.posOn) h += '<div class="legend">' + (pw ? LEG.map(([k, n]) => `<span><i style="background:var(--pc-${k})"></i>${n}</span>`).join("") : "<span>この英文には、品詞の情報がないので、品詞の色は付きません</span>") + "</div>";
     h += '<h4 class="gh">文構造</h4>';
@@ -372,7 +372,7 @@
     }
     if (a.toeic) {
       const t = r.toeic;
-      h += `<div class="blk"><h3>TOEIC の観点</h3>${t ? `<span class="tag">${esc(t.part)}</span><span class="tag">${esc(t.scene)}</span>${t.points.map(p => `<div><b>・${esc(p.type)}</b> <span class="sub">${esc(p.detail)}</span></div>`).join("")}${t.paraphrase.length ? `<div class="sub">言い換え: ${t.paraphrase.map(esc).join(" / ")}</div>` : ""}` : '<span class="sub">なし</span>'}</div>`;
+      h += `<div class="blk">${t ? `<span class="tag">${esc(t.part)}</span><span class="tag">${esc(t.scene)}</span>${t.points.map(p => `<div><b>・${esc(p.type)}</b> <span class="sub">${esc(p.detail)}</span></div>`).join("")}${t.paraphrase.length ? `<div class="sub">言い換え: ${t.paraphrase.map(esc).join(" / ")}</div>` : ""}` : '<span class="sub">なし</span>'}</div>`;
     }
     if (a.quiz) {
       const q = r.quiz;
