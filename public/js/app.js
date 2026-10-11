@@ -10,7 +10,7 @@
   let sel = { sentence: new Set(), meaning: new Set(), iu: new Set(), word: new Set() }; // 単位ごとの選択中の id
   let unit = "sentence";                           // 学習対象選択で見ている単位
   let study = { unit: "sentence", ids: [], i: 0 }; // 学習セット
-  let prefs = { view: { slash: false }, gramOn: false, aux: { ipa: false, ja: true, toeic: false, quiz: false, rec: false }, waux: { ipa: true, ex: true, toeic: false, tr: false, quiz: false }, sh: { gap: 1, rep: 1 }, posOn: false, rate: 1 };
+  let prefs = { view: { slash: false }, gramOn: false, aux: { ipa: false, ja: true, quiz: false, rec: false }, waux: { ipa: true, ex: true, toeic: false, tr: false, quiz: false }, sh: { gap: 1, rep: 1 }, posOn: false, rate: 1 };
   let tab = "reg", wReveal = false;
   const UN = { sentence: { kind: "sentences", name: "英文" }, meaning: { kind: "chunks", name: "意味句" }, iu: { kind: "chunks", name: "IU" }, word: { kind: "words", name: "単語" } };
   const tbl = u => (u === "word" ? words : u === "sentence" ? rows : chunks.filter(c => c.type === u));
@@ -335,6 +335,10 @@
     h += r.phrases && r.phrases.length ? r.phrases.map((p, i) => `<span class="ph"><span class="no">${NUM[i] || i + 1}</span><span class="seg-i cl-${phClass(p.f)}${hl(i)}" data-c="${i}">${P2(p.t)}</span> <span class="lab">${esc(p.f)}</span></span>`).join("") : '<div class="sub">この英文には、文法区切りのデータがありません。</div>';
     h += '<h4 class="gh">文法の解説</h4>';
     h += (r.grammar || []).length ? r.grammar.map(g => `<div><b>・${esc(g.point)}</b><div class="sub">${esc(g.explanation)}</div></div>`).join("") : '<div class="sub">なし</div>';
+    { const t = r.toeic;
+    h += '<h4 class="gh">TOEIC</h4>';
+    h += `<div>${t ? `<span class="tag">${esc(t.part)}</span><span class="tag">${esc(t.scene)}</span>${t.points.map(p => `<div><b>・${esc(p.type)}</b> <span class="sub">${esc(p.detail)}</span></div>`).join("")}${t.paraphrase.length ? `<div class="sub">言い換え: ${t.paraphrase.map(esc).join(" / ")}</div>` : ""}` : '<span class="sub">なし</span>'}</div>`;
+    }
     return h + "</div>";
   }
 
@@ -369,10 +373,6 @@
     if (a.ipa) {
       const v = (r.vocab || []).filter(x => x.ipa);
       h += `<div class="blk">${v.length ? v.map(x => `<div><b>${esc(x.word)}</b> <span class="ipa">/${esc(x.ipa)}/</span></div>`).join("") : '<span class="sub">なし</span>'}</div>`;
-    }
-    if (a.toeic) {
-      const t = r.toeic;
-      h += `<div class="blk">${t ? `<span class="tag">${esc(t.part)}</span><span class="tag">${esc(t.scene)}</span>${t.points.map(p => `<div><b>・${esc(p.type)}</b> <span class="sub">${esc(p.detail)}</span></div>`).join("")}${t.paraphrase.length ? `<div class="sub">言い換え: ${t.paraphrase.map(esc).join(" / ")}</div>` : ""}` : '<span class="sub">なし</span>'}</div>`;
     }
     if (a.quiz) {
       const q = r.quiz;
@@ -547,11 +547,14 @@
     if (mode === "ex") { if (r.ex) await say(r.ex); else toast("例文がありません"); return }
     if (mode === "once") { await say(r.text); return }
     const { key, list: ch } = chunkSrc(r, false); showView(key); // 読む区切りを、表示に出す
-    for (let i = 0; i < ch.length; i++) {
+    const rep = prefs.sh.rep; // 繰り返し: 同じ区切りを、設定の回数だけ続けて聞く
+    for (let i = 0; i < ch.length; i++) for (let k = 1; k <= rep; k++) {
       if (me !== playing) return;
-      renderDisp(r, i, key); await say(ch[i]);
+      renderDisp(r, i, key); pst(`聞く(${i + 1} / ${ch.length}${rep > 1 ? `・${k}回目` : ""})`);
+      await say(ch[i]); if (me !== playing) return;
+      if (rep > 1 && k < rep) await sleep(400, me);
     }
-    if (me === playing) renderDisp(r);
+    if (me === playing) { pst(null); renderDisp(r) }
   }
   // シャドーイング: 区切り(IU があれば IU)ごとに、聞く → 同じ長さの無音(まねする時間)。区切りは、設定の回数だけ繰り返す
   async function shadow(r, me) {
@@ -604,7 +607,7 @@
       else if (ax[k] && has(ax[k])) { prefs.waux[ax[k]] = !prefs.waux[ax[k]]; savePrefs(); renderStudy() }
       return;
     }
-    const map = { "1": "slash" }, ax = { i: "ipa", j: "ja", t: "toeic", q: "quiz", k: "rec" };
+    const map = { "1": "slash" }, ax = { i: "ipa", j: "ja", q: "quiz", k: "rec" };
     if (k === " ") { e.preventDefault(); play("once") } else if (k === "c") play("chunks"); else if (k === "r") play("shadow"); else if (k === "l") play("links");
     else if (k === "2" || k === "g") toggleGram(); else if (k === "3") togglePos(); else if (k === "0") clearViews();
     else if (map[k]) toggleView(map[k]); else if (ax[k]) toggleAux(ax[k]);
@@ -784,6 +787,8 @@
       delete prefs.view.phrases; delete prefs.aux.grammar;
       if (p && p.aux && p.aux.vocab) prefs.aux.ja = true; // 単語・熟語を、「和訳」にまとめた
       delete prefs.aux.vocab;
+      if (p && p.aux && p.aux.toeic) prefs.gramOn = true; // TOEIC解説を、「文法」にまとめた
+      delete prefs.aux.toeic;
       if (p && p.view && p.view.links) prefs.aux.ipa = true; // 音のつながりを、「IPA」にまとめた
       delete prefs.view.links;
       if (p && p.view && p.view.iu) prefs.view.slash = true; // 音区切りを、「意味区切り」にまとめた
