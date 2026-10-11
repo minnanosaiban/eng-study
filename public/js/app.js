@@ -550,7 +550,7 @@
     const rep = prefs.sh.rep; // 繰り返し: 同じ区切りを、設定の回数だけ続けて聞く
     for (let i = 0; i < ch.length; i++) for (let k = 1; k <= rep; k++) {
       if (me !== playing) return;
-      renderDisp(r, i, key); pst(`聞く(${i + 1} / ${ch.length}${rep > 1 ? `・${k}回目` : ""})`);
+      renderDisp(r, i, key); pst(`聞く${rep > 1 ? `(${k}回目)` : ""}`);
       await say(ch[i]); if (me !== playing) return;
       if (rep > 1 && k < rep) await sleep(400, me);
     }
@@ -562,7 +562,7 @@
     showView(key);
     for (let i = 0; i < ch.length; i++) for (let k = 1; k <= rep; k++) {
       if (me !== playing) return;
-      renderDisp(r, i, key); pst(`聞く(${i + 1} / ${ch.length}${rep > 1 ? `・${k}回目` : ""})`);
+      renderDisp(r, i, key); pst(`聞く${rep > 1 ? `(${k}回目)` : ""}`);
       const ms = await sayTimed(ch[i]); if (me !== playing) return;
       const wait = Practice.gap(ms, ch[i], prefs.sh.gap, prefs.rate);
       pst(`声に出して、まねしてください…(${(wait / 1000).toFixed(1)}秒)`);
