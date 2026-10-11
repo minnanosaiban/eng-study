@@ -10,7 +10,7 @@
   let sel = { sentence: new Set(), meaning: new Set(), iu: new Set(), word: new Set() }; // 単位ごとの選択中の id
   let unit = "sentence";                           // 学習対象選択で見ている単位
   let study = { unit: "sentence", ids: [], i: 0 }; // 学習セット
-  let prefs = { view: { iu: false, links: false, slash: false }, gramOn: false, aux: { ipa: false, ja: true, toeic: false, quiz: false, rec: false }, waux: { ipa: true, ex: true, toeic: false, tr: false, quiz: false }, sh: { gap: 1, rep: 1 }, posOn: false, rate: 1 };
+  let prefs = { view: { iu: false, slash: false }, gramOn: false, aux: { ipa: false, ja: true, toeic: false, quiz: false, rec: false }, waux: { ipa: true, ex: true, toeic: false, tr: false, quiz: false }, sh: { gap: 1, rep: 1 }, posOn: false, rate: 1 };
   let tab = "reg", wReveal = false;
   const UN = { sentence: { kind: "sentences", name: "英文" }, meaning: { kind: "chunks", name: "意味句" }, iu: { kind: "chunks", name: "IU" }, word: { kind: "words", name: "単語" } };
   const tbl = u => (u === "word" ? words : u === "sentence" ? rows : chunks.filter(c => c.type === u));
@@ -304,7 +304,7 @@
   // 区切りの見方(表示の入り切り)。全文の下に、出している見方が、この並びで縦に並ぶ。それぞれに、何を基準に区切っているかの説明を付ける
   const VIEWS = [
     { k: "iu", note: "【音区切り】息継ぎの切れ目(一息で読む単位。イントネーション・ユニット)で区切っています。シャドーイングは、この区切りで進みます。" },
-    { k: "links", note: "【音のつながり】くっついて聞こえやすい語のまとまりを示しています(聞き取りの練習用)。下線の所 = つながって聞こえやすい。発音記号の ‿ は、つながる所。規則で作れるもの(連結・弱い語のくっつき)だけで、脱落・はじき音などは表せません。" },
+    { k: "links", note: "【IPA:音のつながり】くっついて聞こえやすい語のまとまりを示しています。下線の所 = つながって聞こえやすい。発音記号の ‿ は、つながる所。規則で作れるもの(連結・弱い語のくっつき)だけで、脱落・はじき音などは表せません。" },
     { k: "slash", note: "【意味区切り】意味のまとまりで / で区切っています。区切りごとの日本語訳は、補助の「和訳」(J)で出し入れできます。前から順に意味を取る練習用です(スラッシュリーディング)。" }
   ];
   // 区切って聞く・シャドーイングが使う区切り。forShadow: シャドーイング(音区切り → 文法 → 意味の順)。そうでなければ、出している区切り(音 → 意味 → 文法)、何も出していなければ、文法 → 意味 → 音
@@ -345,14 +345,14 @@
     const mkP = () => { let ti = 0; return text => !pw ? esc(text) : text.split(" ").filter(Boolean).map(t => { const w = pw[ti++]; return w && w.w === t ? '<span class="pw pw-' + w.p + '">' + esc(t) + "</span>" : esc(t) }).join(" ") };
     let html = '<div class="fulltext">' + mkP()(r.text) + "</div>"; // いちばん上は、いつも全文
     for (const v of VIEWS) {
-      if (!prefs.view[v.k]) continue;
+      if (!(v.k === "links" ? prefs.aux.ipa : prefs.view[v.k])) continue;
       const P = mkP(), hl = i => (nowView === v.k && i === now ? " now" : "");
       let body;
       if (v.k === "slash" && r.slash) body = r.slash.map((s, i) => `${i ? '<span class="slsep">/</span>' : ""}<span class="seg-i${hl(i)}" data-c="${i}">${P(s.en)}</span>`).join("")
         + (prefs.aux.ja ? '<div class="sljas">' + r.slash.map(s => `<div class="ja"><b>${esc(s.en)}</b> ${esc(s.ja)}</div>`).join("") + "</div>" : "");
       else if (v.k === "iu" && r.iu) body = r.iu.map((x, i) => `<span class="ph"><span class="no">${NUM[i] || i + 1}</span><span class="seg-i cl-v${hl(i)}" data-c="${i}">${P(x.t)}</span>${prefs.aux.ipa && x.ipa ? ` <span class="ipa">/${esc(x.ipa)}/</span>` : ""}</span>`).join("");
       else if (v.k === "links") {
-        if (!Pron.ready) { body = '<div class="sub">発音辞書を読み込み中…</div>'; Pron.load().then(ok => { if (ok && prefs.view.links && cur() === r) renderStudy() }) }
+        if (!Pron.ready) { body = '<div class="sub">発音辞書を読み込み中…</div>'; Pron.load().then(ok => { if (ok && prefs.aux.ipa && cur() === r) renderStudy() }) }
         else body = Pron.links(r.text).map((g, i) => g.linked
           ? `<span class="lk${hl(i)}" data-c="${i}">${P(g.t)}${g.ipa ? `<span class="lk-ipa ipa">/${esc(g.ipa)}/</span>` : ""}</span>`
           : `<span class="lk-s${hl(i)}">${P(g.t)}</span>`).join("");
@@ -573,7 +573,7 @@
   async function playLinks(r, me) {
     if (!await Pron.load()) return toast("発音辞書を読み込めませんでした(通信できない可能性)");
     if (me !== playing) return;
-    showView("links");
+    if (!prefs.aux.ipa) { prefs.aux.ipa = true; savePrefs(); renderStudy() }
     const gs = Pron.links(r.text), n = gs.filter(g => g.linked).length;
     if (!n) return toast("この英文には、つながりの所が、ありません");
     for (let i = 0; i < gs.length; i++) {
@@ -605,7 +605,7 @@
       else if (ax[k] && has(ax[k])) { prefs.waux[ax[k]] = !prefs.waux[ax[k]]; savePrefs(); renderStudy() }
       return;
     }
-    const map = { "1": "slash", "4": "iu", "5": "links" }, ax = { i: "ipa", j: "ja", t: "toeic", q: "quiz", k: "rec" };
+    const map = { "1": "slash", "4": "iu" }, ax = { i: "ipa", j: "ja", t: "toeic", q: "quiz", k: "rec" };
     if (k === " ") { e.preventDefault(); play("once") } else if (k === "c") play("chunks"); else if (k === "r") play("shadow"); else if (k === "l") play("links");
     else if (k === "2" || k === "g") toggleGram(); else if (k === "3") togglePos(); else if (k === "0") clearViews();
     else if (map[k]) toggleView(map[k]); else if (ax[k]) toggleAux(ax[k]);
@@ -785,6 +785,8 @@
       delete prefs.view.phrases; delete prefs.aux.grammar;
       if (p && p.aux && p.aux.vocab) prefs.aux.ja = true; // 単語・熟語を、「和訳」にまとめた
       delete prefs.aux.vocab;
+      if (p && p.view && p.view.links) prefs.aux.ipa = true; // 音のつながりを、「IPA」にまとめた
+      delete prefs.view.links;
       const s = await Store.getMeta("study", null);
       if (s && Array.isArray(s.ids)) {
         const u = UN[s.unit] ? s.unit : "sentence", ok = new Set(tbl(u).map(r => r.id));
