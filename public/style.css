@@ -183,3 +183,13 @@ table.v tr:first-child td{border-top:1px solid var(--line)}
 .menu button,.menu select{font-size:12px}
 .menu .inl,.menu .sub{font-size:12px}
 .jabox{margin-top:0}
+.toprow{display:flex;gap:10px;align-items:flex-start}
+.toprow .jabox{flex:1;padding-top:3px}
+#btnSlashMain{flex:none;font-size:12px;padding:1px 9px;font-weight:600}
+#btnSlashMain[aria-pressed="true"]{background:var(--pri);color:var(--pri-tx);border-color:var(--pri)}
+.toprow .jabox:empty{display:block}
+.vstop{border:0;background:none;color:var(--sub);cursor:pointer;font-size:14px;padding:0 0 0 6px;vertical-align:baseline}
+.vstop:hover{color:var(--pri)}
+.fulltext .vplay,.fulltext .vstop{font-size:14px}
+.fulltext .seg-i{cursor:pointer}
+#disp .view[data-view="slash"] .sljas:first-child{margin-top:0}

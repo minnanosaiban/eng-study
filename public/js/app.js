@@ -10,7 +10,7 @@
   let sel = { sentence: new Set(), meaning: new Set(), iu: new Set(), word: new Set() }; // 単位ごとの選択中の id
   let unit = "sentence";                           // 学習対象選択で見ている単位
   let study = { unit: "sentence", ids: [], i: 0 }; // 学習セット
-  let prefs = { view: { slash: false }, gramOn: false, aux: { ipa: false, ja: true, vocab: true, quiz: false, rec: false }, waux: { ipa: true, ex: true, toeic: false, tr: false, quiz: false }, sh: { gap: 0, rep: 1 }, posOn: false, rate: 1 };
+  let prefs = { view: {}, gramOn: false, slashMain: false, aux: { ipa: false, ja: true, vocab: true, quiz: false, rec: false }, waux: { ipa: true, ex: true, toeic: false, tr: false, quiz: false }, sh: { gap: 0, rep: 1 }, posOn: false, rate: 1 };
   let tab = "reg", wReveal = false;
   const UN = { sentence: { kind: "sentences", name: "英文" }, meaning: { kind: "chunks", name: "意味句" }, iu: { kind: "chunks", name: "IU" }, word: { kind: "words", name: "単語" } };
   const tbl = u => (u === "word" ? words : u === "sentence" ? rows : chunks.filter(c => c.type === u));
@@ -307,6 +307,7 @@
     $("#pos").textContent = `${study.i + 1} / ${study.ids.length}`;
     $("#btnPrev").disabled = study.i === 0; $("#btnNext").disabled = study.i >= study.ids.length - 1;
     document.querySelectorAll("#segShow button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v ? !!prefs.view[b.dataset.v] : b.dataset.x ? !!prefs.aux[b.dataset.x] : !!prefs.gramOn)));
+    $("#btnSlashMain").setAttribute("aria-pressed", String(!!prefs.slashMain));
     $("#rate").value = $("#wrate").value = String(prefs.rate);
     $("#shGap").value = String(prefs.sh.gap); $("#shRep").value = String(prefs.sh.rep);
     $("#stSel").value = r.status;
@@ -316,17 +317,16 @@
 
   // 区切りの見方(表示の入り切り)。全文の下に、出している見方が、この並びで縦に並ぶ。それぞれに、何を基準に区切っているかの説明を付ける
   const VIEWS = [
-    { k: "links", note: "" },
-    { k: "slash", note: "" }
+    { k: "links", note: "" }
   ];
   // 区切りを順に聞く(C)が使う区切り。出している区切り(英文 → 文法)、何も出していなければ、英文 → 文法 → 音
   function chunkSrc(r) {
     const avail = { iu: r.iu && r.iu.map(x => x.t), slash: r.slash && r.slash.map(x => x.en), phrases: r.phrases && r.phrases.map(x => x.t) };
-    const key = ["slash", "phrases"].find(k => (k === "phrases" ? prefs.gramOn : prefs.view[k]) && avail[k]) || ["slash", "phrases", "iu"].find(k => avail[k]);
+    const key = ["slash", "phrases"].find(k => (k === "phrases" ? prefs.gramOn : prefs.slashMain) && avail[k]) || ["slash", "phrases", "iu"].find(k => avail[k]);
     return key ? { key, list: avail[key] } : { key: null, list: [r.text] };
   }
   // その見方を、表示に出す(出ていなければ)
-  function showView(k) { if (k === "iu") return; if (k === "phrases") { if (!prefs.gramOn) { prefs.gramOn = true; savePrefs(); renderStudy() } } else if (k && !prefs.view[k]) { prefs.view[k] = true; savePrefs(); renderStudy() } }
+  function showView(k) { if (k === "iu") return; if (k === "slash") { if (!prefs.slashMain) { prefs.slashMain = true; savePrefs(); renderStudy() } } else if (k === "phrases") { if (!prefs.gramOn) { prefs.gramOn = true; savePrefs(); renderStudy() } } else if (k && !prefs.view[k]) { prefs.view[k] = true; savePrefs(); renderStudy() } }
 
   // 文法(ひとまとめ): 品詞ボタン + 文構造(S V O C M・節・文型・時制)+ 文法区切り + 文法の解説
   function gramBlock(r, mkP, now, nowView, pw) {
@@ -360,20 +360,23 @@
     // 品詞の色(どの見方にも重ねる)。区切りをつなぐと原文に戻るので、語の並びの順に、品詞を当てる。文字の色だけで表す(区切りの下線と重ならないように)
     const pw = prefs.gramOn && prefs.posOn && r.words ? r.words : null;
     const mkP = () => { let ti = 0; return text => !pw ? esc(text) : text.split(" ").filter(Boolean).map(t => { const w = pw[ti++]; return w && w.w === t ? '<span class="pw pw-' + w.p + '">' + esc(t) + "</span>" : esc(t) }).join(" ") };
-    let html = '<div class="fulltext" title="クリックで全文を聞く(スペース)。語をなぞって選ぶと、その部分だけ聞ける">' + mkP()(r.text) + "</div>"; // いちばん上は、いつも全文
+    const ftxt = prefs.slashMain && r.slash && r.slash.length ? (P => r.slash.map((s, i) => (i ? '<span class="slsep">/</span><wbr>' : "") + `<span class="seg-i${nowView === "slash" && i === now ? " now" : ""}${sl("slash", i)}" data-c="${i}">${P(s.en)}</span>`).join(""))(mkP()) : mkP()(r.text); // [/] を入れると、全文を / で区切った形にする
+    let html = '<div class="fulltext" title="クリックで全文を聞く(スペース)。語をなぞって選ぶと、その部分だけ聞ける"><button class="vplay" data-k="main" title="聞く(スペース)">▶</button>' + ftxt + ' <button class="vstop" title="止める(S)">■</button></div>'; // いちばん上は、いつも全文
+    if (r.slash && r.slash.length && (prefs.aux.ipa || prefs.aux.ja)) { // 区切りごとの発音記号・訳(英文の下)
+      html += '<div class="view" data-view="slash">'
+        + (prefs.aux.ipa && r.slash.some(s => s.ipa) ? '<div class="sljas">' + r.slash.filter(s => s.ipa).map(s => `<div class="ja"><b>${esc(s.en)}</b> <span class="ipa">/${esc(s.ipa)}/</span></div>`).join("") + "</div>" : "")
+        + (prefs.aux.ja ? '<div class="sljas">' + r.slash.map(s => `<div class="ja"><b>${esc(s.en)}</b> ${esc(s.ja)}</div>`).join("") + "</div>" : "") + "</div>";
+    }
     for (const v of VIEWS) {
-      if (!(v.k === "links" ? prefs.aux.ipa : prefs.view[v.k])) continue;
+      if (!prefs.aux.ipa) continue;
       const P = mkP(), hl = i => (nowView === v.k && i === now ? " now" : "");
       let body;
-      if (v.k === "slash" && r.slash) body = '<button class="vplay" data-k="slash" title="区切りを、頭から順に聞く(C)">▶</button>' + r.slash.map((s, i) => `${i ? '<span class="slsep">/</span>' : ""}<span class="seg-i${hl(i)}${sl(v.k, i)}" data-c="${i}">${P(s.en)}</span>`).join("")
-        + (prefs.aux.ipa && r.slash.some(s => s.ipa) ? '<div class="sljas">' + r.slash.filter(s => s.ipa).map(s => `<div class="ja"><b>${esc(s.en)}</b> <span class="ipa">/${esc(s.ipa)}/</span></div>`).join("") + "</div>" : "")
-        + (prefs.aux.ja ? '<div class="sljas">' + r.slash.map(s => `<div class="ja"><b>${esc(s.en)}</b> ${esc(s.ja)}</div>`).join("") + "</div>" : "");
-      else if (v.k === "links") {
+      if (v.k === "links") {
         if (!Pron.ready) { body = '<div class="sub">発音辞書を読み込み中…</div>'; Pron.load().then(ok => { if (ok && prefs.aux.ipa && cur() === r) renderStudy() }) }
         else body = '<button class="vplay" data-k="links" title="つながって聞こえる所を、ゆっくり → ふつうの速さで聞き比べる(L)">▶</button>' + Pron.links(r.text).map((g, i) => g.linked
           ? `<span class="lk${hl(i)}" data-c="${i}">${P(g.t)}${g.ipa ? `<span class="lk-ipa ipa">/${esc(g.ipa)}/</span>` : ""}</span>`
           : `<span class="lk-s${hl(i)}">${P(g.t)}</span>`).join("");
-      } else body = '<div class="sub">この英文には、この見方のデータがありません。</div>';
+      } else body = "";
       html += `<div class="view" data-view="${v.k}">${v.note ? `<div class="vnote">${esc(v.note)}</div>` : ""}${body}</div>`;
     }
     if (prefs.gramOn) html += gramBlock(r, mkP, now, nowView, pw);
@@ -429,29 +432,32 @@
   $("#shGap").onchange = e => { prefs.sh.gap = +e.target.value; savePrefs() };
   $("#shRep").onchange = e => { prefs.sh.rep = +e.target.value; savePrefs() };
   function toggleView(k) { prefs.view[k] = !prefs.view[k]; savePrefs(); renderStudy() }
+  function toggleSlashMain() { prefs.slashMain = !prefs.slashMain; savePrefs(); renderStudy() }
+  $("#btnSlashMain").onclick = toggleSlashMain;
   function toggleGram() { prefs.gramOn = !prefs.gramOn; savePrefs(); renderStudy() }
   function togglePos() { if (!prefs.gramOn) { prefs.gramOn = true; prefs.posOn = true } else prefs.posOn = !prefs.posOn; savePrefs(); renderStudy() }
   // 区切りをクリック → その区切りだけを、設定の回数、続けて聞く(もう一度クリックで解除)
   $("#disp").onclick = e => {
     if (e.target.closest("#posBtn")) return togglePos();
+    if (e.target.closest(".vstop")) return stopAudio();
     if (disSel()) return; // 語をなぞって選んでいるときは、クリックの読み上げをしない
     const vp = e.target.closest(".vplay");
     if (vp) { // 区切りの ▶ → その区切りを、頭から順に聞く(選んだ区切りは解除)。音のつながりの ▶ → 聞き比べ
       const r = cur(); if (!r) return;
       if (!("speechSynthesis" in window)) return toast("この端末では、読み上げが使えません");
       if (vp.dataset.k === "links") { selC = null; play("links"); return }
+      if (vp.dataset.k === "main") { selC = null; if (prefs.slashMain && r.slash && r.slash.length) { stopAudio(); playAll(r, "slash", r.slash.map(x => x.en), playing) } else play("once"); return }
       const key = vp.dataset.k, list = key === "phrases" ? (r.phrases || []).map(x => x.t) : (r.slash || []).map(x => x.en);
       selC = null; stopAudio(); if (list.length) playAll(r, key, list, playing); return;
     }
-    if (e.target.closest(".fulltext")) return play("once"); // 全文をクリック → 全文を1回聞く
-    const c = e.target.closest("[data-c]"), v = c && c.closest("[data-view]"), r = cur();
-    if (!c || !r || !(v.dataset.view === "slash" || v.dataset.view === "gram")) return;
+    const c = e.target.closest("[data-c]"), v = c && c.closest("[data-view]"), r = cur(), inFt = !!(c && c.closest(".fulltext"));
+    if (!(c && r && (inFt || (v && v.dataset.view === "gram")))) { if (e.target.closest(".fulltext")) play("once"); return } // 全文をクリック → 全文を1回聞く
     if (!("speechSynthesis" in window)) return toast("この端末では、読み上げが使えません");
-    const key = v.dataset.view === "gram" ? "phrases" : "slash", i = +c.dataset.c;
+    const key = inFt ? "slash" : "phrases", i = +c.dataset.c;
     if (selC && selC.id === r.id && selC.key === key && selC.i === i) { selC = null; stopAudio(); return }
     selC = { id: r.id, key, i }; stopAudio(); playSel(r, key, i, playing);
   };
-  function clearViews() { for (const k of Object.keys(prefs.view)) prefs.view[k] = false; prefs.gramOn = false; savePrefs(); renderStudy() }
+  function clearViews() { for (const k of Object.keys(prefs.view)) prefs.view[k] = false; prefs.gramOn = false; prefs.slashMain = false; savePrefs(); renderStudy() }
   function toggleAux(x) { prefs.aux[x] = !prefs.aux[x]; savePrefs(); renderStudy() }
   $("#stSel").onchange = async e => { const r = cur(); if (r) { r.status = e.target.value; await Store.put(r, "sentences") } };
 
@@ -655,8 +661,6 @@
   }
 
   $("#segWAudio").onclick = e => { if (e.target.closest("#wStop")) return stopAudio(); const b = e.target.closest("button[data-a]"); if (b) play(b.dataset.a) };
-  $("#btnStop").onclick = stopAudio;
-  $("#btnPlay").onclick = () => play("once");
 
   // ---------- ショートカット ----------
   document.addEventListener("keydown", e => {
@@ -673,9 +677,9 @@
       else if (ax[k] && has(ax[k])) { prefs.waux[ax[k]] = !prefs.waux[ax[k]]; savePrefs(); renderStudy() }
       return;
     }
-    const map = { "1": "slash" }, ax = { i: "ipa", j: "ja", v: "vocab", q: "quiz", k: "rec" };
+    const map = {}, ax = { i: "ipa", j: "ja", v: "vocab", q: "quiz", k: "rec" };
     if (k === " ") { e.preventDefault(); play("once") } else if (k === "c") play("chunks"); else if (k === "l") play("links");
-    else if (k === "2" || k === "g") toggleGram(); else if (k === "3") togglePos(); else if (k === "0") clearViews();
+    else if (k === "1") toggleSlashMain(); else if (k === "2" || k === "g") toggleGram(); else if (k === "3") togglePos(); else if (k === "0") clearViews();
     else if (map[k]) toggleView(map[k]); else if (ax[k]) toggleAux(ax[k]);
   });
 
@@ -856,9 +860,11 @@
       delete prefs.aux.toeic;
       if (!p || !p.sh || p.sh.v !== 2) prefs.sh.gap = 0; // シャドーイングを、区切りの ▶ にまとめた(間の初期値は「なし」)
       prefs.sh.v = 2;
+      if (p && p.slashMain === undefined && p.view && p.view.slash) prefs.slashMain = true; // 英文ボタンを、左上の [/] にまとめた
+      delete prefs.view.slash;
       if (p && p.view && p.view.links) prefs.aux.ipa = true; // 音のつながりを、「IPA」にまとめた
       delete prefs.view.links;
-      if (p && p.view && p.view.iu) prefs.view.slash = true; // 音区切りを、「意味区切り」にまとめた
+      if (p && p.view && p.view.iu) prefs.slashMain = true; // 音区切りを、「意味区切り」にまとめた
       delete prefs.view.iu;
       const s = await Store.getMeta("study", null);
       if (s && Array.isArray(s.ids)) {
