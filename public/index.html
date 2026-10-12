@@ -28,6 +28,18 @@
     <div class="card">
       <h2>AI で解析する(和訳・区切り・品詞・単語・発音記号・TOEIC・4択)</h2>
       <p id="aiInfo" class="sub"></p>
+      <div class="lens word-only" hidden>
+        <div class="seg" id="segLens" role="group" aria-label="視点">
+          <span class="lbl">視点</span>
+          <button data-l="parts" title="接頭辞・語根・接尾辞が同じ単語">部品</button>
+          <button data-l="rel" title="類義語・反意語・上位・下位の語があるか">つながり</button>
+          <button data-l="pos" title="品詞ごと">品詞</button>
+          <button data-l="scene" title="場面(グループ)ごと">場面</button>
+          <button data-l="freq" title="TOEIC での頻出度ごと">頻出度</button>
+          <button data-l="level" title="難易度ごと">難易度</button>
+        </div>
+        <div id="lensChips" class="chips"></div>
+      </div>
       <div class="row wrap">
         <button id="btnAI" class="pri">解析する</button>
         <button id="btnAIStop" hidden>止める</button>
@@ -148,7 +160,6 @@
       <div class="filters">
         <input id="fq" type="search" placeholder="英文・和訳で検索">
         <select id="fgroup" aria-label="グループ"></select>
-        <select id="fpart" class="word-only" aria-label="部品" hidden></select>
         <select id="fstatus" aria-label="状態">
           <option value="">状態: すべて</option>
           <option value="not-mastered" selected>状態: 覚えた以外</option>

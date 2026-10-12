@@ -66,4 +66,4 @@ npx wrangler dev --var SETUP_CODE:localtest
 - 発音辞書: [CMU Pronouncing Dictionary](http://www.speech.cs.cmu.edu/cgi-bin/cmudict)(Carnegie Mellon University)。npm の cmu-pronouncing-dictionary(ISC)から取り出して、IPA に変換したものを `public/dict/` に同梱(`public/dict/NOTICE.txt` 参照)
 - QR コード: [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator)(MIT、Kazuhiko Arase。`public/vendor/qrcode.js` に同梱)
 
-- 単語の**分解**と**つながり**(単語カードの「分解」「つながり」): 語を部品(接頭辞・語根・接尾辞)に分け、同じ部品を持つ語を並べる。類義語・反意語・上位・下位の語も出る。データは、Claude Code で作って受信箱から入れる(`CLAUDE.md` に形を書いた)。「学習対象選択」の単語では、「部品」で絞り込んで、同じ部品の単語をまとめて学習できる。同梱サンプルの単語には、141語分の見本が付く。
+- 単語の**分解**と**つながり**(単語カードの「分解」「つながり」): 語を部品(接頭辞・語根・接尾辞)に分け、同じ部品を持つ語を並べる。類義語・反意語・上位・下位の語も出る。データは、Claude Code で作って受信箱から入れる(`CLAUDE.md` に形を書いた)。「学習対象選択」の単語では、**視点**(部品・つながり・品詞・場面・頻出度・難易度)を選ぶと、その見方で単語がまとまり(チップ)になり、選ぶと、その単語だけに絞って学習できる。同梱サンプルの単語には、141語分の見本が付く。

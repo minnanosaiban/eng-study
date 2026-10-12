@@ -175,13 +175,13 @@
   // ---------- 学習対象選択 ----------
   const allGroups = () => [...new Set([...rows, ...words, ...chunks].flatMap(r => r.groups || []))].sort();
   function filtered() {
-    const q = $("#fq").value.trim().toLowerCase(), g = $("#fgroup").value, pt = $("#fpart").value, st = $("#fstatus").value, lv = $("#flevel").value, ln = $("#flen").value, ps = $("#fpos").value;
+    const q = $("#fq").value.trim().toLowerCase(), g = $("#fgroup").value, st = $("#fstatus").value, lv = $("#flevel").value, ln = $("#flen").value, ps = $("#fpos").value;
     const wc = r => r.text.split(" ").length, where = r => (r.n === 1 || r.idx === 0 ? "first" : r.idx === r.n - 1 ? "last" : "mid");
     return tbl(unit).filter(r =>
       (!isCard(unit) || unit === "word" || ((!ln || (ln === "s" ? wc(r) <= 2 : ln === "m" ? wc(r) >= 3 && wc(r) <= 5 : wc(r) >= 6)) && (!ps || where(r) === ps))) &&
       (!q || r.text.toLowerCase().includes(q) || (r.ja || "").includes(q)) &&
       (!g || (r.groups || []).includes(g)) &&
-      (unit !== "word" || !pt || (r.parts || []).some(q2 => pkey(q2.p) === pt)) &&
+      (unit !== "word" || !lens || !lensVal || lensKeys(r).some(([k]) => k === lensVal)) &&
       (!st || (st === "not-mastered" ? r.status !== "mastered" : r.status === st)) &&
       (!lv || String(r.level) === lv) &&
       ((unit !== "sentence" && unit !== "word") || !$("#fmis").value || (r.mistakes || []).length > 0));
@@ -191,14 +191,33 @@
     $("#fgroup").innerHTML = `<option value="">グループ: すべて</option>` + allGroups().map(g => `<option>${esc(g)}</option>`).join("");
     $("#fgroup").value = allGroups().includes(cur) ? cur : "";
   }
-  // 単語の「部品」で絞り込む(同じ部品を持つ単語をまとめて学習する)
-  function renderPartSelect() {
-    const cur = $("#fpart").value, m = new Map();
-    for (const w of words) for (const p of w.parts || []) { if (p.kind === "語") continue; const k = pkey(p.p), e = m.get(k) || { p: p.p, n: 0 }; e.n++; m.set(k, e) }
-    const list = [...m.entries()].sort((a, b) => b[1].n - a[1].n || a[1].p.localeCompare(b[1].p));
-    $("#fpart").innerHTML = '<option value="">部品: すべて</option>' + list.map(([k, e]) => `<option value="${esc(k)}">${esc(e.p)}(${e.n})</option>`).join("");
-    $("#fpart").value = m.has(cur) ? cur : "";
+  // 単語を、いろいろな視点でまとめる(部品・つながり・品詞・場面・頻出度・難易度)。まとまり(チップ)を選ぶと、その単語だけに絞れる
+  let lens = "", lensVal = "";
+  function lensKeys(w) {
+    switch (lens) {
+      case "parts": return (w.parts || []).filter(p => p.kind !== "語").map(p => [pkey(p.p), p.p + (p.mean ? " " + p.mean : "")]);
+      case "rel": { const r = w.rel; return r ? [r.syn.length && ["syn", "類義語がある"], r.ant.length && ["ant", "反意語がある(対で覚える)"], r.up.length && ["up", "上位の語がある"], r.down.length && ["down", "下位の語がある"]].filter(Boolean) : [] }
+      case "pos": return w.pos ? [[w.pos, w.pos]] : [];
+      case "scene": return (w.groups || []).map(g => [g, g]);
+      case "freq": return w.freq ? [[String(w.freq), "頻出度 " + w.freq]] : [];
+      case "level": return w.level ? [[String(w.level), String(w.level)]] : [];
+    }
+    return [];
   }
+  function renderLens() {
+    document.querySelectorAll("#segLens button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.l === lens)));
+    const box = $("#lensChips");
+    if (!lens) { box.innerHTML = '<span class="sub">視点を選ぶと、その見方で単語がまとまります。</span>'; return }
+    const m = new Map();
+    for (const w of words) for (const [k, l] of lensKeys(w)) { const e = m.get(k) || { l, n: 0 }; e.n++; m.set(k, e) }
+    let cl = [...m.entries()]; if (lens === "parts") cl = cl.filter(([, e]) => e.n >= 2); // 1語だけの部品は、まとまりにならない
+    cl.sort((a, b) => b[1].n - a[1].n || String(a[1].l).localeCompare(String(b[1].l)));
+    if (lensVal && !cl.some(([k]) => k === lensVal)) lensVal = "";
+    box.innerHTML = cl.length ? cl.map(([k, e]) => `<button class="chip" data-k="${esc(k)}" aria-pressed="${k === lensVal}">${esc(e.l)}<span class="n">${e.n}</span></button>`).join("")
+      : '<span class="sub">この視点のデータがありません(分解・つながりのデータがある単語が要ります)。</span>';
+  }
+  $("#segLens").onclick = e => { const b = e.target.closest("button[data-l]"); if (!b) return; lens = lens === b.dataset.l ? "" : b.dataset.l; lensVal = ""; renderPick() };
+  $("#lensChips").onclick = e => { const b = e.target.closest("button[data-k]"); if (!b) return; lensVal = lensVal === b.dataset.k ? "" : b.dataset.k; renderPick() };
   function pickRow(r) {
     const chunk = unit === "meaning" || unit === "iu";
     const tags = `${r.level ? `<span class="tag">${r.level}</span>` : ""}<span class="tag">${esc(Clean.STATUS[r.status])}</span>${chunk ? `<span class="tag">${r.idx + 1}/${r.n}番目・${r.text.split(" ").length}語</span>` : ""}${(r.groups || []).map(g => `<span class="tag">${esc(g)}</span>`).join("")}`;
@@ -213,7 +232,7 @@
     document.querySelectorAll("#segUnit button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.u === unit)));
     document.querySelectorAll(".chunk-only").forEach(e => { e.hidden = !(unit === "meaning" || unit === "iu") });
     document.querySelectorAll(".sent-only").forEach(e => { e.hidden = unit !== "sentence" && unit !== "word" });
-    renderGroupSelect(); renderPartSelect();
+    renderGroupSelect(); if (unit === "word") renderLens();
     document.querySelectorAll(".word-only").forEach(e => { e.hidden = unit !== "word" });
     const list = filtered(), n = tbl(unit).length;
     $("#pickList").innerHTML = list.length ? list.map(pickRow).join("")
@@ -228,7 +247,7 @@
   }
   $("#segUnit").onclick = e => { const b = e.target.closest("button[data-u]"); if (b) { unit = b.dataset.u; renderPick() } };
   $("#pickList").onchange = e => { const c = e.target.closest("input[data-id]"); if (!c) return; c.checked ? sel[unit].add(c.dataset.id) : sel[unit].delete(c.dataset.id); pickInfo() };
-  ["#fq", "#fgroup", "#fpart", "#fstatus", "#flevel", "#flen", "#fpos", "#fmis"].forEach(s => $(s).addEventListener("input", renderPick));
+  ["#fq", "#fgroup", "#fstatus", "#flevel", "#flen", "#fpos", "#fmis"].forEach(s => $(s).addEventListener("input", renderPick));
   $("#btnAll").onclick = () => { filtered().forEach(r => sel[unit].add(r.id)); renderPick() };
   $("#btnNone").onclick = () => { sel[unit].clear(); renderPick() };
   $("#btnRand").onclick = () => {

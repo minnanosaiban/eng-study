@@ -33,7 +33,12 @@
      "declare",
      "reveal"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:人事",
+    "Part 6 / 7 頻出"
+   ]
   },
   {
    "word": "approve",
@@ -73,7 +78,13 @@
      "reject",
      "disapprove"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:人事",
+    "Part 5 語彙",
+    "ビジネス:契約・財務"
+   ]
   },
   {
    "word": "promote",
@@ -116,7 +127,11 @@
     "ant": [
      "demote"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:人事"
+   ]
   },
   {
    "word": "submit",
@@ -156,7 +171,13 @@
      "hand in",
      "turn in"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙",
+    "ビジネス:人事",
+    "Part 5 文法",
+    "ビジネス:会議・出張"
+   ]
   },
   {
    "word": "complete",
@@ -194,7 +215,14 @@
     "ant": [
      "begin"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:人事",
+    "ビジネス:契約・財務",
+    "ビジネス:広告・顧客対応",
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "inform",
@@ -233,7 +261,11 @@
      "notify",
      "advise"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:人事"
+   ]
   },
   {
    "word": "contact",
@@ -265,7 +297,12 @@
      ]
     }
    ],
-   "tip": "「共に触れる」から、接触・連絡するの意味になる。"
+   "tip": "「共に触れる」から、接触・連絡するの意味になる。",
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:会議・出張",
+    "ビジネス:広告・顧客対応"
+   ]
   },
   {
    "word": "reschedule",
@@ -300,7 +337,11 @@
      "postpone",
      "rearrange"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:会議・出張"
+   ]
   },
   {
    "word": "encourage",
@@ -338,7 +379,11 @@
     "ant": [
      "discourage"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:会議・出張"
+   ]
   },
   {
    "word": "accommodate",
@@ -377,7 +422,11 @@
      "house",
      "adapt to"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙",
+    "ビジネス:会議・出張"
+   ]
   },
   {
    "word": "oversee",
@@ -412,7 +461,11 @@
      "supervise",
      "manage"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:会議・出張"
+   ]
   },
   {
    "word": "upgrade",
@@ -445,7 +498,12 @@
     "ant": [
      "downgrade"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:会議・出張",
+    "ビジネス:IT・施設"
+   ]
   },
   {
    "word": "include",
@@ -479,7 +537,11 @@
     "ant": [
      "exclude"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙",
+    "ビジネス:会議・出張"
+   ]
   },
   {
    "word": "register",
@@ -514,7 +576,12 @@
      "enroll",
      "sign up"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:会議・出張",
+    "ビジネス:IT・施設"
+   ]
   },
   {
    "word": "apologize",
@@ -558,7 +625,13 @@
     "syn": [
      "say sorry"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:会議・出張",
+    "Part 5 語彙",
+    "ビジネス:広告・顧客対応"
+   ]
   },
   {
    "word": "inconvenience",
@@ -607,7 +680,11 @@
     "ant": [
      "convenience"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:会議・出張"
+   ]
   },
   {
    "word": "venue",
@@ -643,7 +720,11 @@
      "site",
      "location"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:会議・出張"
+   ]
   },
   {
    "word": "contract",
@@ -679,7 +760,11 @@
      "agreement",
      "deal"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:契約・財務"
+   ]
   },
   {
    "word": "notice",
@@ -714,7 +799,11 @@
     "syn": [
      "announcement"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:契約・財務"
+   ]
   },
   {
    "word": "termination",
@@ -758,7 +847,11 @@
      "start",
      "beginning"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:契約・財務"
+   ]
   },
   {
    "word": "revenue",
@@ -799,7 +892,11 @@
      "earnings",
      "sales"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:契約・財務"
+   ]
   },
   {
    "word": "overseas",
@@ -833,7 +930,11 @@
     "ant": [
      "domestic"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:契約・財務"
+   ]
   },
   {
    "word": "increase",
@@ -872,7 +973,11 @@
      "decrease",
      "reduce"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:契約・財務"
+   ]
   },
   {
    "word": "verify",
@@ -911,7 +1016,11 @@
      "confirm",
      "check"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:契約・財務"
+   ]
   },
   {
    "word": "inspection",
@@ -952,7 +1061,11 @@
      "examination",
      "check"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:契約・財務"
+   ]
   },
   {
    "word": "facility",
@@ -986,7 +1099,11 @@
      "building",
      "plant"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:契約・財務"
+   ]
   },
   {
    "word": "refund",
@@ -1021,7 +1138,13 @@
      "repay",
      "reimburse"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:契約・財務",
+    "Part 5 語彙",
+    "ビジネス:広告・顧客対応"
+   ]
   },
   {
    "word": "payment",
@@ -1051,7 +1174,11 @@
      ]
     }
    ],
-   "tip": "動詞+ -ment で、動作やその結果を表す名詞になる。"
+   "tip": "動詞+ -ment で、動作やその結果を表す名詞になる。",
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:契約・財務"
+   ]
   },
   {
    "word": "shipment",
@@ -1081,7 +1208,12 @@
      ]
     }
    ],
-   "tip": "ship(発送する)+ -ment で、出荷品・積荷。"
+   "tip": "ship(発送する)+ -ment で、出荷品・積荷。",
+   "groups": [
+    "Part 5 語彙",
+    "Part 5 文法",
+    "ビジネス:物流・製造"
+   ]
   },
   {
    "word": "agreement",
@@ -1124,7 +1256,11 @@
     "ant": [
      "disagreement"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:契約・財務"
+   ]
   },
   {
    "word": "negotiation",
@@ -1164,7 +1300,11 @@
      "discussion",
      "bargaining"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:契約・財務"
+   ]
   },
   {
    "word": "shareholder",
@@ -1206,7 +1346,11 @@
     "up": [
      "investor"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙",
+    "ビジネス:契約・財務"
+   ]
   },
   {
    "word": "merger",
@@ -1241,7 +1385,11 @@
      "combination",
      "union"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙",
+    "ビジネス:契約・財務"
+   ]
   },
   {
    "word": "annual",
@@ -1275,7 +1423,13 @@
     "syn": [
      "yearly"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙",
+    "ビジネス:契約・財務",
+    "Part 5 文法",
+    "ビジネス:人事"
+   ]
   },
   {
    "word": "auditor",
@@ -1305,7 +1459,11 @@
      "mean": "〜する人"
     }
    ],
-   "tip": "昔、帳簿を「聞いて」確かめた人から。監査人。"
+   "tip": "昔、帳簿を「聞いて」確かめた人から。監査人。",
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:契約・財務"
+   ]
   },
   {
    "word": "purchase",
@@ -1342,7 +1500,11 @@
     "ant": [
      "sell"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:広告・顧客対応"
+   ]
   },
   {
    "word": "receive",
@@ -1381,7 +1543,12 @@
     "ant": [
      "send"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:広告・顧客対応",
+    "ビジネス:契約・財務"
+   ]
   },
   {
    "word": "advertising",
@@ -1422,7 +1589,11 @@
      "promotion",
      "marketing"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:広告・顧客対応"
+   ]
   },
   {
    "word": "campaign",
@@ -1450,7 +1621,11 @@
      "mean": "名詞をつくる"
     }
    ],
-   "tip": "平野で行う軍の作戦から、運動・キャンペーンの意味になった。"
+   "tip": "平野で行う軍の作戦から、運動・キャンペーンの意味になった。",
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:広告・顧客対応"
+   ]
   },
   {
    "word": "appreciate",
@@ -1490,7 +1665,11 @@
      "value",
      "be grateful for"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:広告・顧客対応"
+   ]
   },
   {
    "word": "survey",
@@ -1526,7 +1705,11 @@
      "poll",
      "study"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:広告・顧客対応"
+   ]
   },
   {
    "word": "hesitate",
@@ -1561,7 +1744,11 @@
      "pause",
      "waver"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:広告・顧客対応"
+   ]
   },
   {
    "word": "anticipate",
@@ -1606,7 +1793,11 @@
      "expect",
      "foresee"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:広告・顧客対応"
+   ]
   },
   {
    "word": "merchandise",
@@ -1641,7 +1832,11 @@
      "goods",
      "products"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙",
+    "ビジネス:広告・顧客対応"
+   ]
   },
   {
    "word": "replacement",
@@ -1684,7 +1879,11 @@
     "syn": [
      "substitute"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙",
+    "ビジネス:広告・顧客対応"
+   ]
   },
   {
    "word": "vary",
@@ -1720,7 +1919,11 @@
      "differ",
      "fluctuate"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:広告・顧客対応"
+   ]
   },
   {
    "word": "availability",
@@ -1759,7 +1962,11 @@
      "mean": "名詞をつくる"
     }
    ],
-   "tip": "「役立てられる状態」から、在庫の有無・利用できることの意味になる。"
+   "tip": "「役立てられる状態」から、在庫の有無・利用できることの意味になる。",
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:広告・顧客対応"
+   ]
   },
   {
    "word": "destination",
@@ -1798,7 +2005,11 @@
      "goal",
      "target"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:広告・顧客対応"
+   ]
   },
   {
    "word": "relocate",
@@ -1838,7 +2049,10 @@
      "move",
      "transfer"
     ]
-   }
+   },
+   "groups": [
+    "Part 6 / 7 頻出"
+   ]
   },
   {
    "word": "temporarily",
@@ -1880,7 +2094,10 @@
     "ant": [
      "permanently"
     ]
-   }
+   },
+   "groups": [
+    "Part 6 / 7 頻出"
+   ]
   },
   {
    "word": "renovation",
@@ -1921,7 +2138,11 @@
      "refurbishment",
      "remodeling"
     ]
-   }
+   },
+   "groups": [
+    "Part 6 / 7 頻出",
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "renovate",
@@ -1966,7 +2187,11 @@
      "remodel",
      "refurbish"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙",
+    "ビジネス:IT・施設"
+   ]
   },
   {
    "word": "remind",
@@ -2000,7 +2225,10 @@
     "syn": [
      "prompt"
     ]
-   }
+   },
+   "groups": [
+    "Part 6 / 7 頻出"
+   ]
   },
   {
    "word": "identification",
@@ -2037,7 +2265,10 @@
      "mean": "名詞をつくる"
     }
    ],
-   "tip": "「同じだと確かめること」から、身分証明・識別の意味になる。"
+   "tip": "「同じだと確かめること」から、身分証明・識別の意味になる。",
+   "groups": [
+    "Part 6 / 7 頻出"
+   ]
   },
   {
    "word": "reserve",
@@ -2073,7 +2304,10 @@
      "book",
      "set aside"
     ]
-   }
+   },
+   "groups": [
+    "Part 6 / 7 頻出"
+   ]
   },
   {
    "word": "available",
@@ -2116,7 +2350,12 @@
     "ant": [
      "unavailable"
     ]
-   }
+   },
+   "groups": [
+    "Part 6 / 7 頻出",
+    "Part 5 文法",
+    "ビジネス:広告・顧客対応"
+   ]
   },
   {
    "word": "unavailable",
@@ -2163,7 +2402,10 @@
     "ant": [
      "available"
     ]
-   }
+   },
+   "groups": [
+    "Part 6 / 7 頻出"
+   ]
   },
   {
    "word": "tenant",
@@ -2207,7 +2449,10 @@
     "ant": [
      "landlord"
     ]
-   }
+   },
+   "groups": [
+    "Part 6 / 7 頻出"
+   ]
   },
   {
    "word": "maintenance",
@@ -2248,7 +2493,10 @@
      "upkeep",
      "repair"
     ]
-   }
+   },
+   "groups": [
+    "Part 6 / 7 頻出"
+   ]
   },
   {
    "word": "maintain",
@@ -2287,7 +2535,10 @@
     "ant": [
      "neglect"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "effective",
@@ -2332,7 +2583,10 @@
     "ant": [
      "ineffective"
     ]
-   }
+   },
+   "groups": [
+    "Part 6 / 7 頻出"
+   ]
   },
   {
    "word": "accept",
@@ -2372,7 +2626,10 @@
      "reject",
      "decline"
     ]
-   }
+   },
+   "groups": [
+    "Part 6 / 7 頻出"
+   ]
   },
   {
    "word": "position",
@@ -2409,7 +2666,10 @@
      "job",
      "role"
     ]
-   }
+   },
+   "groups": [
+    "Part 6 / 7 頻出"
+   ]
   },
   {
    "word": "regional",
@@ -2452,7 +2712,10 @@
     "ant": [
      "national"
     ]
-   }
+   },
+   "groups": [
+    "Part 6 / 7 頻出"
+   ]
   },
   {
    "word": "enclosed",
@@ -2496,7 +2759,10 @@
      "attached",
      "included"
     ]
-   }
+   },
+   "groups": [
+    "Part 6 / 7 頻出"
+   ]
   },
   {
    "word": "division",
@@ -2536,7 +2802,10 @@
      "section",
      "department"
     ]
-   }
+   },
+   "groups": [
+    "Part 6 / 7 頻出"
+   ]
   },
   {
    "word": "expand",
@@ -2579,7 +2848,10 @@
      "shrink",
      "reduce"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "operation",
@@ -2614,7 +2886,10 @@
      "business",
      "activity"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "proposal",
@@ -2659,7 +2934,10 @@
      "suggestion",
      "plan"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "reject",
@@ -2699,7 +2977,10 @@
      "accept",
      "approve"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "requirement",
@@ -2740,7 +3021,10 @@
      "condition",
      "prerequisite"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "colleague",
@@ -2778,7 +3062,10 @@
      "coworker",
      "associate"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "reliability",
@@ -2824,7 +3111,10 @@
      "dependability",
      "trustworthiness"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "equipment",
@@ -2862,7 +3152,10 @@
      "gear",
      "machinery"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "avoid",
@@ -2896,7 +3189,10 @@
      "evade",
      "stay away from"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "supplier",
@@ -2936,7 +3232,12 @@
      "vendor",
      "provider"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙",
+    "Part 5 文法",
+    "ビジネス:物流・製造"
+   ]
   },
   {
    "word": "assure",
@@ -2971,7 +3272,10 @@
      "guarantee",
      "promise"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "significant",
@@ -3016,7 +3320,10 @@
      "insignificant",
      "minor"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "express",
@@ -3057,7 +3364,10 @@
      "state",
      "convey"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "flexible",
@@ -3099,7 +3409,10 @@
      "rigid",
      "fixed"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "demand",
@@ -3137,7 +3450,10 @@
     "ant": [
      "supply"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "vehicle",
@@ -3175,7 +3491,10 @@
      "truck",
      "bus"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "decade",
@@ -3204,7 +3523,10 @@
      "mean": "名詞をつくる"
     }
    ],
-   "tip": "10(dec)年のまとまり。"
+   "tip": "10(dec)年のまとまり。",
+   "groups": [
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "consider",
@@ -3238,7 +3560,10 @@
      "think about",
      "weigh"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "resident",
@@ -3279,7 +3604,10 @@
      "inhabitant",
      "occupant"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "designated",
@@ -3324,7 +3652,10 @@
      "assigned",
      "specified"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "container",
@@ -3359,7 +3690,10 @@
      "mean": "もの・道具"
     }
    ],
-   "tip": "中に物を保つもの。容器。"
+   "tip": "中に物を保つもの。容器。",
+   "groups": [
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "originally",
@@ -3399,7 +3733,11 @@
      "at first",
      "initially"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:物流・製造"
+   ]
   },
   {
    "word": "properly",
@@ -3434,7 +3772,11 @@
      "correctly",
      "appropriately"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:物流・製造"
+   ]
   },
   {
    "word": "reduce",
@@ -3474,7 +3816,11 @@
      "increase",
      "expand"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙",
+    "ビジネス:物流・製造"
+   ]
   },
   {
    "word": "consumption",
@@ -3516,7 +3862,11 @@
     "ant": [
      "production"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙",
+    "ビジネス:物流・製造"
+   ]
   },
   {
    "word": "install",
@@ -3553,7 +3903,13 @@
     "ant": [
      "remove"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙",
+    "ビジネス:物流・製造",
+    "Part 5 文法",
+    "ビジネス:IT・施設"
+   ]
   },
   {
    "word": "efficient",
@@ -3597,7 +3953,11 @@
     "ant": [
      "inefficient"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙",
+    "ビジネス:物流・製造"
+   ]
   },
   {
    "word": "inspector",
@@ -3632,7 +3992,11 @@
      "mean": "〜する人"
     }
    ],
-   "tip": "中をよく見る人。検査員。"
+   "tip": "中をよく見る人。検査員。",
+   "groups": [
+    "Part 5 語彙",
+    "ビジネス:物流・製造"
+   ]
   },
   {
    "word": "ensure",
@@ -3670,7 +4034,11 @@
      "guarantee",
      "make certain"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙",
+    "ビジネス:物流・製造"
+   ]
   },
   {
    "word": "experience",
@@ -3704,7 +4072,11 @@
      "mean": "名詞をつくる"
     }
    ],
-   "tip": "「試してみて得たもの」から、経験・経験するの意味になる。"
+   "tip": "「試してみて得たもの」から、経験・経験するの意味になる。",
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:物流・製造"
+   ]
   },
   {
    "word": "protect",
@@ -3738,7 +4110,11 @@
      "guard",
      "defend"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:IT・施設"
+   ]
   },
   {
    "word": "confidential",
@@ -3778,7 +4154,11 @@
      "secret",
      "private"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:IT・施設"
+   ]
   },
   {
    "word": "access",
@@ -3815,7 +4195,11 @@
      "entry",
      "entrance"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:IT・施設"
+   ]
   },
   {
    "word": "prompt",
@@ -3849,7 +4233,11 @@
      "quick",
      "urge"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:IT・施設"
+   ]
   },
   {
    "word": "exceed",
@@ -3885,7 +4273,12 @@
      "surpass",
      "go beyond"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:人事",
+    "ビジネス:会議・出張"
+   ]
   },
   {
    "word": "communicate",
@@ -3926,7 +4319,11 @@
      "convey",
      "contact"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:人事"
+   ]
   },
   {
    "word": "monitor",
@@ -3960,7 +4357,11 @@
      "watch",
      "supervise"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:契約・財務"
+   ]
   },
   {
    "word": "postpone",
@@ -4003,7 +4404,11 @@
      "advance",
      "bring forward"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:会議・出張"
+   ]
   },
   {
    "word": "attend",
@@ -4042,7 +4447,11 @@
     "ant": [
      "miss"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:会議・出張"
+   ]
   },
   {
    "word": "attendance",
@@ -4090,7 +4499,11 @@
     "ant": [
      "absence"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:会議・出張"
+   ]
   },
   {
    "word": "remote",
@@ -4129,7 +4542,11 @@
     "ant": [
      "nearby"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:会議・出張"
+   ]
   },
   {
    "word": "conference",
@@ -4171,7 +4588,11 @@
      "meeting",
      "convention"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:会議・出張"
+   ]
   },
   {
    "word": "deposit",
@@ -4209,7 +4630,11 @@
     "ant": [
      "withdrawal"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙",
+    "ビジネス:契約・財務"
+   ]
   },
   {
    "word": "export",
@@ -4244,7 +4669,11 @@
     "ant": [
      "import"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:契約・財務"
+   ]
   },
   {
    "word": "appliance",
@@ -4288,7 +4717,11 @@
      "refrigerator",
      "microwave"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:広告・顧客対応"
+   ]
   },
   {
    "word": "indicate",
@@ -4329,7 +4762,11 @@
      "show",
      "suggest"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙",
+    "ビジネス:広告・顧客対応"
+   ]
   },
   {
    "word": "previous",
@@ -4378,7 +4815,11 @@
      "next",
      "following"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙",
+    "ビジネス:広告・顧客対応"
+   ]
   },
   {
    "word": "construction",
@@ -4421,7 +4862,10 @@
     "ant": [
      "demolition"
     ]
-   }
+   },
+   "groups": [
+    "Part 6 / 7 頻出"
+   ]
   },
   {
    "word": "remain",
@@ -4455,7 +4899,10 @@
      "stay",
      "continue to be"
     ]
-   }
+   },
+   "groups": [
+    "Part 6 / 7 頻出"
+   ]
   },
   {
    "word": "attach",
@@ -4488,7 +4935,10 @@
     "ant": [
      "detach"
     ]
-   }
+   },
+   "groups": [
+    "Part 6 / 7 頻出"
+   ]
   },
   {
    "word": "revised",
@@ -4529,7 +4979,10 @@
      "updated",
      "amended"
     ]
-   }
+   },
+   "groups": [
+    "Part 6 / 7 頻出"
+   ]
   },
   {
    "word": "reflect",
@@ -4564,7 +5017,10 @@
      "mirror",
      "show"
     ]
-   }
+   },
+   "groups": [
+    "Part 6 / 7 頻出"
+   ]
   },
   {
    "word": "eligible",
@@ -4608,7 +5064,11 @@
     "ant": [
      "ineligible"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:人事"
+   ]
   },
   {
    "word": "select",
@@ -4647,7 +5107,11 @@
      "choose",
      "pick"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:人事"
+   ]
   },
   {
    "word": "committee",
@@ -4688,7 +5152,12 @@
      "board",
      "panel"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:人事",
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "employee",
@@ -4737,7 +5206,12 @@
     "ant": [
      "employer"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:人事",
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "applicant",
@@ -4781,7 +5255,11 @@
     "syn": [
      "candidate"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 語彙",
+    "ビジネス:人事"
+   ]
   },
   {
    "word": "candidate",
@@ -4823,7 +5301,12 @@
     "up": [
      "person"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:人事",
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "interview",
@@ -4858,7 +5341,12 @@
      ]
     }
    ],
-   "tip": "「互いに(間で)見合う」から、面接の意味になる。"
+   "tip": "「互いに(間で)見合う」から、面接の意味になる。",
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:人事",
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "supervisor",
@@ -4905,7 +5393,11 @@
     "ant": [
      "subordinate"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:人事"
+   ]
   },
   {
    "word": "coordinator",
@@ -4945,7 +5437,11 @@
     "syn": [
      "organizer"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:人事"
+   ]
   },
   {
    "word": "conduct",
@@ -4982,7 +5478,11 @@
      "carry out",
      "perform"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:人事"
+   ]
   },
   {
    "word": "compensation",
@@ -5023,7 +5523,11 @@
      "payment",
      "reward"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:人事"
+   ]
   },
   {
    "word": "additional",
@@ -5063,7 +5567,11 @@
      "extra",
      "further"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:人事"
+   ]
   },
   {
    "word": "extensive",
@@ -5109,7 +5617,11 @@
      "broad",
      "comprehensive"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:人事"
+   ]
   },
   {
    "word": "immediately",
@@ -5150,7 +5662,11 @@
      "at once",
      "promptly"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:会議・出張"
+   ]
   },
   {
    "word": "quarterly",
@@ -5183,7 +5699,11 @@
     "syn": [
      "every three months"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:会議・出張"
+   ]
   },
   {
    "word": "department",
@@ -5227,7 +5747,11 @@
      "division",
      "section"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:人事"
+   ]
   },
   {
    "word": "accounting",
@@ -5266,7 +5790,11 @@
     "syn": [
      "bookkeeping"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:契約・財務"
+   ]
   },
   {
    "word": "discount",
@@ -5308,7 +5836,12 @@
     "ant": [
      "surcharge"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:会議・出張",
+    "Part 5 語彙"
+   ]
   },
   {
    "word": "attendee",
@@ -5352,7 +5885,11 @@
      "participant",
      "guest"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:会議・出張"
+   ]
   },
   {
    "word": "expense",
@@ -5391,7 +5928,12 @@
     "ant": [
      "income"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:会議・出張",
+    "ビジネス:契約・財務"
+   ]
   },
   {
    "word": "receipt",
@@ -5420,7 +5962,11 @@
      ]
     }
    ],
-   "tip": "受け取ったことの証拠。領収書。"
+   "tip": "受け取ったことの証拠。領収書。",
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:契約・財務"
+   ]
   },
   {
    "word": "repave",
@@ -5454,7 +6000,10 @@
     "syn": [
      "resurface"
     ]
-   }
+   },
+   "groups": [
+    "Part 6 / 7 頻出"
+   ]
   },
   {
    "word": "affordable",
@@ -5492,7 +6041,11 @@
     "ant": [
      "expensive"
     ]
-   }
+   },
+   "groups": [
+    "Part 5 文法",
+    "ビジネス:広告・顧客対応"
+   ]
   }
  ]
 }
