@@ -584,7 +584,7 @@
     }
     if (mode === "links") return playLinks(r, me);
     if (mode === "ex") { if (r.ex) await say(r.ex); else toast("例文がありません"); return }
-    if (mode === "once") { pst("聞く"); await say(r.text); if (me === playing) pst(null); return }
+    if (mode === "once") return playAll(r, null, [r.text], me); // 全文も、繰り返し・間の設定で聞く
     if (selC && selC.id === r.id) return playSel(r, selC.key, selC.i, me); // 選んだ区切りがあれば、それだけを繰り返す
     const { key, list: ch } = chunkSrc(r); showView(key); // 読む区切りを、表示に出す
     return playAll(r, key, ch, me);
