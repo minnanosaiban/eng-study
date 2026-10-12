@@ -160,3 +160,5 @@ code{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding
 .jabox{margin-top:16px;font-size:12px}
 .jabox:empty{display:none}
 .jabox:not(:empty) + #disp{margin-top:12px}
+/* 英文の画面のボタン・選択肢の文字は、すべて同じ大きさ */
+.sentence button,.sentence select,#selPlay{font-size:12px}
