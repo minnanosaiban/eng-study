@@ -156,3 +156,7 @@ code{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding
 .show{margin-bottom:12px}
 .show button{font-size:12px;padding:2px 8px}
 .show .lbl{font-size:12px}
+.pager{display:inline-flex;align-items:center;gap:6px;margin-left:10px}
+.jabox{margin-top:16px;font-size:12px}
+.jabox:empty{display:none}
+.jabox:not(:empty) + #disp{margin-top:12px}

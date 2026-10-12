@@ -369,7 +369,7 @@
 
   function renderAux(r) {
     const a = prefs.aux; let h = "";
-    if (a.ja) h += `<div class="blk">${r.ja ? esc(r.ja) : '<span class="sub">なし</span>'}</div>`;
+    $("#jaBox").innerHTML = a.ja ? (r.ja ? esc(r.ja) : '<span class="sub">なし</span>') : ""; // 全文の和訳は、英文の上に置く
     if (a.ja) h += `<div class="blk"><div class="row" style="margin:0"><span class="grow"></span>${(r.vocab || []).length ? '<button id="vAddAll" class="sm">全て単語へ</button>' : ""}</div>${(r.vocab || []).length ? `<table class="v">${r.vocab.map((x, i) => `<tr><td><b>${esc(x.word)}</b>${a.ipa && x.ipa ? `<div class="ipa">/${esc(x.ipa)}/</div>` : ""}<div class="sub">${"★".repeat(x.level || 0)}</div></td><td class="sub">${esc(x.pos)}</td><td>${esc(x.meaning)}<div class="sub">${esc(x.note)}</div>${x.toeic ? `<div class="sub">TOEIC: ${esc(x.toeic)}</div>` : ""}</td><td><button class="sm" data-wadd="${i}">${words.some(w => w.text.toLowerCase() === x.word.toLowerCase()) ? "登録済" : "＋単語"}</button></td></tr>`).join("")}</table>` : '<span class="sub">なし</span>'}</div>`;
     if (a.ipa) {
       const v = (r.vocab || []).filter(x => x.ipa);
