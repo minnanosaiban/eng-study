@@ -226,24 +226,25 @@
             <button data-x="quiz" title="4択問題(Q)">4択問題</button>
             <button data-x="rec" title="間違いの記録(K)">間違いの記録</button>
           </div>
+          <span class="pager"><button id="btnPrev" aria-label="前へ">←</button><span id="pos" class="sub"></span><button id="btnNext" aria-label="次へ">→</button></span>
         </div>
-          <div class="rowl adj">
-                        <label class="inl">速さ
-              <select id="rate"><option value="0.7">0.7</option><option value="0.85">0.85</option><option value="1" selected>1.0</option><option value="1.15">1.15</option></select>
-            </label>
-            <label class="inl">間
-              <select id="shGap" title="区切りを読んだあとに置く、まねする時間(読み上げの長さの何倍か)。「なし」なら、続けて読む"><option value="0" selected>なし</option><option value="0.8">0.8倍</option><option value="1">1倍</option><option value="1.5">1.5倍</option><option value="2">2倍</option></select>
-            </label>
-            <label class="inl">繰り返し
-              <select id="shRep" title="区切りの ▶・クリックで選んだ区切りで、同じ区切りを何回続けて繰り返すか"><option value="1" selected>1回</option><option value="2">2回</option><option value="3">3回</option><option value="4">4回</option><option value="5">5回</option><option value="6">6回</option><option value="7">7回</option><option value="8">8回</option><option value="9">9回</option><option value="10">10回</option></select>
-            </label>
-            <span class="pager"><button id="btnPrev" aria-label="前へ">←</button><span id="pos" class="sub"></span><button id="btnNext" aria-label="次へ">→</button></span>
-          </div>
       </div>
       <article class="card sentence">
-        <div class="toprow"><button id="btnSlashMain" aria-pressed="false" title="英文を、意味の区切り( / )で切り替える">/</button><div id="jaBox" class="jabox"></div></div>
+        <div class="rowl adj">
+          <button id="btnSlashMain" aria-pressed="false" title="英文を、意味の区切り( / )で切り替える">/</button>
+                      <label class="inl">速さ
+            <select id="rate"><option value="0.7">0.7</option><option value="0.85">0.85</option><option value="1" selected>1.0</option><option value="1.15">1.15</option></select>
+          </label>
+          <label class="inl">間
+            <select id="shGap" title="区切りを読んだあとに置く、まねする時間(読み上げの長さの何倍か)。「なし」なら、続けて読む"><option value="0" selected>なし</option><option value="0.8">0.8倍</option><option value="1">1倍</option><option value="1.5">1.5倍</option><option value="2">2倍</option></select>
+          </label>
+          <label class="inl">繰り返し
+            <select id="shRep" title="区切りの ▶・クリックで選んだ区切りで、同じ区切りを何回続けて繰り返すか"><option value="1" selected>1回</option><option value="2">2回</option><option value="3">3回</option><option value="4">4回</option><option value="5">5回</option><option value="6">6回</option><option value="7">7回</option><option value="8">8回</option><option value="9">9回</option><option value="10">10回</option></select>
+          </label>
+          <span id="pstatus" class="pstatus" hidden></span>
+        </div>
+        <div id="jaBox" class="jabox"></div>
         <div id="disp"></div>
-        <div id="pstatus" class="pstatus" hidden></div>
         <div id="aux"></div>
         <div class="row">
           <label class="inl">状態

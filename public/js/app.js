@@ -595,7 +595,7 @@
     const rep = prefs.sh.rep, gap = +prefs.sh.gap || 0, idx = only == null ? ch.map((_, i) => i) : [only];
     for (const i of idx) for (let k = 1; k <= rep; k++) {
       if (me !== playing) return;
-      renderDisp(r, i, key); pst(`聞く${rep > 1 ? `(${k}回目)` : ""}`);
+      renderDisp(r, i, key); pst(rep > 1 ? `${k}回目` : "聞く");
       const ms = await sayTimed(ch[i]); if (me !== playing) return;
       if (gap) {
         const wait = Practice.gap(ms, ch[i], gap, prefs.rate);
@@ -630,7 +630,7 @@
     const rep = prefs.sh.rep, gap = +prefs.sh.gap || 0;
     for (let k = 1; k <= rep; k++) {
       if (me !== playing) return;
-      pst(`聞く${rep > 1 ? `(${k}回目)` : ""}`);
+      pst(rep > 1 ? `${k}回目` : "聞く");
       const ms = await sayTimed(text); if (me !== playing) return;
       if (gap) { const wait = Practice.gap(ms, text, gap, prefs.rate); pst(`声に出して、まねしてください…(${(wait / 1000).toFixed(1)}秒)`); await sleep(wait, me) }
       else if (k < rep) await sleep(400, me);

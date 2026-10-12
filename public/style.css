@@ -193,3 +193,8 @@ table.v tr:first-child td{border-top:1px solid var(--line)}
 .fulltext .vplay,.fulltext .vstop{font-size:14px}
 .fulltext .seg-i{cursor:pointer}
 #disp .view[data-view="slash"] .sljas:first-child{margin-top:0}
+.menu .show{align-items:center}
+.show .pager{margin-left:4px}
+.sentence .adj{margin:0 0 8px}
+.adj .pstatus{margin:0 0 0 6px;padding:0;background:none;font-size:14px;font-weight:600}
+.adj .pstatus[hidden]{display:none}
