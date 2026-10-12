@@ -173,3 +173,4 @@ code{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding
 table.v tr:first-child td{border-top:1px solid var(--line)}
 #disp .fulltext:last-child{margin-bottom:36px}
 #disp .fulltext + .view{margin-top:0}
+.jabox:not(:empty){border-top:1px solid var(--line);padding-top:8px}
