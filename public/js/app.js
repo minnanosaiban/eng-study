@@ -10,7 +10,7 @@
   let sel = { sentence: new Set(), meaning: new Set(), iu: new Set(), word: new Set() }; // 単位ごとの選択中の id
   let unit = "sentence";                           // 学習対象選択で見ている単位
   let study = { unit: "sentence", ids: [], i: 0 }; // 学習セット
-  let prefs = { view: { slash: false }, gramOn: false, aux: { ipa: false, ja: true, quiz: false, rec: false }, waux: { ipa: true, ex: true, toeic: false, tr: false, quiz: false }, sh: { gap: 0, rep: 1 }, posOn: false, rate: 1 };
+  let prefs = { view: { slash: false }, gramOn: false, aux: { ipa: false, ja: true, vocab: true, quiz: false, rec: false }, waux: { ipa: true, ex: true, toeic: false, tr: false, quiz: false }, sh: { gap: 0, rep: 1 }, posOn: false, rate: 1 };
   let tab = "reg", wReveal = false;
   const UN = { sentence: { kind: "sentences", name: "英文" }, meaning: { kind: "chunks", name: "意味句" }, iu: { kind: "chunks", name: "IU" }, word: { kind: "words", name: "単語" } };
   const tbl = u => (u === "word" ? words : u === "sentence" ? rows : chunks.filter(c => c.type === u));
@@ -370,7 +370,7 @@
   function renderAux(r) {
     const a = prefs.aux; let h = "";
     $("#jaBox").innerHTML = a.ja ? (r.ja ? esc(r.ja) : '<span class="sub">なし</span>') : ""; // 全文の和訳は、英文の上に置く
-    if (a.ja) h += `<div class="blk"><div class="row" style="margin:0"><span class="grow"></span>${(r.vocab || []).length ? '<button id="vAddAll" class="sm">全て単語へ</button>' : ""}</div>${(r.vocab || []).length ? `<table class="v">${r.vocab.map((x, i) => `<tr><td><b>${esc(x.word)}</b>${a.ipa && x.ipa ? `<div class="ipa">/${esc(x.ipa)}/</div>` : ""}<div class="sub">${"★".repeat(x.level || 0)}</div></td><td class="sub">${esc(x.pos)}</td><td>${esc(x.meaning)}<div class="sub">${esc(x.note)}</div>${x.toeic ? `<div class="sub">TOEIC: ${esc(x.toeic)}</div>` : ""}</td><td><button class="sm" data-wadd="${i}">${words.some(w => w.text.toLowerCase() === x.word.toLowerCase()) ? "登録済" : "＋単語"}</button></td></tr>`).join("")}</table>` : '<span class="sub">なし</span>'}</div>`;
+    if (a.vocab) h += `<div class="blk"><div class="row" style="margin:0"><span class="grow"></span>${(r.vocab || []).length ? '<button id="vAddAll" class="sm">全て単語へ</button>' : ""}</div>${(r.vocab || []).length ? `<table class="v">${r.vocab.map((x, i) => `<tr><td><b>${esc(x.word)}</b>${a.ipa && x.ipa ? `<div class="ipa">/${esc(x.ipa)}/</div>` : ""}<div class="sub">${"★".repeat(x.level || 0)}</div></td><td class="sub">${esc(x.pos)}</td><td>${esc(x.meaning)}<div class="sub">${esc(x.note)}</div>${x.toeic ? `<div class="sub">TOEIC: ${esc(x.toeic)}</div>` : ""}</td><td><button class="sm" data-wadd="${i}">${words.some(w => w.text.toLowerCase() === x.word.toLowerCase()) ? "登録済" : "＋単語"}</button></td></tr>`).join("")}</table>` : '<span class="sub">なし</span>'}</div>`;
     if (a.ipa) {
       const v = (r.vocab || []).filter(x => x.ipa);
       h += `<div class="blk">${v.length ? v.map(x => `<div><b>${esc(x.word)}</b> <span class="ipa">/${esc(x.ipa)}/</span></div>`).join("") : '<span class="sub">なし</span>'}</div>`;
@@ -660,7 +660,7 @@
       else if (ax[k] && has(ax[k])) { prefs.waux[ax[k]] = !prefs.waux[ax[k]]; savePrefs(); renderStudy() }
       return;
     }
-    const map = { "1": "slash" }, ax = { i: "ipa", j: "ja", q: "quiz", k: "rec" };
+    const map = { "1": "slash" }, ax = { i: "ipa", j: "ja", v: "vocab", q: "quiz", k: "rec" };
     if (k === " ") { e.preventDefault(); play("once") } else if (k === "c") play("chunks"); else if (k === "l") play("links");
     else if (k === "2" || k === "g") toggleGram(); else if (k === "3") togglePos(); else if (k === "0") clearViews();
     else if (map[k]) toggleView(map[k]); else if (ax[k]) toggleAux(ax[k]);
@@ -838,8 +838,7 @@
       delete prefs.disp;
       if (p && p.gramOn === undefined && (p.posOn || (p.view && p.view.phrases) || (p.aux && p.aux.grammar))) prefs.gramOn = true; // 文法区切り・品詞・文法を、「文法」にまとめた
       delete prefs.view.phrases; delete prefs.aux.grammar;
-      if (p && p.aux && p.aux.vocab) prefs.aux.ja = true; // 単語・熟語を、「和訳」にまとめた
-      delete prefs.aux.vocab;
+      if (!p || !p.aux || p.aux.vocab === undefined) prefs.aux.vocab = !!prefs.aux.ja; // 「和訳」から「単語」を分けた(それまで和訳を出していれば、単語も出す)
       if (p && p.aux && p.aux.toeic) prefs.gramOn = true; // TOEIC解説を、「文法」にまとめた
       delete prefs.aux.toeic;
       if (!p || !p.sh || p.sh.v !== 2) prefs.sh.gap = 0; // シャドーイングを、区切りの ▶ にまとめた(間の初期値は「なし」)
