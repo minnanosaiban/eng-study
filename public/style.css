@@ -46,7 +46,7 @@ textarea{width:100%;resize:vertical}
 .bar{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;position:sticky;top:52px;z-index:4}
 .sentence{padding:16px 18px}
 .nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-#disp{font-size:21px;line-height:1.9;margin:18px 0 20px;overflow-wrap:anywhere}
+#disp{font-size:21px;line-height:1.9;margin:36px 0 16px;overflow-wrap:anywhere}
 #disp .seg-i{display:inline-block;margin-right:.35em;padding:0 2px;border-radius:4px}
 #disp .seg-i.now{background:var(--hl)}
 #disp .slsep{color:var(--sub);margin:0 .15em 0 -.15em}
@@ -120,7 +120,7 @@ code{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding
 .dispnote{font-size:13px;color:var(--sub);margin:2px 0 6px;line-height:1.5}
 .pw-n{color:var(--pc-n)}.pw-pron{color:var(--pc-pron)}.pw-v{color:var(--pc-v)}.pw-aux{color:var(--pc-aux)}.pw-adj{color:var(--pc-adj)}.pw-adv{color:var(--pc-adv)}.pw-prep{color:var(--pc-prep)}.pw-conj{color:var(--pc-conj)}.pw-det{color:var(--pc-det)}.pw-other{color:var(--pc-other)}
 .pw{font-weight:500}
-.fulltext{margin-bottom:2px;overflow-wrap:anywhere}
+.fulltext{margin-bottom:36px;overflow-wrap:anywhere}
 .view{margin-top:16px}
 .rowl{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
 .rowl + .rowl{margin-top:8px}
@@ -159,7 +159,7 @@ code{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding
 .pager{display:inline-flex;align-items:center;gap:6px;margin-left:10px}
 .jabox{margin-top:16px;font-size:12px}
 .jabox:empty{display:none}
-.jabox:not(:empty) + #disp{margin-top:12px}
+.jabox:not(:empty) + #disp{margin-top:36px}
 /* 英文の画面のボタン・選択肢の文字は、すべて同じ大きさ */
 .sentence button,.sentence select,#selPlay{font-size:12px}
 /* 日本語で書かれた文字は、すべて 12px(原文の英文だけを大きく) */
@@ -171,3 +171,5 @@ code{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding
 #disp .sljas{margin-top:16px}
 #disp .sljas + .sljas{margin-top:8px}
 table.v tr:first-child td{border-top:1px solid var(--line)}
+#disp .fulltext:last-child{margin-bottom:36px}
+#disp .fulltext + .view{margin-top:0}
