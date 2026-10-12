@@ -275,6 +275,19 @@
   function go(d) { const n = study.i + d; if (n < 0 || n >= study.ids.length) return; stopAudio(); wq = null; study.i = n; wReveal = false; saveStudy(); renderStudy() }
   $("#btnPrev").onclick = $("#wPrev").onclick = () => go(-1);
   $("#btnNext").onclick = $("#wNext").onclick = () => go(1);
+  // 画面を左右になぞる(スワイプ): 左へ → 次の英文、右へ → 前の英文。語の選択(長押し)・ボタン・選択肢の操作とは、区別する
+  {
+    let sw = null;
+    const ok = t => !t.closest("button, select, input, textarea, a, label");
+    document.querySelectorAll("article.sentence").forEach(el => {
+      el.addEventListener("touchstart", e => { sw = e.touches.length === 1 && ok(e.target) ? { x: e.touches[0].clientX, y: e.touches[0].clientY, t: Date.now() } : null }, { passive: true });
+      el.addEventListener("touchend", e => {
+        if (!sw || window.getSelection().toString().trim()) { sw = null; return }
+        const t = e.changedTouches[0], dx = t.clientX - sw.x, dy = t.clientY - sw.y, dt = Date.now() - sw.t; sw = null;
+        if (Math.abs(dx) >= 60 && Math.abs(dx) > Math.abs(dy) * 2 && dt < 700) go(dx < 0 ? 1 : -1);
+      }, { passive: true });
+    });
+  }
   function setRate(v) { prefs.rate = +v; $("#rate").value = $("#wrate").value = String(prefs.rate); savePrefs() }
   $("#rate").onchange = e => setRate(e.target.value); $("#wrate").onchange = e => setRate(e.target.value);
 
