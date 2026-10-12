@@ -1,0 +1,5498 @@
+{
+ "words": [
+  {
+   "word": "announce",
+   "pos": "動詞",
+   "meaning": "~を発表する",
+   "note": "",
+   "ipa": "əˈnaʊns",
+   "freq": 3,
+   "toeic": "announce a plan / announce the results",
+   "level": 730,
+   "ex": "The human resources department will announce the new vacation policy once the board has approved it.",
+   "parts": [
+    {
+     "p": "an-",
+     "kind": "接頭辞",
+     "mean": "〜へ(ad-)"
+    },
+    {
+     "p": "nounce",
+     "kind": "語根",
+     "mean": "告げる",
+     "like": [
+      "pronounce 発音する",
+      "denounce 非難する",
+      "renounce 放棄する"
+     ]
+    }
+   ],
+   "tip": "「〜へ向けて告げる」が、発表するの意味になった。",
+   "rel": {
+    "syn": [
+     "declare",
+     "reveal"
+    ]
+   }
+  },
+  {
+   "word": "approve",
+   "pos": "動詞",
+   "meaning": "~を承認する",
+   "note": "",
+   "ipa": "əˈpɹuv",
+   "freq": 3,
+   "toeic": "approve a request / approve the budget",
+   "level": 730,
+   "ex": "The human resources department will announce the new vacation policy once the board has approved it.",
+   "parts": [
+    {
+     "p": "ap-",
+     "kind": "接頭辞",
+     "mean": "〜に(ad-)"
+    },
+    {
+     "p": "prove",
+     "kind": "語根",
+     "mean": "良いと証明する",
+     "like": [
+      "prove 証明する",
+      "approval 承認",
+      "proof 証拠"
+     ]
+    }
+   ],
+   "tip": "「良いと認める」と考えると、承認するにつながる。",
+   "rel": {
+    "syn": [
+     "authorize",
+     "endorse",
+     "accept"
+    ],
+    "ant": [
+     "reject",
+     "disapprove"
+    ]
+   }
+  },
+  {
+   "word": "promote",
+   "pos": "動詞",
+   "meaning": "~を昇進させる",
+   "note": "受動態で「昇進する」",
+   "ipa": "pɹəˈmoʊt",
+   "freq": 3,
+   "toeic": "be promoted to ~ / promote a product(宣伝する)の意味もある",
+   "level": 730,
+   "ex": "Ms. Tanaka, who joined the marketing team last spring, has been promoted to senior manager.",
+   "parts": [
+    {
+     "p": "pro-",
+     "kind": "接頭辞",
+     "mean": "前へ",
+     "like": [
+      "progress 進歩",
+      "produce 生産する",
+      "provide 提供する"
+     ]
+    },
+    {
+     "p": "mote",
+     "kind": "語根",
+     "mean": "動かす",
+     "like": [
+      "motion 動き",
+      "remote 遠い",
+      "motive 動機",
+      "emotion 感情"
+     ]
+    }
+   ],
+   "tip": "「前へ動かす」から、昇進させる・促進するの意味になる。",
+   "rel": {
+    "syn": [
+     "advance"
+    ],
+    "ant": [
+     "demote"
+    ]
+   }
+  },
+  {
+   "word": "submit",
+   "pos": "動詞",
+   "meaning": "~を提出する",
+   "note": "",
+   "ipa": "səbˈmɪt",
+   "freq": 3,
+   "toeic": "submit an application / submit a report",
+   "level": 600,
+   "ex": "Applicants are required to submit two letters of recommendation along with their résumés.",
+   "parts": [
+    {
+     "p": "sub-",
+     "kind": "接頭辞",
+     "mean": "下に",
+     "like": [
+      "subway 地下鉄",
+      "submarine 潜水艦"
+     ]
+    },
+    {
+     "p": "mit",
+     "kind": "語根",
+     "mean": "送る",
+     "like": [
+      "permit 許可する",
+      "transmit 送る",
+      "commit 委ねる",
+      "admit 認める"
+     ]
+    }
+   ],
+   "tip": "「下に差し出す」から、提出するの意味になる。",
+   "rel": {
+    "syn": [
+     "hand in",
+     "turn in"
+    ]
+   }
+  },
+  {
+   "word": "complete",
+   "pos": "動詞",
+   "meaning": "~を修了する、完了する",
+   "note": "",
+   "ipa": "kəmˈplit",
+   "freq": 3,
+   "toeic": "complete a form / complete the training など",
+   "level": 600,
+   "ex": "All new employees must complete the safety training before they begin working on the production floor.",
+   "parts": [
+    {
+     "p": "com-",
+     "kind": "接頭辞",
+     "mean": "完全に"
+    },
+    {
+     "p": "plete",
+     "kind": "語根",
+     "mean": "満たす",
+     "like": [
+      "complement 補うもの",
+      "deplete 使い果たす",
+      "replete 満ちた"
+     ]
+    }
+   ],
+   "tip": "「完全に満たす」から、完成させる・修了するの意味になる。",
+   "rel": {
+    "syn": [
+     "finish",
+     "fulfill"
+    ],
+    "ant": [
+     "begin"
+    ]
+   }
+  },
+  {
+   "word": "inform",
+   "pos": "動詞",
+   "meaning": "~に知らせる",
+   "note": "inform 人 of/that ~ の形が多い",
+   "ipa": "ˌɪnˈfɔɹm",
+   "freq": 3,
+   "toeic": "inform A of B / inform customers",
+   "level": 730,
+   "ex": "Please inform your supervisor at least two weeks in advance if you plan to take extended leave.",
+   "parts": [
+    {
+     "p": "in-",
+     "kind": "接頭辞",
+     "mean": "中に",
+     "like": [
+      "include 含む",
+      "insert 差し込む"
+     ]
+    },
+    {
+     "p": "form",
+     "kind": "語根",
+     "mean": "形づくる",
+     "like": [
+      "transform 変形する",
+      "reform 改革する",
+      "perform 行う"
+     ]
+    }
+   ],
+   "tip": "「頭の中に形をつくる」から、知らせるの意味になる。",
+   "rel": {
+    "syn": [
+     "notify",
+     "advise"
+    ]
+   }
+  },
+  {
+   "word": "contact",
+   "pos": "動詞",
+   "meaning": "連絡する",
+   "note": "他動詞",
+   "ipa": "ˈkɑnˌtækt",
+   "freq": 3,
+   "toeic": "contact the department / customer service",
+   "level": 600,
+   "ex": "If the flight is delayed, please contact the travel desk immediately.",
+   "parts": [
+    {
+     "p": "con-",
+     "kind": "接頭辞",
+     "mean": "共に",
+     "like": [
+      "connect つなぐ",
+      "contract 契約"
+     ]
+    },
+    {
+     "p": "tact",
+     "kind": "語根",
+     "mean": "触れる",
+     "like": [
+      "intact 損なわれていない",
+      "tactile 触覚の"
+     ]
+    }
+   ],
+   "tip": "「共に触れる」から、接触・連絡するの意味になる。"
+  },
+  {
+   "word": "reschedule",
+   "pos": "動詞",
+   "meaning": "日程を変更する",
+   "note": "",
+   "ipa": "ɹiˈskɛdʒul",
+   "freq": 3,
+   "toeic": "be rescheduled for/to + 日時 の形でよく出る。",
+   "level": 600,
+   "ex": "The quarterly sales meeting has been rescheduled to Thursday due to the director's business trip.",
+   "parts": [
+    {
+     "p": "re-",
+     "kind": "接頭辞",
+     "mean": "再び",
+     "like": [
+      "rebuild 再建する",
+      "reopen 再開する",
+      "rewrite 書き直す"
+     ]
+    },
+    {
+     "p": "schedule",
+     "kind": "語",
+     "mean": "予定を立てる"
+    }
+   ],
+   "tip": "re- は「もう一度」。日程を組み直す。",
+   "rel": {
+    "syn": [
+     "postpone",
+     "rearrange"
+    ]
+   }
+  },
+  {
+   "word": "encourage",
+   "pos": "動詞",
+   "meaning": "奨励する、促す",
+   "note": "",
+   "ipa": "ɛnˈkɝɪdʒ",
+   "freq": 3,
+   "toeic": "be encouraged to do の形で頻出。",
+   "level": 730,
+   "ex": "Participants are encouraged to submit their questions in advance so that the speakers can prepare thorough answers.",
+   "parts": [
+    {
+     "p": "en-",
+     "kind": "接頭辞",
+     "mean": "〜にする",
+     "like": [
+      "enable 可能にする",
+      "enrich 豊かにする",
+      "endanger 危険にさらす"
+     ]
+    },
+    {
+     "p": "courage",
+     "kind": "語",
+     "mean": "勇気"
+    }
+   ],
+   "tip": "「勇気を与える」から、奨励する・促すの意味になる。",
+   "rel": {
+    "syn": [
+     "urge",
+     "motivate"
+    ],
+    "ant": [
+     "discourage"
+    ]
+   }
+  },
+  {
+   "word": "accommodate",
+   "pos": "動詞",
+   "meaning": "収容する、対応する",
+   "note": "",
+   "ipa": "əˈkɑməˌdeɪt",
+   "freq": 3,
+   "toeic": "accommodate up to 50 guests / accommodate a request",
+   "level": 600,
+   "ex": "The conference room on the third floor can accommodate up to forty people.",
+   "parts": [
+    {
+     "p": "ac-",
+     "kind": "接頭辞",
+     "mean": "〜へ(ad-)"
+    },
+    {
+     "p": "commod",
+     "kind": "語根",
+     "mean": "ちょうどよい",
+     "like": [
+      "commodity 日用品",
+      "accommodation 宿泊施設"
+     ]
+    },
+    {
+     "p": "-ate",
+     "kind": "接尾辞",
+     "mean": "〜する(動詞をつくる)"
+    }
+   ],
+   "tip": "「ちょうどよく合わせる」から、収容する・対応するの意味になる。",
+   "rel": {
+    "syn": [
+     "house",
+     "adapt to"
+    ]
+   }
+  },
+  {
+   "word": "oversee",
+   "pos": "動詞",
+   "meaning": "監督する",
+   "note": "",
+   "ipa": "ˈoʊvɚˌsi",
+   "freq": 3,
+   "toeic": "oversee a project / operations",
+   "level": 730,
+   "ex": "Mr. Sato will be visiting our Singapore office from Monday through Wednesday to oversee the system upgrade.",
+   "parts": [
+    {
+     "p": "over-",
+     "kind": "接頭辞",
+     "mean": "上から",
+     "like": [
+      "overlook 見渡す・見落とす",
+      "overcome 克服する",
+      "oversight 監督"
+     ]
+    },
+    {
+     "p": "see",
+     "kind": "語",
+     "mean": "見る"
+    }
+   ],
+   "tip": "「上から見る」から、監督するの意味になる。",
+   "rel": {
+    "syn": [
+     "supervise",
+     "manage"
+    ]
+   }
+  },
+  {
+   "word": "upgrade",
+   "pos": "名詞",
+   "meaning": "改良、更新",
+   "note": "動詞としても使う",
+   "ipa": "əpˈɡɹeɪd",
+   "freq": 2,
+   "toeic": "system upgrade / software upgrade",
+   "level": 730,
+   "ex": "Mr. Sato will be visiting our Singapore office from Monday through Wednesday to oversee the system upgrade.",
+   "parts": [
+    {
+     "p": "up-",
+     "kind": "接頭辞",
+     "mean": "上へ",
+     "like": [
+      "update 更新する",
+      "uphold 支持する"
+     ]
+    },
+    {
+     "p": "grade",
+     "kind": "語",
+     "mean": "段階"
+    }
+   ],
+   "tip": "段階を上へ上げる。",
+   "rel": {
+    "ant": [
+     "downgrade"
+    ]
+   }
+  },
+  {
+   "word": "include",
+   "pos": "動詞",
+   "meaning": "含む",
+   "note": "",
+   "ipa": "ˌɪnˈklud",
+   "freq": 3,
+   "toeic": "The package includes ...",
+   "level": 730,
+   "ex": "The agenda for tomorrow's meeting includes a review of last month's budget and a discussion of the upcoming product launch.",
+   "parts": [
+    {
+     "p": "in-",
+     "kind": "接頭辞",
+     "mean": "中に"
+    },
+    {
+     "p": "clude",
+     "kind": "語根",
+     "mean": "閉じる",
+     "like": [
+      "conclude 結論づける",
+      "exclude 除く",
+      "preclude 妨げる"
+     ]
+    }
+   ],
+   "tip": "「中に閉じ込める」から、含むの意味になる。",
+   "rel": {
+    "ant": [
+     "exclude"
+    ]
+   }
+  },
+  {
+   "word": "register",
+   "pos": "動詞",
+   "meaning": "登録する",
+   "note": "",
+   "ipa": "ˈɹɛdʒɪstɚ",
+   "freq": 3,
+   "toeic": "register for a seminar / register online",
+   "level": 730,
+   "ex": "Attendees who register before the end of the month will receive a discount on the admission fee.",
+   "parts": [
+    {
+     "p": "re-",
+     "kind": "接頭辞",
+     "mean": "後ろへ(元へ)"
+    },
+    {
+     "p": "gist",
+     "kind": "語根",
+     "mean": "運ぶ・記録する",
+     "like": [
+      "suggest 提案する",
+      "digest 要約する",
+      "congestion 混雑"
+     ]
+    }
+   ],
+   "tip": "「記録に運ぶ」から、登録するの意味になる。",
+   "rel": {
+    "syn": [
+     "enroll",
+     "sign up"
+    ]
+   }
+  },
+  {
+   "word": "apologize",
+   "pos": "動詞",
+   "meaning": "謝罪する",
+   "note": "",
+   "ipa": "əˈpɑləˌdʒaɪz",
+   "freq": 3,
+   "toeic": "apologize for the delay / inconvenience",
+   "level": 730,
+   "ex": "We apologize for any inconvenience caused by the change in the seminar venue.",
+   "parts": [
+    {
+     "p": "apo-",
+     "kind": "接頭辞",
+     "mean": "離れて"
+    },
+    {
+     "p": "log",
+     "kind": "語根",
+     "mean": "言葉",
+     "like": [
+      "logic 論理",
+      "dialogue 対話",
+      "monologue 独白"
+     ]
+    },
+    {
+     "p": "-ize",
+     "kind": "接尾辞",
+     "mean": "〜する(動詞をつくる)",
+     "like": [
+      "organize 組織する",
+      "realize 気づく",
+      "emphasize 強調する"
+     ]
+    }
+   ],
+   "tip": "「言葉で弁明する」から、謝罪するの意味になる。",
+   "rel": {
+    "syn": [
+     "say sorry"
+    ]
+   }
+  },
+  {
+   "word": "inconvenience",
+   "pos": "名詞",
+   "meaning": "不便、迷惑",
+   "note": "不可算名詞",
+   "ipa": "ˌɪnkənˈvinjəns",
+   "freq": 3,
+   "toeic": "We apologize for any inconvenience.",
+   "level": 730,
+   "ex": "We apologize for any inconvenience caused by the change in the seminar venue.",
+   "parts": [
+    {
+     "p": "in-",
+     "kind": "接頭辞",
+     "mean": "否定"
+    },
+    {
+     "p": "con-",
+     "kind": "接頭辞",
+     "mean": "共に"
+    },
+    {
+     "p": "ven",
+     "kind": "語根",
+     "mean": "来る",
+     "like": [
+      "venue 会場",
+      "event 出来事",
+      "prevent 防ぐ",
+      "adventure 冒険"
+     ]
+    },
+    {
+     "p": "-ience",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "「一緒に来る(都合が合う)」の否定で、不便・迷惑。",
+   "rel": {
+    "syn": [
+     "trouble",
+     "bother"
+    ],
+    "ant": [
+     "convenience"
+    ]
+   }
+  },
+  {
+   "word": "venue",
+   "pos": "名詞",
+   "meaning": "会場",
+   "note": "",
+   "ipa": "ˈvɛnju",
+   "freq": 3,
+   "toeic": "event venue / change of venue",
+   "level": 730,
+   "ex": "We apologize for any inconvenience caused by the change in the seminar venue.",
+   "parts": [
+    {
+     "p": "ven",
+     "kind": "語根",
+     "mean": "来る(集まる)",
+     "like": [
+      "event 出来事",
+      "convention 大会",
+      "prevent 防ぐ",
+      "adventure 冒険"
+     ]
+    },
+    {
+     "p": "-ue",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "人が「来る」場所、つまり会場。",
+   "rel": {
+    "syn": [
+     "site",
+     "location"
+    ]
+   }
+  },
+  {
+   "word": "contract",
+   "pos": "名詞",
+   "meaning": "契約",
+   "note": "",
+   "ipa": "ˈkɑnˌtɹækt",
+   "freq": 3,
+   "toeic": "sign a contract / contract renewal など",
+   "level": 730,
+   "ex": "The contract will remain in effect for two years unless either party gives written notice of termination.",
+   "parts": [
+    {
+     "p": "con-",
+     "kind": "接頭辞",
+     "mean": "共に"
+    },
+    {
+     "p": "tract",
+     "kind": "語根",
+     "mean": "引く",
+     "like": [
+      "attract 引きつける",
+      "extract 抜き出す",
+      "subtract 引く",
+      "distract 気を散らす"
+     ]
+    }
+   ],
+   "tip": "「共に引き合う」から、契約するの意味になる。",
+   "rel": {
+    "syn": [
+     "agreement",
+     "deal"
+    ]
+   }
+  },
+  {
+   "word": "notice",
+   "pos": "名詞",
+   "meaning": "通知",
+   "note": "",
+   "ipa": "ˈnoʊtəs",
+   "freq": 3,
+   "toeic": "give notice / written notice / until further notice",
+   "level": 730,
+   "ex": "The contract will remain in effect for two years unless either party gives written notice of termination.",
+   "parts": [
+    {
+     "p": "not",
+     "kind": "語根",
+     "mean": "知る",
+     "like": [
+      "note 書き留める",
+      "notify 通知する",
+      "notion 概念",
+      "notable 注目すべき"
+     ]
+    },
+    {
+     "p": "-ice",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "「知らせるもの」から、通知・お知らせの意味になる。",
+   "rel": {
+    "syn": [
+     "announcement"
+    ]
+   }
+  },
+  {
+   "word": "termination",
+   "pos": "名詞",
+   "meaning": "終了、解約",
+   "note": "",
+   "ipa": "tɚməˈneɪʃən",
+   "freq": 2,
+   "toeic": "termination of a contract",
+   "level": 730,
+   "ex": "The contract will remain in effect for two years unless either party gives written notice of termination.",
+   "parts": [
+    {
+     "p": "termin",
+     "kind": "語根",
+     "mean": "境界・終わり",
+     "like": [
+      "determine 決定する",
+      "terminal 終点",
+      "exterminate 絶滅させる"
+     ]
+    },
+    {
+     "p": "-ation",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる",
+     "like": [
+      "operation 業務",
+      "installation 設置",
+      "reservation 予約"
+     ]
+    }
+   ],
+   "tip": "「境界を引くこと」から、終了・解約の意味になる。",
+   "rel": {
+    "syn": [
+     "ending",
+     "cancellation"
+    ],
+    "ant": [
+     "start",
+     "beginning"
+    ]
+   }
+  },
+  {
+   "word": "revenue",
+   "pos": "名詞",
+   "meaning": "収益、売上高",
+   "note": "不可算で使うことが多い",
+   "ipa": "ˈɹɛvəˌnu",
+   "freq": 3,
+   "toeic": "annual revenue / revenue growth",
+   "level": 730,
+   "ex": "Revenue from overseas sales increased by 12 percent compared with the same period last year.",
+   "parts": [
+    {
+     "p": "re-",
+     "kind": "接頭辞",
+     "mean": "戻って"
+    },
+    {
+     "p": "ven",
+     "kind": "語根",
+     "mean": "来る",
+     "like": [
+      "venue 会場",
+      "event 出来事",
+      "avenue 大通り"
+     ]
+    },
+    {
+     "p": "-ue",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "「戻って来るもの」から、収益・売上高の意味になる。",
+   "rel": {
+    "syn": [
+     "income",
+     "earnings",
+     "sales"
+    ]
+   }
+  },
+  {
+   "word": "overseas",
+   "pos": "形容詞",
+   "meaning": "海外の",
+   "note": "",
+   "ipa": "ˈoʊvɚˈsiz",
+   "freq": 3,
+   "toeic": "overseas branch / overseas market",
+   "level": 730,
+   "ex": "Revenue from overseas sales increased by 12 percent compared with the same period last year.",
+   "parts": [
+    {
+     "p": "over-",
+     "kind": "接頭辞",
+     "mean": "越えて",
+     "like": [
+      "overtime 時間外",
+      "overwork 働きすぎ",
+      "overcome 克服する"
+     ]
+    },
+    {
+     "p": "seas",
+     "kind": "語",
+     "mean": "海"
+    }
+   ],
+   "tip": "「海を越えて」の意味。",
+   "rel": {
+    "ant": [
+     "domestic"
+    ]
+   }
+  },
+  {
+   "word": "increase",
+   "pos": "動詞",
+   "meaning": "増加する",
+   "note": "",
+   "ipa": "ˌɪnˈkɹis",
+   "freq": 3,
+   "toeic": "increase by ~ percent / a sharp increase",
+   "level": 730,
+   "ex": "Revenue from overseas sales increased by 12 percent compared with the same period last year.",
+   "parts": [
+    {
+     "p": "in-",
+     "kind": "接頭辞",
+     "mean": "中で"
+    },
+    {
+     "p": "crease",
+     "kind": "語根",
+     "mean": "成長する",
+     "like": [
+      "decrease 減る",
+      "crescent 三日月",
+      "increment 増加分"
+     ]
+    }
+   ],
+   "tip": "「中で育つ」から、増えるの意味になる。",
+   "rel": {
+    "syn": [
+     "grow",
+     "rise"
+    ],
+    "ant": [
+     "decrease",
+     "reduce"
+    ]
+   }
+  },
+  {
+   "word": "verify",
+   "pos": "動詞",
+   "meaning": "確認する",
+   "note": "",
+   "ipa": "ˈvɛɹəˌfaɪ",
+   "freq": 2,
+   "toeic": "verify the information / verify an order",
+   "level": 730,
+   "ex": "The accounting department is responsible for verifying every receipt submitted with an expense report.",
+   "parts": [
+    {
+     "p": "ver",
+     "kind": "語根",
+     "mean": "真実",
+     "like": [
+      "verdict 評決",
+      "very 非常に"
+     ]
+    },
+    {
+     "p": "-ify",
+     "kind": "接尾辞",
+     "mean": "〜にする(動詞をつくる)",
+     "like": [
+      "clarify 明らかにする",
+      "simplify 単純にする",
+      "identify 識別する"
+     ]
+    }
+   ],
+   "tip": "「真実にする(確かめる)」の意味。",
+   "rel": {
+    "syn": [
+     "confirm",
+     "check"
+    ]
+   }
+  },
+  {
+   "word": "inspection",
+   "pos": "名詞",
+   "meaning": "検査、点検",
+   "note": "",
+   "ipa": "ˌɪnˈspɛkʃən",
+   "freq": 3,
+   "toeic": "safety inspection / pass an inspection",
+   "level": 860,
+   "ex": "Provided that the inspection is completed on schedule, the new facility will open in September.",
+   "parts": [
+    {
+     "p": "in-",
+     "kind": "接頭辞",
+     "mean": "中を"
+    },
+    {
+     "p": "spect",
+     "kind": "語根",
+     "mean": "見る",
+     "like": [
+      "respect 尊敬",
+      "expect 期待する",
+      "prospect 見通し",
+      "suspect 疑う"
+     ]
+    },
+    {
+     "p": "-ion",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "「中をよく見ること」から、検査・点検の意味になる。",
+   "rel": {
+    "syn": [
+     "examination",
+     "check"
+    ]
+   }
+  },
+  {
+   "word": "facility",
+   "pos": "名詞",
+   "meaning": "施設",
+   "note": "",
+   "ipa": "fəˈsɪlɪti",
+   "freq": 3,
+   "toeic": "manufacturing facility / facilities",
+   "level": 860,
+   "ex": "Provided that the inspection is completed on schedule, the new facility will open in September.",
+   "parts": [
+    {
+     "p": "facil",
+     "kind": "語根",
+     "mean": "容易な",
+     "like": [
+      "facilitate 容易にする",
+      "facile 容易な"
+     ]
+    },
+    {
+     "p": "-ity",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "「物事を容易にするもの」から、施設・設備の意味になる。",
+   "rel": {
+    "syn": [
+     "building",
+     "plant"
+    ]
+   }
+  },
+  {
+   "word": "refund",
+   "pos": "動詞",
+   "meaning": "返金する",
+   "note": "名詞では「返金」",
+   "ipa": "ɹɪˈfʌnd",
+   "freq": 3,
+   "toeic": "full refund / request a refund",
+   "level": 730,
+   "ex": "Payment will be refunded in full if the order is canceled before it is shipped.",
+   "parts": [
+    {
+     "p": "re-",
+     "kind": "接頭辞",
+     "mean": "元に"
+    },
+    {
+     "p": "fund",
+     "kind": "語根",
+     "mean": "注ぐ",
+     "like": [
+      "confuse 混同する",
+      "diffuse 拡散する",
+      "transfusion 輸血"
+     ]
+    }
+   ],
+   "tip": "「元へ注ぎ返す」から、返金するの意味になる。",
+   "rel": {
+    "syn": [
+     "repay",
+     "reimburse"
+    ]
+   }
+  },
+  {
+   "word": "payment",
+   "pos": "名詞",
+   "meaning": "支払い、代金",
+   "note": "",
+   "ipa": "ˈpeɪmənt",
+   "freq": 3,
+   "toeic": "make a payment / payment method",
+   "level": 730,
+   "ex": "Payment will be refunded in full if the order is canceled before it is shipped.",
+   "parts": [
+    {
+     "p": "pay",
+     "kind": "語",
+     "mean": "支払う"
+    },
+    {
+     "p": "-ment",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる",
+     "like": [
+      "agreement 合意",
+      "shipment 出荷",
+      "requirement 要件",
+      "equipment 設備"
+     ]
+    }
+   ],
+   "tip": "動詞+ -ment で、動作やその結果を表す名詞になる。"
+  },
+  {
+   "word": "shipment",
+   "pos": "名詞",
+   "meaning": "出荷品、積荷",
+   "note": "",
+   "ipa": "ˈʃɪpmənt",
+   "freq": 3,
+   "toeic": "a shipment of goods / delayed shipment",
+   "level": 730,
+   "ex": "The supplier has assured us that the shipment will arrive no later than Tuesday.",
+   "parts": [
+    {
+     "p": "ship",
+     "kind": "語",
+     "mean": "発送する"
+    },
+    {
+     "p": "-ment",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる",
+     "like": [
+      "payment 支払い",
+      "agreement 合意",
+      "requirement 要件",
+      "equipment 設備"
+     ]
+    }
+   ],
+   "tip": "ship(発送する)+ -ment で、出荷品・積荷。"
+  },
+  {
+   "word": "agreement",
+   "pos": "名詞",
+   "meaning": "合意、契約書",
+   "note": "",
+   "ipa": "əˈɡɹimənt",
+   "freq": 3,
+   "toeic": "reach an agreement / sign an agreement",
+   "level": 600,
+   "ex": "The agreement was signed by both parties after several weeks of negotiation.",
+   "parts": [
+    {
+     "p": "a-",
+     "kind": "接頭辞",
+     "mean": "〜へ(ad-)"
+    },
+    {
+     "p": "gree",
+     "kind": "語根",
+     "mean": "好ましい",
+     "like": [
+      "grateful ありがたく思う",
+      "gratitude 感謝",
+      "congratulate 祝う"
+     ]
+    },
+    {
+     "p": "-ment",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "「好ましいと思うこと」から、合意・契約書の意味になる。",
+   "rel": {
+    "syn": [
+     "contract",
+     "deal"
+    ],
+    "ant": [
+     "disagreement"
+    ]
+   }
+  },
+  {
+   "word": "negotiation",
+   "pos": "名詞",
+   "meaning": "交渉",
+   "note": "",
+   "ipa": "nɪˌɡoʊʃiˈeɪʃən",
+   "freq": 3,
+   "toeic": "enter into negotiations / contract negotiation",
+   "level": 600,
+   "ex": "The agreement was signed by both parties after several weeks of negotiation.",
+   "parts": [
+    {
+     "p": "neg-",
+     "kind": "接頭辞",
+     "mean": "〜でない"
+    },
+    {
+     "p": "oti",
+     "kind": "語根",
+     "mean": "ひま・余暇"
+    },
+    {
+     "p": "-ation",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる",
+     "like": [
+      "operation 業務",
+      "installation 設置",
+      "reservation 予約"
+     ]
+    }
+   ],
+   "tip": "「ひまでない(忙しい)こと」が、商談・交渉の意味になった。",
+   "rel": {
+    "syn": [
+     "discussion",
+     "bargaining"
+    ]
+   }
+  },
+  {
+   "word": "shareholder",
+   "pos": "名詞",
+   "meaning": "株主",
+   "note": "",
+   "ipa": "ˈʃɛɹˌhoʊldɚ",
+   "freq": 2,
+   "toeic": "shareholders' meeting",
+   "level": 730,
+   "ex": "Shareholders are expected to approve the proposed merger at the annual meeting next month.",
+   "parts": [
+    {
+     "p": "share",
+     "kind": "語",
+     "mean": "株"
+    },
+    {
+     "p": "hold",
+     "kind": "語",
+     "mean": "持つ"
+    },
+    {
+     "p": "-er",
+     "kind": "接尾辞",
+     "mean": "〜する人",
+     "like": [
+      "manager 管理者",
+      "supplier 納入業者",
+      "supervisor 上司"
+     ]
+    }
+   ],
+   "tip": "株(share)を持つ(hold)人。",
+   "rel": {
+    "syn": [
+     "stockholder"
+    ],
+    "up": [
+     "investor"
+    ]
+   }
+  },
+  {
+   "word": "merger",
+   "pos": "名詞",
+   "meaning": "合併",
+   "note": "",
+   "ipa": "ˈmɝdʒɚ",
+   "freq": 2,
+   "toeic": "merger with ~ / mergers and acquisitions",
+   "level": 730,
+   "ex": "Shareholders are expected to approve the proposed merger at the annual meeting next month.",
+   "parts": [
+    {
+     "p": "merg",
+     "kind": "語根",
+     "mean": "沈める・混ぜる",
+     "like": [
+      "submerge 沈める",
+      "emerge 現れる",
+      "immerse 浸す"
+     ]
+    },
+    {
+     "p": "-er",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "2つが混ざって1つになること。合併。",
+   "rel": {
+    "syn": [
+     "combination",
+     "union"
+    ]
+   }
+  },
+  {
+   "word": "annual",
+   "pos": "形容詞",
+   "meaning": "年次の",
+   "note": "",
+   "ipa": "ˈænjuəl",
+   "freq": 3,
+   "toeic": "annual meeting / annual report",
+   "level": 730,
+   "ex": "Shareholders are expected to approve the proposed merger at the annual meeting next month.",
+   "parts": [
+    {
+     "p": "ann",
+     "kind": "語根",
+     "mean": "年",
+     "like": [
+      "anniversary 記念日",
+      "annals 年報",
+      "biennial 2年ごとの"
+     ]
+    },
+    {
+     "p": "-ual",
+     "kind": "接尾辞",
+     "mean": "〜の(形容詞をつくる)"
+    }
+   ],
+   "tip": "「年の」から、年次の・毎年のの意味になる。",
+   "rel": {
+    "syn": [
+     "yearly"
+    ]
+   }
+  },
+  {
+   "word": "auditor",
+   "pos": "名詞",
+   "meaning": "監査人",
+   "note": "",
+   "ipa": "ˈɔdɪtɚ",
+   "freq": 2,
+   "toeic": "external auditor / audit",
+   "level": 860,
+   "ex": "Our auditors have recommended that the firm review its internal controls more frequently.",
+   "parts": [
+    {
+     "p": "audi",
+     "kind": "語根",
+     "mean": "聞く",
+     "like": [
+      "audience 聴衆",
+      "audio 音声",
+      "audition オーディション",
+      "auditorium 講堂"
+     ]
+    },
+    {
+     "p": "-or",
+     "kind": "接尾辞",
+     "mean": "〜する人"
+    }
+   ],
+   "tip": "昔、帳簿を「聞いて」確かめた人から。監査人。"
+  },
+  {
+   "word": "purchase",
+   "pos": "動詞",
+   "meaning": "購入する",
+   "note": "名詞でも使う",
+   "ipa": "ˈpɝtʃəs",
+   "freq": 3,
+   "toeic": "purchase an item / proof of purchase(購入証明)",
+   "level": 600,
+   "ex": "Customers who purchase two or more items will receive a free gift with their order.",
+   "parts": [
+    {
+     "p": "pur-",
+     "kind": "接頭辞",
+     "mean": "前へ"
+    },
+    {
+     "p": "chase",
+     "kind": "語根",
+     "mean": "追う",
+     "like": [
+      "chase 追いかける",
+      "pursue 追い求める"
+     ]
+    }
+   ],
+   "tip": "「追い求めて手に入れる」から、購入するの意味になる。",
+   "rel": {
+    "syn": [
+     "buy",
+     "acquire"
+    ],
+    "ant": [
+     "sell"
+    ]
+   }
+  },
+  {
+   "word": "receive",
+   "pos": "動詞",
+   "meaning": "受け取る",
+   "note": "",
+   "ipa": "ɹəˈsiv",
+   "freq": 3,
+   "toeic": "receive a discount / receive a confirmation e-mail",
+   "level": 600,
+   "ex": "Customers who purchase two or more items will receive a free gift with their order.",
+   "parts": [
+    {
+     "p": "re-",
+     "kind": "接頭辞",
+     "mean": "後ろへ"
+    },
+    {
+     "p": "ceive",
+     "kind": "語根",
+     "mean": "取る",
+     "like": [
+      "conceive 思いつく",
+      "perceive 知覚する",
+      "deceive だます",
+      "receipt 領収書"
+     ]
+    }
+   ],
+   "tip": "「手元に取り戻す」から、受け取るの意味になる。",
+   "rel": {
+    "syn": [
+     "get",
+     "accept"
+    ],
+    "ant": [
+     "send"
+    ]
+   }
+  },
+  {
+   "word": "advertising",
+   "pos": "名詞",
+   "meaning": "広告(業)",
+   "note": "形容詞的にも使う",
+   "ipa": "ˈædvɚˌtaɪzɪŋ",
+   "freq": 3,
+   "toeic": "advertising campaign / advertising agency",
+   "level": 730,
+   "ex": "The new advertising campaign, which will run for six weeks, targets young professionals.",
+   "parts": [
+    {
+     "p": "ad-",
+     "kind": "接頭辞",
+     "mean": "〜へ"
+    },
+    {
+     "p": "vert",
+     "kind": "語根",
+     "mean": "向ける",
+     "like": [
+      "convert 変換する",
+      "reverse 逆",
+      "divert そらす",
+      "adverse 不利な"
+     ]
+    },
+    {
+     "p": "-ing",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "人の注意を「向けさせる」こと。広告(業)。",
+   "rel": {
+    "syn": [
+     "promotion",
+     "marketing"
+    ]
+   }
+  },
+  {
+   "word": "campaign",
+   "pos": "名詞",
+   "meaning": "キャンペーン、運動",
+   "note": "",
+   "ipa": "kæmˈpeɪn",
+   "freq": 3,
+   "toeic": "launch a campaign(キャンペーンを開始する)",
+   "level": 730,
+   "ex": "The new advertising campaign, which will run for six weeks, targets young professionals.",
+   "parts": [
+    {
+     "p": "camp",
+     "kind": "語根",
+     "mean": "平野・野営地",
+     "like": [
+      "campus 校庭",
+      "camp キャンプ"
+     ]
+    },
+    {
+     "p": "-aign",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "平野で行う軍の作戦から、運動・キャンペーンの意味になった。"
+  },
+  {
+   "word": "appreciate",
+   "pos": "動詞",
+   "meaning": "ありがたく思う",
+   "note": "",
+   "ipa": "əˈpɹiʃiˌeɪt",
+   "freq": 3,
+   "toeic": "We would appreciate your cooperation.",
+   "level": 730,
+   "ex": "We would appreciate it if you could complete the short survey about your recent experience.",
+   "parts": [
+    {
+     "p": "ap-",
+     "kind": "接頭辞",
+     "mean": "〜に(ad-)"
+    },
+    {
+     "p": "preci",
+     "kind": "語根",
+     "mean": "価値",
+     "like": [
+      "precious 貴重な",
+      "price 価格",
+      "praise 賞賛"
+     ]
+    },
+    {
+     "p": "-ate",
+     "kind": "接尾辞",
+     "mean": "〜する(動詞をつくる)"
+    }
+   ],
+   "tip": "「価値を認める」から、ありがたく思う・値上がりするの意味になる。",
+   "rel": {
+    "syn": [
+     "value",
+     "be grateful for"
+    ]
+   }
+  },
+  {
+   "word": "survey",
+   "pos": "名詞",
+   "meaning": "アンケート、調査",
+   "note": "",
+   "ipa": "sɚˈveɪ",
+   "freq": 3,
+   "toeic": "customer satisfaction survey",
+   "level": 730,
+   "ex": "We would appreciate it if you could complete the short survey about your recent experience.",
+   "parts": [
+    {
+     "p": "sur-",
+     "kind": "接頭辞",
+     "mean": "上から"
+    },
+    {
+     "p": "vey",
+     "kind": "語根",
+     "mean": "見る",
+     "like": [
+      "view 見方",
+      "review 見直す",
+      "interview 面接",
+      "preview 試写"
+     ]
+    }
+   ],
+   "tip": "「上から見渡す」から、調査・アンケートの意味になる。",
+   "rel": {
+    "syn": [
+     "poll",
+     "study"
+    ]
+   }
+  },
+  {
+   "word": "hesitate",
+   "pos": "動詞",
+   "meaning": "ためらう",
+   "note": "",
+   "ipa": "ˈhɛzəˌteɪt",
+   "freq": 3,
+   "toeic": "Do not hesitate to contact us.",
+   "level": 860,
+   "ex": "Should you have any questions about your order, please do not hesitate to contact our customer service center.",
+   "parts": [
+    {
+     "p": "hes",
+     "kind": "語根",
+     "mean": "くっつく",
+     "like": [
+      "adhere 付着する",
+      "adhesive 接着剤",
+      "cohesion 結束"
+     ]
+    },
+    {
+     "p": "-itate",
+     "kind": "接尾辞",
+     "mean": "〜する(動詞をつくる)"
+    }
+   ],
+   "tip": "「くっついて動けない」から、ためらうの意味になる。",
+   "rel": {
+    "syn": [
+     "pause",
+     "waver"
+    ]
+   }
+  },
+  {
+   "word": "anticipate",
+   "pos": "動詞",
+   "meaning": "予想する、見込む",
+   "note": "",
+   "ipa": "ænˈtɪsəˌpeɪt",
+   "freq": 3,
+   "toeic": "anticipate demand",
+   "level": 730,
+   "ex": "The store's grand opening drew a larger crowd than the organizers had anticipated.",
+   "parts": [
+    {
+     "p": "anti-",
+     "kind": "接頭辞",
+     "mean": "前に",
+     "like": [
+      "anticipate 予想する",
+      "antique 古代の"
+     ]
+    },
+    {
+     "p": "cip",
+     "kind": "語根",
+     "mean": "取る",
+     "like": [
+      "participate 参加する",
+      "capture 捕らえる",
+      "concept 概念",
+      "accept 受け入れる"
+     ]
+    },
+    {
+     "p": "-ate",
+     "kind": "接尾辞",
+     "mean": "〜する(動詞をつくる)"
+    }
+   ],
+   "tip": "「先に取る」から、予想する・見越すの意味になる。",
+   "rel": {
+    "syn": [
+     "expect",
+     "foresee"
+    ]
+   }
+  },
+  {
+   "word": "merchandise",
+   "pos": "名詞",
+   "meaning": "商品",
+   "note": "不可算",
+   "ipa": "ˈmɝtʃənˌdaɪz",
+   "freq": 3,
+   "toeic": "return merchandise / merchandise display",
+   "level": 730,
+   "ex": "All merchandise must be returned in its original packaging in order to qualify for a refund.",
+   "parts": [
+    {
+     "p": "merch",
+     "kind": "語根",
+     "mean": "商う",
+     "like": [
+      "commerce 商業",
+      "market 市場",
+      "merchant 商人"
+     ]
+    },
+    {
+     "p": "-ise",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "商う(merch)もの。商品。",
+   "rel": {
+    "syn": [
+     "goods",
+     "products"
+    ]
+   }
+  },
+  {
+   "word": "replacement",
+   "pos": "名詞",
+   "meaning": "交換品、代替品",
+   "note": "",
+   "ipa": "ɹɪˈpleɪsmənt",
+   "freq": 3,
+   "toeic": "free replacement / replacement part",
+   "level": 600,
+   "ex": "The manager apologized to the customer and offered a replacement at no extra charge.",
+   "parts": [
+    {
+     "p": "re-",
+     "kind": "接頭辞",
+     "mean": "再び",
+     "like": [
+      "rebuild 再建する",
+      "reopen 再開する"
+     ]
+    },
+    {
+     "p": "place",
+     "kind": "語",
+     "mean": "置く"
+    },
+    {
+     "p": "-ment",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる",
+     "like": [
+      "payment 支払い",
+      "shipment 出荷",
+      "equipment 設備"
+     ]
+    }
+   ],
+   "tip": "元の場所に別のものを置くこと。交換品。",
+   "rel": {
+    "syn": [
+     "substitute"
+    ]
+   }
+  },
+  {
+   "word": "vary",
+   "pos": "動詞",
+   "meaning": "異なる、変動する",
+   "note": "",
+   "ipa": "ˈvɛɹi",
+   "freq": 3,
+   "toeic": "prices vary / vary depending on ~",
+   "level": 730,
+   "ex": "Delivery times may vary depending on the availability of the items and the destination.",
+   "parts": [
+    {
+     "p": "var",
+     "kind": "語根",
+     "mean": "異なる",
+     "like": [
+      "various さまざまな",
+      "variety 多様性",
+      "variable 変わりやすい",
+      "variation 変化"
+     ]
+    },
+    {
+     "p": "-y",
+     "kind": "接尾辞",
+     "mean": "動詞をつくる"
+    }
+   ],
+   "tip": "いろいろに違う。",
+   "rel": {
+    "syn": [
+     "differ",
+     "fluctuate"
+    ]
+   }
+  },
+  {
+   "word": "availability",
+   "pos": "名詞",
+   "meaning": "在庫の有無、利用可能性",
+   "note": "",
+   "ipa": "əˌveɪləˈbɪləti",
+   "freq": 3,
+   "toeic": "subject to availability",
+   "level": 730,
+   "ex": "Delivery times may vary depending on the availability of the items and the destination.",
+   "parts": [
+    {
+     "p": "avail",
+     "kind": "語根",
+     "mean": "役立つ",
+     "like": [
+      "valid 有効な",
+      "value 価値",
+      "evaluate 評価する"
+     ]
+    },
+    {
+     "p": "-able",
+     "kind": "接尾辞",
+     "mean": "〜できる",
+     "like": [
+      "affordable 手頃な",
+      "reliable 信頼できる",
+      "reasonable 妥当な"
+     ]
+    },
+    {
+     "p": "-ity",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "「役立てられる状態」から、在庫の有無・利用できることの意味になる。"
+  },
+  {
+   "word": "destination",
+   "pos": "名詞",
+   "meaning": "届け先、目的地",
+   "note": "",
+   "ipa": "ˌdɛstəˈneɪʃən",
+   "freq": 2,
+   "toeic": "final destination",
+   "level": 730,
+   "ex": "Delivery times may vary depending on the availability of the items and the destination.",
+   "parts": [
+    {
+     "p": "de-",
+     "kind": "接頭辞",
+     "mean": "強調"
+    },
+    {
+     "p": "stin",
+     "kind": "語根",
+     "mean": "固める・立てる",
+     "like": [
+      "destiny 運命",
+      "obstinate 頑固な"
+     ]
+    },
+    {
+     "p": "-ation",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "「行き先と定めた場所」。届け先・目的地。",
+   "rel": {
+    "syn": [
+     "goal",
+     "target"
+    ]
+   }
+  },
+  {
+   "word": "relocate",
+   "pos": "動詞",
+   "meaning": "移転させる、移転する",
+   "note": "",
+   "ipa": "ˌɹiˈloʊkeɪt",
+   "freq": 3,
+   "toeic": "relocate to ~ の形で、オフィスや部署の移転に頻出",
+   "level": 730,
+   "ex": "The cafeteria will be temporarily relocated to the second floor while renovations are under way.",
+   "parts": [
+    {
+     "p": "re-",
+     "kind": "接頭辞",
+     "mean": "再び"
+    },
+    {
+     "p": "loc",
+     "kind": "語根",
+     "mean": "場所",
+     "like": [
+      "local 地元の",
+      "location 場所",
+      "allocate 割り当てる"
+     ]
+    },
+    {
+     "p": "-ate",
+     "kind": "接尾辞",
+     "mean": "〜する(動詞をつくる)"
+    }
+   ],
+   "tip": "場所を再び定める。移転する。",
+   "rel": {
+    "syn": [
+     "move",
+     "transfer"
+    ]
+   }
+  },
+  {
+   "word": "temporarily",
+   "pos": "副詞",
+   "meaning": "一時的に",
+   "note": "",
+   "ipa": "ˌtɛmpɚˈɛɹəli",
+   "freq": 2,
+   "toeic": "temporarily closed / temporarily unavailable",
+   "level": 730,
+   "ex": "The cafeteria will be temporarily relocated to the second floor while renovations are under way.",
+   "parts": [
+    {
+     "p": "tempor",
+     "kind": "語根",
+     "mean": "時",
+     "like": [
+      "temporary 一時的な",
+      "contemporary 現代の",
+      "tempo 速さ"
+     ]
+    },
+    {
+     "p": "-ary",
+     "kind": "接尾辞",
+     "mean": "〜の(形容詞をつくる)"
+    },
+    {
+     "p": "-ly",
+     "kind": "接尾辞",
+     "mean": "副詞をつくる"
+    }
+   ],
+   "tip": "「その時だけ」の意味から、一時的にの意味になる。",
+   "rel": {
+    "syn": [
+     "for now"
+    ],
+    "ant": [
+     "permanently"
+    ]
+   }
+  },
+  {
+   "word": "renovation",
+   "pos": "名詞",
+   "meaning": "改装、改修",
+   "note": "",
+   "ipa": "ˌɹɛnəˈveɪʃən",
+   "freq": 3,
+   "toeic": "under renovation / renovation work",
+   "level": 730,
+   "ex": "The cafeteria will be temporarily relocated to the second floor while renovations are under way.",
+   "parts": [
+    {
+     "p": "re-",
+     "kind": "接頭辞",
+     "mean": "再び"
+    },
+    {
+     "p": "nov",
+     "kind": "語根",
+     "mean": "新しい",
+     "like": [
+      "novel 新しい・小説",
+      "innovation 革新",
+      "novice 初心者",
+      "renew 更新する"
+     ]
+    },
+    {
+     "p": "-ation",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "再び新しくすること。改装・改修。",
+   "rel": {
+    "syn": [
+     "refurbishment",
+     "remodeling"
+    ]
+   }
+  },
+  {
+   "word": "renovate",
+   "pos": "動詞",
+   "meaning": "改装する",
+   "note": "",
+   "ipa": "ˈɹɛnəˌveɪt",
+   "freq": 3,
+   "toeic": "newly renovated / be renovated",
+   "level": 730,
+   "ex": "The newly renovated lobby features comfortable seating and a large display screen showing the daily schedule.",
+   "parts": [
+    {
+     "p": "re-",
+     "kind": "接頭辞",
+     "mean": "再び"
+    },
+    {
+     "p": "nov",
+     "kind": "語根",
+     "mean": "新しい",
+     "like": [
+      "novel 新しい",
+      "innovation 革新",
+      "renew 更新する"
+     ]
+    },
+    {
+     "p": "-ate",
+     "kind": "接尾辞",
+     "mean": "〜する(動詞をつくる)",
+     "like": [
+      "relocate 移転する",
+      "anticipate 予想する",
+      "accommodate 収容する"
+     ]
+    }
+   ],
+   "tip": "再び新しくする。改装する。",
+   "rel": {
+    "syn": [
+     "remodel",
+     "refurbish"
+    ]
+   }
+  },
+  {
+   "word": "remind",
+   "pos": "動詞",
+   "meaning": "念を押す、思い出させる",
+   "note": "",
+   "ipa": "ɹiˈmaɪnd",
+   "freq": 3,
+   "toeic": "be reminded to do / remind A of B",
+   "level": 730,
+   "ex": "Employees are reminded to wear their identification badges at all times while inside the building.",
+   "parts": [
+    {
+     "p": "re-",
+     "kind": "接頭辞",
+     "mean": "再び",
+     "like": [
+      "rebuild 再建する",
+      "reconsider 再考する",
+      "reopen 再開する"
+     ]
+    },
+    {
+     "p": "mind",
+     "kind": "語",
+     "mean": "心・思う"
+    }
+   ],
+   "tip": "もう一度、心に思わせる。",
+   "rel": {
+    "syn": [
+     "prompt"
+    ]
+   }
+  },
+  {
+   "word": "identification",
+   "pos": "名詞",
+   "meaning": "身分証明、識別",
+   "note": "",
+   "ipa": "aɪˌdɛntəfəˈkeɪʃən",
+   "freq": 2,
+   "toeic": "identification badge / photo identification",
+   "level": 730,
+   "ex": "Employees are reminded to wear their identification badges at all times while inside the building.",
+   "parts": [
+    {
+     "p": "ident",
+     "kind": "語根",
+     "mean": "同じ",
+     "like": [
+      "identical 同一の",
+      "identity 身元"
+     ]
+    },
+    {
+     "p": "-ify",
+     "kind": "接尾辞",
+     "mean": "〜にする",
+     "like": [
+      "verify 確かめる",
+      "clarify 明らかにする"
+     ]
+    },
+    {
+     "p": "-cation",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "「同じだと確かめること」から、身分証明・識別の意味になる。"
+  },
+  {
+   "word": "reserve",
+   "pos": "動詞",
+   "meaning": "予約する",
+   "note": "",
+   "ipa": "ɹɪˈzɝv",
+   "freq": 3,
+   "toeic": "reserve a room / reserve a seat",
+   "level": 600,
+   "ex": "To reserve a meeting room, please use the online booking system available on the company intranet.",
+   "parts": [
+    {
+     "p": "re-",
+     "kind": "接頭辞",
+     "mean": "後ろに"
+    },
+    {
+     "p": "serve",
+     "kind": "語根",
+     "mean": "保つ",
+     "like": [
+      "preserve 保存する",
+      "conserve 節約する",
+      "observe 観察する",
+      "deserve 値する"
+     ]
+    }
+   ],
+   "tip": "「後ろに取っておく」から、予約するの意味になる。",
+   "rel": {
+    "syn": [
+     "book",
+     "set aside"
+    ]
+   }
+  },
+  {
+   "word": "available",
+   "pos": "形容詞",
+   "meaning": "利用できる",
+   "note": "",
+   "ipa": "əˈveɪləbəl",
+   "freq": 3,
+   "toeic": "be available on / available to ~",
+   "level": 600,
+   "ex": "To reserve a meeting room, please use the online booking system available on the company intranet.",
+   "parts": [
+    {
+     "p": "avail",
+     "kind": "語根",
+     "mean": "役立つ",
+     "like": [
+      "valid 有効な",
+      "value 価値",
+      "evaluate 評価する"
+     ]
+    },
+    {
+     "p": "-able",
+     "kind": "接尾辞",
+     "mean": "〜できる",
+     "like": [
+      "affordable 手頃な",
+      "reliable 信頼できる",
+      "reasonable 妥当な"
+     ]
+    }
+   ],
+   "tip": "「役立てられる」から、利用できるの意味になる。",
+   "rel": {
+    "syn": [
+     "accessible",
+     "free"
+    ],
+    "ant": [
+     "unavailable"
+    ]
+   }
+  },
+  {
+   "word": "unavailable",
+   "pos": "形容詞",
+   "meaning": "利用できない",
+   "note": "",
+   "ipa": "ˌʌnəˈveɪləbəl",
+   "freq": 3,
+   "toeic": "temporarily unavailable",
+   "level": 730,
+   "ex": "Due to a scheduled system update, the internal network will be unavailable between midnight and 3 A.M.",
+   "parts": [
+    {
+     "p": "un-",
+     "kind": "接頭辞",
+     "mean": "否定",
+     "like": [
+      "unable できない",
+      "unusual 珍しい",
+      "unlikely ありそうにない"
+     ]
+    },
+    {
+     "p": "avail",
+     "kind": "語根",
+     "mean": "役立つ",
+     "like": [
+      "valid 有効な",
+      "value 価値"
+     ]
+    },
+    {
+     "p": "-able",
+     "kind": "接尾辞",
+     "mean": "〜できる"
+    }
+   ],
+   "tip": "available の否定。",
+   "rel": {
+    "syn": [
+     "not free",
+     "booked"
+    ],
+    "ant": [
+     "available"
+    ]
+   }
+  },
+  {
+   "word": "tenant",
+   "pos": "名詞",
+   "meaning": "入居者、テナント",
+   "note": "",
+   "ipa": "ˈtɛnənt",
+   "freq": 3,
+   "toeic": "ビルの管理や賃貸の通知で頻出",
+   "level": 730,
+   "ex": "The maintenance team requests that all tenants remove personal items from the hallways.",
+   "parts": [
+    {
+     "p": "ten",
+     "kind": "語根",
+     "mean": "保つ",
+     "like": [
+      "contain 含む",
+      "maintain 維持する",
+      "retain 保持する",
+      "obtain 得る"
+     ]
+    },
+    {
+     "p": "-ant",
+     "kind": "接尾辞",
+     "mean": "〜する人",
+     "like": [
+      "applicant 応募者",
+      "assistant 助手",
+      "participant 参加者"
+     ]
+    }
+   ],
+   "tip": "建物を「保持している人」。入居者・テナント。",
+   "rel": {
+    "syn": [
+     "occupant",
+     "renter"
+    ],
+    "ant": [
+     "landlord"
+    ]
+   }
+  },
+  {
+   "word": "maintenance",
+   "pos": "名詞",
+   "meaning": "保守管理",
+   "note": "",
+   "ipa": "ˈmeɪntənəns",
+   "freq": 3,
+   "toeic": "maintenance team / routine maintenance",
+   "level": 730,
+   "ex": "The maintenance team requests that all tenants remove personal items from the hallways.",
+   "parts": [
+    {
+     "p": "main",
+     "kind": "語根",
+     "mean": "手"
+    },
+    {
+     "p": "ten",
+     "kind": "語根",
+     "mean": "保つ",
+     "like": [
+      "contain 含む",
+      "retain 保持する",
+      "obtain 得る",
+      "sustain 持続させる"
+     ]
+    },
+    {
+     "p": "-ance",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "「手で保つこと」から、保守管理の意味になる。",
+   "rel": {
+    "syn": [
+     "upkeep",
+     "repair"
+    ]
+   }
+  },
+  {
+   "word": "maintain",
+   "pos": "動詞",
+   "meaning": "整備する、維持する",
+   "note": "名詞は maintenance",
+   "ipa": "meɪnˈteɪn",
+   "freq": 3,
+   "toeic": "maintain equipment / regular maintenance",
+   "level": 730,
+   "ex": "Please make sure that the equipment is properly maintained to avoid unexpected breakdowns.",
+   "parts": [
+    {
+     "p": "main",
+     "kind": "語根",
+     "mean": "手"
+    },
+    {
+     "p": "tain",
+     "kind": "語根",
+     "mean": "保つ",
+     "like": [
+      "contain 含む",
+      "retain 保持する",
+      "obtain 得る",
+      "entertain 楽しませる"
+     ]
+    }
+   ],
+   "tip": "「手で保つ」から、維持する・整備するの意味になる。",
+   "rel": {
+    "syn": [
+     "keep",
+     "preserve"
+    ],
+    "ant": [
+     "neglect"
+    ]
+   }
+  },
+  {
+   "word": "effective",
+   "pos": "形容詞",
+   "meaning": "(規則などが)有効な、発効する",
+   "note": "",
+   "ipa": "ɪˈfɛktɪv",
+   "freq": 3,
+   "toeic": "effective immediately / effective as of ~",
+   "level": 730,
+   "ex": "Effective immediately, visitors must check in at the front desk and receive a guest pass.",
+   "parts": [
+    {
+     "p": "ef-",
+     "kind": "接頭辞",
+     "mean": "外へ(ex-)"
+    },
+    {
+     "p": "fect",
+     "kind": "語根",
+     "mean": "作る",
+     "like": [
+      "effect 効果",
+      "perfect 完全な",
+      "defect 欠陥",
+      "affect 影響する",
+      "factory 工場"
+     ]
+    },
+    {
+     "p": "-ive",
+     "kind": "接尾辞",
+     "mean": "〜の性質の"
+    }
+   ],
+   "tip": "「結果を外へ生み出す」から、効果的な・有効なの意味になる。",
+   "rel": {
+    "syn": [
+     "efficient",
+     "successful"
+    ],
+    "ant": [
+     "ineffective"
+    ]
+   }
+  },
+  {
+   "word": "accept",
+   "pos": "動詞",
+   "meaning": "受け入れる、引き受ける",
+   "note": "",
+   "ipa": "ækˈsɛpt",
+   "freq": 3,
+   "toeic": "accept a position / accept an offer",
+   "level": 730,
+   "ex": "We are pleased to announce that Ms. Park has accepted the position of regional director.",
+   "parts": [
+    {
+     "p": "ac-",
+     "kind": "接頭辞",
+     "mean": "〜へ(ad-)"
+    },
+    {
+     "p": "cept",
+     "kind": "語根",
+     "mean": "取る",
+     "like": [
+      "except 〜を除いて",
+      "concept 概念",
+      "receive 受け取る",
+      "intercept 横取りする"
+     ]
+    }
+   ],
+   "tip": "「自分の方へ取る」から、受け入れるの意味になる。",
+   "rel": {
+    "syn": [
+     "receive",
+     "take on"
+    ],
+    "ant": [
+     "reject",
+     "decline"
+    ]
+   }
+  },
+  {
+   "word": "position",
+   "pos": "名詞",
+   "meaning": "職、役職",
+   "note": "",
+   "ipa": "pəˈzɪʃən",
+   "freq": 3,
+   "toeic": "apply for a position / fill a position",
+   "level": 730,
+   "ex": "We are pleased to announce that Ms. Park has accepted the position of regional director.",
+   "parts": [
+    {
+     "p": "pos",
+     "kind": "語根",
+     "mean": "置く",
+     "like": [
+      "compose 構成する",
+      "expose さらす",
+      "propose 提案する",
+      "deposit 預ける"
+     ]
+    },
+    {
+     "p": "-ition",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "「置かれた場所」から、位置・職の意味になる。",
+   "rel": {
+    "syn": [
+     "post",
+     "job",
+     "role"
+    ]
+   }
+  },
+  {
+   "word": "regional",
+   "pos": "形容詞",
+   "meaning": "地域の",
+   "note": "",
+   "ipa": "ˈɹidʒənəl",
+   "freq": 2,
+   "toeic": "regional director / regional office",
+   "level": 730,
+   "ex": "We are pleased to announce that Ms. Park has accepted the position of regional director.",
+   "parts": [
+    {
+     "p": "reg",
+     "kind": "語根",
+     "mean": "支配する・まっすぐ",
+     "like": [
+      "regular 規則的な",
+      "region 地域",
+      "regulation 規則",
+      "rule 規則"
+     ]
+    },
+    {
+     "p": "-ion",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    },
+    {
+     "p": "-al",
+     "kind": "接尾辞",
+     "mean": "〜の(形容詞をつくる)"
+    }
+   ],
+   "tip": "ある支配の及ぶ範囲(region)の。地域の。",
+   "rel": {
+    "syn": [
+     "local"
+    ],
+    "ant": [
+     "national"
+    ]
+   }
+  },
+  {
+   "word": "enclosed",
+   "pos": "形容詞",
+   "meaning": "同封の",
+   "note": "",
+   "ipa": "ɛnˈkloʊzd",
+   "freq": 3,
+   "toeic": "enclosed document / please find the enclosed ~",
+   "level": 730,
+   "ex": "The enclosed brochure describes the full range of services offered by our consulting division.",
+   "parts": [
+    {
+     "p": "en-",
+     "kind": "接頭辞",
+     "mean": "中に",
+     "like": [
+      "enable 可能にする",
+      "enrich 豊かにする"
+     ]
+    },
+    {
+     "p": "close",
+     "kind": "語根",
+     "mean": "閉じる",
+     "like": [
+      "include 含む",
+      "disclose 明かす",
+      "closure 閉鎖"
+     ]
+    },
+    {
+     "p": "-ed",
+     "kind": "接尾辞",
+     "mean": "過去分詞"
+    }
+   ],
+   "tip": "「中に閉じ込めた」から、同封のの意味になる。",
+   "rel": {
+    "syn": [
+     "attached",
+     "included"
+    ]
+   }
+  },
+  {
+   "word": "division",
+   "pos": "名詞",
+   "meaning": "部門",
+   "note": "",
+   "ipa": "dɪˈvɪʒən",
+   "freq": 2,
+   "toeic": "sales division / consulting division",
+   "level": 730,
+   "ex": "The enclosed brochure describes the full range of services offered by our consulting division.",
+   "parts": [
+    {
+     "p": "di-",
+     "kind": "接頭辞",
+     "mean": "分けて"
+    },
+    {
+     "p": "vis",
+     "kind": "語根",
+     "mean": "分ける",
+     "like": [
+      "divide 分ける",
+      "individual 個人の",
+      "divorce 離婚"
+     ]
+    },
+    {
+     "p": "-ion",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "分けたもの。部門・分割。",
+   "rel": {
+    "syn": [
+     "section",
+     "department"
+    ]
+   }
+  },
+  {
+   "word": "expand",
+   "pos": "動詞",
+   "meaning": "拡大する",
+   "note": "expand into ~ で「~へ進出する」",
+   "ipa": "ɪkˈspænd",
+   "freq": 3,
+   "toeic": "expand operations / expand into new markets",
+   "level": 600,
+   "ex": "The company plans to expand its operations into Southeast Asia by the end of next year.",
+   "parts": [
+    {
+     "p": "ex-",
+     "kind": "接頭辞",
+     "mean": "外へ",
+     "like": [
+      "export 輸出する",
+      "express 表す",
+      "exceed 超える"
+     ]
+    },
+    {
+     "p": "pand",
+     "kind": "語根",
+     "mean": "広げる",
+     "like": [
+      "expansion 拡大",
+      "expanse 広がり"
+     ]
+    }
+   ],
+   "tip": "「外へ広げる」から、拡大するの意味になる。",
+   "rel": {
+    "syn": [
+     "grow",
+     "enlarge"
+    ],
+    "ant": [
+     "shrink",
+     "reduce"
+    ]
+   }
+  },
+  {
+   "word": "operation",
+   "pos": "名詞",
+   "meaning": "事業、業務",
+   "note": "複数形で事業活動の意味",
+   "ipa": "ˌɑpɚˈeɪʃən",
+   "freq": 3,
+   "toeic": "business operations / daily operations",
+   "level": 600,
+   "ex": "The company plans to expand its operations into Southeast Asia by the end of next year.",
+   "parts": [
+    {
+     "p": "oper",
+     "kind": "語根",
+     "mean": "仕事",
+     "like": [
+      "operate 操作する",
+      "cooperate 協力する",
+      "opera 歌劇"
+     ]
+    },
+    {
+     "p": "-ation",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "仕事・はたらき。事業・業務・手術。",
+   "rel": {
+    "syn": [
+     "business",
+     "activity"
+    ]
+   }
+  },
+  {
+   "word": "proposal",
+   "pos": "名詞",
+   "meaning": "提案(書)",
+   "note": "",
+   "ipa": "pɹəˈpoʊzəl",
+   "freq": 3,
+   "toeic": "submit a proposal / budget proposal",
+   "level": 600,
+   "ex": "The proposal was rejected because it failed to meet the budget requirements.",
+   "parts": [
+    {
+     "p": "pro-",
+     "kind": "接頭辞",
+     "mean": "前に",
+     "like": [
+      "progress 進歩",
+      "produce 生産する"
+     ]
+    },
+    {
+     "p": "pose",
+     "kind": "語根",
+     "mean": "置く",
+     "like": [
+      "compose 構成する",
+      "expose さらす",
+      "oppose 反対する",
+      "impose 課す"
+     ]
+    },
+    {
+     "p": "-al",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "「前に置いて見せる」から、提案(書)の意味になる。",
+   "rel": {
+    "syn": [
+     "suggestion",
+     "plan"
+    ]
+   }
+  },
+  {
+   "word": "reject",
+   "pos": "動詞",
+   "meaning": "却下する、断る",
+   "note": "",
+   "ipa": "ɹɪˈdʒɛkt",
+   "freq": 2,
+   "toeic": "reject a proposal / reject an offer",
+   "level": 600,
+   "ex": "The proposal was rejected because it failed to meet the budget requirements.",
+   "parts": [
+    {
+     "p": "re-",
+     "kind": "接頭辞",
+     "mean": "後ろへ"
+    },
+    {
+     "p": "ject",
+     "kind": "語根",
+     "mean": "投げる",
+     "like": [
+      "project 計画・投影する",
+      "object 反対する",
+      "inject 注入する",
+      "subject 主題"
+     ]
+    }
+   ],
+   "tip": "「後ろへ投げ返す」から、却下する・断るの意味になる。",
+   "rel": {
+    "syn": [
+     "decline",
+     "turn down"
+    ],
+    "ant": [
+     "accept",
+     "approve"
+    ]
+   }
+  },
+  {
+   "word": "requirement",
+   "pos": "名詞",
+   "meaning": "要件、必要条件",
+   "note": "",
+   "ipa": "ɹɪˈkwaɪɹmənt",
+   "freq": 3,
+   "toeic": "meet the requirements / safety requirements",
+   "level": 600,
+   "ex": "The proposal was rejected because it failed to meet the budget requirements.",
+   "parts": [
+    {
+     "p": "re-",
+     "kind": "接頭辞",
+     "mean": "強く"
+    },
+    {
+     "p": "quire",
+     "kind": "語根",
+     "mean": "求める",
+     "like": [
+      "require 必要とする",
+      "acquire 手に入れる",
+      "inquire 尋ねる",
+      "request 要請"
+     ]
+    },
+    {
+     "p": "-ment",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "強く求められること。要件。",
+   "rel": {
+    "syn": [
+     "condition",
+     "prerequisite"
+    ]
+   }
+  },
+  {
+   "word": "colleague",
+   "pos": "名詞",
+   "meaning": "同僚",
+   "note": "",
+   "ipa": "ˈkɑliɡ",
+   "freq": 3,
+   "toeic": "a colleague of mine",
+   "level": 730,
+   "ex": "Mr. Lee is highly regarded among his colleagues for his reliability and attention to detail.",
+   "parts": [
+    {
+     "p": "col-",
+     "kind": "接頭辞",
+     "mean": "共に(com-)",
+     "like": [
+      "college 大学",
+      "collect 集める"
+     ]
+    },
+    {
+     "p": "league",
+     "kind": "語根",
+     "mean": "選ぶ・結ぶ",
+     "like": [
+      "league 連盟",
+      "ally 同盟者"
+     ]
+    }
+   ],
+   "tip": "「共に選ばれた(仲間)」から、同僚の意味になる。",
+   "rel": {
+    "syn": [
+     "coworker",
+     "associate"
+    ]
+   }
+  },
+  {
+   "word": "reliability",
+   "pos": "名詞",
+   "meaning": "信頼性",
+   "note": "形容詞は reliable",
+   "ipa": "ɹiˌlaɪəˈbɪləti",
+   "freq": 2,
+   "toeic": "product reliability",
+   "level": 730,
+   "ex": "Mr. Lee is highly regarded among his colleagues for his reliability and attention to detail.",
+   "parts": [
+    {
+     "p": "re-",
+     "kind": "接頭辞",
+     "mean": "強く"
+    },
+    {
+     "p": "li",
+     "kind": "語根",
+     "mean": "結ぶ",
+     "like": [
+      "rely 頼る",
+      "ally 同盟者",
+      "alliance 同盟",
+      "liable 責任がある"
+     ]
+    },
+    {
+     "p": "-able",
+     "kind": "接尾辞",
+     "mean": "〜できる"
+    },
+    {
+     "p": "-ity",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "「結びついて頼れる」から、信頼性の意味になる。",
+   "rel": {
+    "syn": [
+     "dependability",
+     "trustworthiness"
+    ]
+   }
+  },
+  {
+   "word": "equipment",
+   "pos": "名詞",
+   "meaning": "設備、機器",
+   "note": "不可算名詞で複数形にしない",
+   "ipa": "ɪˈkwɪpmənt",
+   "freq": 3,
+   "toeic": "office equipment / safety equipment",
+   "level": 730,
+   "ex": "Please make sure that the equipment is properly maintained to avoid unexpected breakdowns.",
+   "parts": [
+    {
+     "p": "equip",
+     "kind": "語根",
+     "mean": "整える",
+     "like": [
+      "equip 備える"
+     ]
+    },
+    {
+     "p": "-ment",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる",
+     "like": [
+      "payment 支払い",
+      "shipment 出荷",
+      "requirement 要件"
+     ]
+    }
+   ],
+   "tip": "整えられた道具の全体。設備・機器。",
+   "rel": {
+    "syn": [
+     "gear",
+     "machinery"
+    ]
+   }
+  },
+  {
+   "word": "avoid",
+   "pos": "動詞",
+   "meaning": "避ける",
+   "note": "目的語に動名詞をとる",
+   "ipa": "əˈvɔɪd",
+   "freq": 2,
+   "toeic": "avoid doing / avoid delays",
+   "level": 730,
+   "ex": "Please make sure that the equipment is properly maintained to avoid unexpected breakdowns.",
+   "parts": [
+    {
+     "p": "a-",
+     "kind": "接頭辞",
+     "mean": "離れて"
+    },
+    {
+     "p": "void",
+     "kind": "語根",
+     "mean": "空の",
+     "like": [
+      "void 無効の",
+      "devoid 欠いた"
+     ]
+    }
+   ],
+   "tip": "「空にして離れる」から、避けるの意味になる。",
+   "rel": {
+    "syn": [
+     "evade",
+     "stay away from"
+    ]
+   }
+  },
+  {
+   "word": "supplier",
+   "pos": "名詞",
+   "meaning": "納入業者、供給元",
+   "note": "",
+   "ipa": "səˈplaɪɚ",
+   "freq": 3,
+   "toeic": "a supplier of parts",
+   "level": 730,
+   "ex": "The supplier has assured us that the shipment will arrive no later than Tuesday.",
+   "parts": [
+    {
+     "p": "sup-",
+     "kind": "接頭辞",
+     "mean": "下から(sub-)"
+    },
+    {
+     "p": "ply",
+     "kind": "語根",
+     "mean": "満たす",
+     "like": [
+      "supply 供給する",
+      "complement 補うもの",
+      "implement 実行する"
+     ]
+    },
+    {
+     "p": "-er",
+     "kind": "接尾辞",
+     "mean": "〜する人"
+    }
+   ],
+   "tip": "「下から満たす」から、供給する人=納入業者。",
+   "rel": {
+    "syn": [
+     "vendor",
+     "provider"
+    ]
+   }
+  },
+  {
+   "word": "assure",
+   "pos": "動詞",
+   "meaning": "保証する、請け合う",
+   "note": "assure + 人 + that ~",
+   "ipa": "əˈʃʊɹ",
+   "freq": 3,
+   "toeic": "assure customers that ~",
+   "level": 730,
+   "ex": "The supplier has assured us that the shipment will arrive no later than Tuesday.",
+   "parts": [
+    {
+     "p": "as-",
+     "kind": "接頭辞",
+     "mean": "〜に(ad-)"
+    },
+    {
+     "p": "sure",
+     "kind": "語",
+     "mean": "確かな",
+     "like": [
+      "ensure 確実にする",
+      "insure 保険をかける",
+      "reassure 安心させる"
+     ]
+    }
+   ],
+   "tip": "「確かだと言う」から、保証する・請け合うの意味になる。",
+   "rel": {
+    "syn": [
+     "guarantee",
+     "promise"
+    ]
+   }
+  },
+  {
+   "word": "significant",
+   "pos": "形容詞",
+   "meaning": "かなりの、重要な",
+   "note": "",
+   "ipa": "səɡˈnɪfɪkənt",
+   "freq": 3,
+   "toeic": "a significant increase / significant number",
+   "level": 730,
+   "ex": "A significant number of employees have expressed interest in the flexible work schedule.",
+   "parts": [
+    {
+     "p": "sign",
+     "kind": "語根",
+     "mean": "印",
+     "like": [
+      "signal 信号",
+      "signature 署名",
+      "design 設計する",
+      "resign 辞職する"
+     ]
+    },
+    {
+     "p": "-ific",
+     "kind": "語根",
+     "mean": "作る"
+    },
+    {
+     "p": "-ant",
+     "kind": "接尾辞",
+     "mean": "〜の(形容詞をつくる)"
+    }
+   ],
+   "tip": "「印を作るほど」から、意味のある・重要なの意味になる。",
+   "rel": {
+    "syn": [
+     "important",
+     "considerable"
+    ],
+    "ant": [
+     "insignificant",
+     "minor"
+    ]
+   }
+  },
+  {
+   "word": "express",
+   "pos": "動詞",
+   "meaning": "表明する",
+   "note": "",
+   "ipa": "ɪkˈspɹɛs",
+   "freq": 2,
+   "toeic": "express interest in / express concern",
+   "level": 730,
+   "ex": "A significant number of employees have expressed interest in the flexible work schedule.",
+   "parts": [
+    {
+     "p": "ex-",
+     "kind": "接頭辞",
+     "mean": "外へ",
+     "like": [
+      "export 輸出する",
+      "expand 広げる",
+      "exceed 超える"
+     ]
+    },
+    {
+     "p": "press",
+     "kind": "語根",
+     "mean": "押す",
+     "like": [
+      "impress 感銘を与える",
+      "compress 圧縮する",
+      "depress 落ち込ませる",
+      "suppress 抑える"
+     ]
+    }
+   ],
+   "tip": "「気持ちを外へ押し出す」から、表明する・急行のの意味になる。",
+   "rel": {
+    "syn": [
+     "state",
+     "convey"
+    ]
+   }
+  },
+  {
+   "word": "flexible",
+   "pos": "形容詞",
+   "meaning": "柔軟な",
+   "note": "",
+   "ipa": "ˈflɛksəbəl",
+   "freq": 3,
+   "toeic": "flexible schedule / flexible hours",
+   "level": 730,
+   "ex": "A significant number of employees have expressed interest in the flexible work schedule.",
+   "parts": [
+    {
+     "p": "flex",
+     "kind": "語根",
+     "mean": "曲げる",
+     "like": [
+      "reflect 反映する",
+      "reflex 反射",
+      "deflect そらす"
+     ]
+    },
+    {
+     "p": "-ible",
+     "kind": "接尾辞",
+     "mean": "〜できる",
+     "like": [
+      "possible 可能な",
+      "visible 目に見える"
+     ]
+    }
+   ],
+   "tip": "曲げられる。柔軟な。",
+   "rel": {
+    "syn": [
+     "adaptable"
+    ],
+    "ant": [
+     "rigid",
+     "fixed"
+    ]
+   }
+  },
+  {
+   "word": "demand",
+   "pos": "名詞",
+   "meaning": "需要",
+   "note": "",
+   "ipa": "dɪˈmænd",
+   "freq": 3,
+   "toeic": "demand for ~ / in high demand",
+   "level": 600,
+   "ex": "Demand for electric vehicles has grown steadily over the past decade.",
+   "parts": [
+    {
+     "p": "de-",
+     "kind": "接頭辞",
+     "mean": "完全に"
+    },
+    {
+     "p": "mand",
+     "kind": "語根",
+     "mean": "命じる",
+     "like": [
+      "command 命令する",
+      "mandatory 義務の",
+      "recommend 推薦する"
+     ]
+    }
+   ],
+   "tip": "強く命じること。要求・需要。",
+   "rel": {
+    "syn": [
+     "request",
+     "need"
+    ],
+    "ant": [
+     "supply"
+    ]
+   }
+  },
+  {
+   "word": "vehicle",
+   "pos": "名詞",
+   "meaning": "車両",
+   "note": "",
+   "ipa": "ˈvihɪkəl",
+   "freq": 2,
+   "toeic": "company vehicle / electric vehicle",
+   "level": 600,
+   "ex": "Demand for electric vehicles has grown steadily over the past decade.",
+   "parts": [
+    {
+     "p": "veh",
+     "kind": "語根",
+     "mean": "運ぶ",
+     "like": [
+      "convey 運ぶ",
+      "vehicular 車両の"
+     ]
+    },
+    {
+     "p": "-icle",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "人や物を運ぶもの。",
+   "rel": {
+    "up": [
+     "transport"
+    ],
+    "down": [
+     "car",
+     "truck",
+     "bus"
+    ]
+   }
+  },
+  {
+   "word": "decade",
+   "pos": "名詞",
+   "meaning": "10年間",
+   "note": "",
+   "ipa": "dɛˈkeɪd",
+   "freq": 2,
+   "toeic": "over the past decade",
+   "level": 600,
+   "ex": "Demand for electric vehicles has grown steadily over the past decade.",
+   "parts": [
+    {
+     "p": "dec",
+     "kind": "語根",
+     "mean": "10",
+     "like": [
+      "decimal 十進法の",
+      "December 12月(昔は10番目)",
+      "decathlon 十種競技"
+     ]
+    },
+    {
+     "p": "-ade",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "10(dec)年のまとまり。"
+  },
+  {
+   "word": "consider",
+   "pos": "動詞",
+   "meaning": "検討する",
+   "note": "目的語に動名詞をとる",
+   "ipa": "kənˈsɪdɚ",
+   "freq": 3,
+   "toeic": "consider doing / consider an option",
+   "level": 730,
+   "ex": "The committee will make a final decision after carefully considering all of the options.",
+   "parts": [
+    {
+     "p": "con-",
+     "kind": "接頭辞",
+     "mean": "共に"
+    },
+    {
+     "p": "sider",
+     "kind": "語根",
+     "mean": "星",
+     "like": [
+      "desire 望む",
+      "disaster 災害"
+     ]
+    }
+   ],
+   "tip": "「星(の並び)をよく見る」から、じっくり考える・検討するの意味になる。",
+   "rel": {
+    "syn": [
+     "think about",
+     "weigh"
+    ]
+   }
+  },
+  {
+   "word": "resident",
+   "pos": "名詞",
+   "meaning": "住民",
+   "note": "",
+   "ipa": "ˈɹɛzɪdənt",
+   "freq": 2,
+   "toeic": "local residents",
+   "level": 730,
+   "ex": "Residents are asked to dispose of their waste in the designated containers.",
+   "parts": [
+    {
+     "p": "re-",
+     "kind": "接頭辞",
+     "mean": "後ろに"
+    },
+    {
+     "p": "sid",
+     "kind": "語根",
+     "mean": "座る",
+     "like": [
+      "reside 居住する",
+      "preside 議長を務める",
+      "president 社長・大統領",
+      "subside 静まる"
+     ]
+    },
+    {
+     "p": "-ent",
+     "kind": "接尾辞",
+     "mean": "〜する人"
+    }
+   ],
+   "tip": "「その場に座っている人」から、住民の意味になる。",
+   "rel": {
+    "syn": [
+     "inhabitant",
+     "occupant"
+    ]
+   }
+  },
+  {
+   "word": "designated",
+   "pos": "形容詞",
+   "meaning": "指定された",
+   "note": "動詞 designate の過去分詞から",
+   "ipa": "ˈdɛzɪɡˌneɪtɪd",
+   "freq": 3,
+   "toeic": "designated area / designated parking",
+   "level": 730,
+   "ex": "Residents are asked to dispose of their waste in the designated containers.",
+   "parts": [
+    {
+     "p": "de-",
+     "kind": "接頭辞",
+     "mean": "強調"
+    },
+    {
+     "p": "sign",
+     "kind": "語根",
+     "mean": "印",
+     "like": [
+      "signal 信号",
+      "signature 署名",
+      "resign 辞職する"
+     ]
+    },
+    {
+     "p": "-ate",
+     "kind": "接尾辞",
+     "mean": "〜する(動詞をつくる)"
+    },
+    {
+     "p": "-ed",
+     "kind": "接尾辞",
+     "mean": "過去分詞"
+    }
+   ],
+   "tip": "「印をつけて示した」から、指定された。",
+   "rel": {
+    "syn": [
+     "assigned",
+     "specified"
+    ]
+   }
+  },
+  {
+   "word": "container",
+   "pos": "名詞",
+   "meaning": "容器",
+   "note": "",
+   "ipa": "kənˈteɪnɚ",
+   "freq": 2,
+   "toeic": "storage container",
+   "level": 730,
+   "ex": "Residents are asked to dispose of their waste in the designated containers.",
+   "parts": [
+    {
+     "p": "con-",
+     "kind": "接頭辞",
+     "mean": "共に"
+    },
+    {
+     "p": "tain",
+     "kind": "語根",
+     "mean": "保つ",
+     "like": [
+      "contain 含む",
+      "maintain 維持する",
+      "retain 保持する",
+      "obtain 得る"
+     ]
+    },
+    {
+     "p": "-er",
+     "kind": "接尾辞",
+     "mean": "もの・道具"
+    }
+   ],
+   "tip": "中に物を保つもの。容器。"
+  },
+  {
+   "word": "originally",
+   "pos": "副詞",
+   "meaning": "当初は",
+   "note": "",
+   "ipa": "ɚˈɪdʒənəli",
+   "freq": 2,
+   "toeic": "originally scheduled / planned の形で頻出",
+   "level": 730,
+   "ex": "The shipment, which was originally scheduled for Monday, will now arrive on Wednesday because of severe weather.",
+   "parts": [
+    {
+     "p": "orig",
+     "kind": "語根",
+     "mean": "生まれる・始まる",
+     "like": [
+      "origin 起源",
+      "original 元の",
+      "orient 方向づける"
+     ]
+    },
+    {
+     "p": "-al",
+     "kind": "接尾辞",
+     "mean": "〜の"
+    },
+    {
+     "p": "-ly",
+     "kind": "接尾辞",
+     "mean": "副詞をつくる"
+    }
+   ],
+   "tip": "始まりのときには。当初は。",
+   "rel": {
+    "syn": [
+     "at first",
+     "initially"
+    ]
+   }
+  },
+  {
+   "word": "properly",
+   "pos": "副詞",
+   "meaning": "適切に",
+   "note": "",
+   "ipa": "ˈpɹɑpɚli",
+   "freq": 2,
+   "toeic": "properly labeled / function properly",
+   "level": 600,
+   "ex": "Please make sure all cartons are properly labeled before they are loaded onto the truck.",
+   "parts": [
+    {
+     "p": "proper",
+     "kind": "語根",
+     "mean": "自分自身の・適切な",
+     "like": [
+      "property 財産",
+      "appropriate 適切な",
+      "proprietor 所有者"
+     ]
+    },
+    {
+     "p": "-ly",
+     "kind": "接尾辞",
+     "mean": "副詞をつくる"
+    }
+   ],
+   "tip": "きちんと当てはまる形で。適切に。",
+   "rel": {
+    "syn": [
+     "correctly",
+     "appropriately"
+    ]
+   }
+  },
+  {
+   "word": "reduce",
+   "pos": "動詞",
+   "meaning": "減らす",
+   "note": "",
+   "ipa": "ɹəˈdus",
+   "freq": 3,
+   "toeic": "reduce costs / reduce consumption",
+   "level": 600,
+   "ex": "The factory has reduced its energy consumption by installing more efficient machinery.",
+   "parts": [
+    {
+     "p": "re-",
+     "kind": "接頭辞",
+     "mean": "後ろに"
+    },
+    {
+     "p": "duce",
+     "kind": "語根",
+     "mean": "導く",
+     "like": [
+      "produce 生産する",
+      "introduce 紹介する",
+      "conduct 行う",
+      "educate 教育する"
+     ]
+    }
+   ],
+   "tip": "「後ろへ導く(戻す)」から、減らすの意味になる。",
+   "rel": {
+    "syn": [
+     "decrease",
+     "cut"
+    ],
+    "ant": [
+     "increase",
+     "expand"
+    ]
+   }
+  },
+  {
+   "word": "consumption",
+   "pos": "名詞",
+   "meaning": "消費",
+   "note": "",
+   "ipa": "kənˈsʌmpʃən",
+   "freq": 2,
+   "toeic": "energy consumption",
+   "level": 600,
+   "ex": "The factory has reduced its energy consumption by installing more efficient machinery.",
+   "parts": [
+    {
+     "p": "con-",
+     "kind": "接頭辞",
+     "mean": "完全に"
+    },
+    {
+     "p": "sum",
+     "kind": "語根",
+     "mean": "取る",
+     "like": [
+      "assume 仮定する",
+      "resume 再開する",
+      "presume 推定する"
+     ]
+    },
+    {
+     "p": "-ption",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "完全に取り入れて使うこと。消費。",
+   "rel": {
+    "syn": [
+     "use"
+    ],
+    "ant": [
+     "production"
+    ]
+   }
+  },
+  {
+   "word": "install",
+   "pos": "動詞",
+   "meaning": "設置する、導入する",
+   "note": "",
+   "ipa": "ˌɪnˈstɔl",
+   "freq": 3,
+   "toeic": "install equipment / software",
+   "level": 600,
+   "ex": "The factory has reduced its energy consumption by installing more efficient machinery.",
+   "parts": [
+    {
+     "p": "in-",
+     "kind": "接頭辞",
+     "mean": "中に"
+    },
+    {
+     "p": "stall",
+     "kind": "語根",
+     "mean": "場所",
+     "like": [
+      "stall 屋台",
+      "forestall 先手を打つ"
+     ]
+    }
+   ],
+   "tip": "決まった場所に据える。設置する。",
+   "rel": {
+    "syn": [
+     "set up",
+     "fit"
+    ],
+    "ant": [
+     "remove"
+    ]
+   }
+  },
+  {
+   "word": "efficient",
+   "pos": "形容詞",
+   "meaning": "効率的な",
+   "note": "",
+   "ipa": "ɪˈfɪʃənt",
+   "freq": 2,
+   "toeic": "energy-efficient / cost-efficient",
+   "level": 600,
+   "ex": "The factory has reduced its energy consumption by installing more efficient machinery.",
+   "parts": [
+    {
+     "p": "ef-",
+     "kind": "接頭辞",
+     "mean": "外へ(ex-)"
+    },
+    {
+     "p": "fic",
+     "kind": "語根",
+     "mean": "作る",
+     "like": [
+      "effect 効果",
+      "sufficient 十分な",
+      "deficient 不足した",
+      "proficient 熟達した"
+     ]
+    },
+    {
+     "p": "-ient",
+     "kind": "接尾辞",
+     "mean": "〜の性質の"
+    }
+   ],
+   "tip": "「結果を外へ生み出す」から、効率的なの意味になる。",
+   "rel": {
+    "syn": [
+     "productive",
+     "effective"
+    ],
+    "ant": [
+     "inefficient"
+    ]
+   }
+  },
+  {
+   "word": "inspector",
+   "pos": "名詞",
+   "meaning": "検査員",
+   "note": "",
+   "ipa": "ˌɪnˈspɛktɚ",
+   "freq": 2,
+   "toeic": "quality inspector / safety inspector",
+   "level": 730,
+   "ex": "Quality inspectors are responsible for ensuring that every product meets the safety standards.",
+   "parts": [
+    {
+     "p": "in-",
+     "kind": "接頭辞",
+     "mean": "中を"
+    },
+    {
+     "p": "spect",
+     "kind": "語根",
+     "mean": "見る",
+     "like": [
+      "respect 尊敬",
+      "expect 期待する",
+      "prospect 見通し",
+      "suspect 疑う"
+     ]
+    },
+    {
+     "p": "-or",
+     "kind": "接尾辞",
+     "mean": "〜する人"
+    }
+   ],
+   "tip": "中をよく見る人。検査員。"
+  },
+  {
+   "word": "ensure",
+   "pos": "動詞",
+   "meaning": "確実にする",
+   "note": "",
+   "ipa": "ɛnˈʃʊɹ",
+   "freq": 3,
+   "toeic": "ensure that ~ / ensure safety",
+   "level": 730,
+   "ex": "Quality inspectors are responsible for ensuring that every product meets the safety standards.",
+   "parts": [
+    {
+     "p": "en-",
+     "kind": "接頭辞",
+     "mean": "〜にする",
+     "like": [
+      "enable 可能にする",
+      "enrich 豊かにする"
+     ]
+    },
+    {
+     "p": "sure",
+     "kind": "語",
+     "mean": "確かな",
+     "like": [
+      "assure 保証する",
+      "insure 保険をかける"
+     ]
+    }
+   ],
+   "tip": "「確かにする」から、確実にするの意味になる。",
+   "rel": {
+    "syn": [
+     "guarantee",
+     "make certain"
+    ]
+   }
+  },
+  {
+   "word": "experience",
+   "pos": "動詞",
+   "meaning": "経験する、被る",
+   "note": "",
+   "ipa": "ɪkˈspɪɹiəns",
+   "freq": 2,
+   "toeic": "experience delays / difficulties",
+   "level": 600,
+   "ex": "Due to the high volume of orders, customers may experience delays in processing.",
+   "parts": [
+    {
+     "p": "ex-",
+     "kind": "接頭辞",
+     "mean": "外へ"
+    },
+    {
+     "p": "peri",
+     "kind": "語根",
+     "mean": "試す",
+     "like": [
+      "experiment 実験",
+      "expert 専門家",
+      "peril 危険"
+     ]
+    },
+    {
+     "p": "-ence",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "「試してみて得たもの」から、経験・経験するの意味になる。"
+  },
+  {
+   "word": "protect",
+   "pos": "動詞",
+   "meaning": "保護する",
+   "note": "",
+   "ipa": "pɹəˈtɛkt",
+   "freq": 2,
+   "toeic": "protect data / information",
+   "level": 730,
+   "ex": "Employees are required to change their passwords every ninety days to protect confidential data.",
+   "parts": [
+    {
+     "p": "pro-",
+     "kind": "接頭辞",
+     "mean": "前に"
+    },
+    {
+     "p": "tect",
+     "kind": "語根",
+     "mean": "覆う",
+     "like": [
+      "detect 見抜く",
+      "protective 保護の"
+     ]
+    }
+   ],
+   "tip": "「前を覆う」から、保護するの意味になる。",
+   "rel": {
+    "syn": [
+     "guard",
+     "defend"
+    ]
+   }
+  },
+  {
+   "word": "confidential",
+   "pos": "形容詞",
+   "meaning": "機密の",
+   "note": "",
+   "ipa": "ˌkɑnfəˈdɛnʃəl",
+   "freq": 3,
+   "toeic": "confidential information / document",
+   "level": 730,
+   "ex": "Employees are required to change their passwords every ninety days to protect confidential data.",
+   "parts": [
+    {
+     "p": "con-",
+     "kind": "接頭辞",
+     "mean": "強く"
+    },
+    {
+     "p": "fid",
+     "kind": "語根",
+     "mean": "信じる",
+     "like": [
+      "confident 自信のある",
+      "faithful 忠実な",
+      "fidelity 忠誠"
+     ]
+    },
+    {
+     "p": "-ential",
+     "kind": "接尾辞",
+     "mean": "〜の(形容詞をつくる)"
+    }
+   ],
+   "tip": "「信じて預けられた」から、機密のの意味になる。",
+   "rel": {
+    "syn": [
+     "secret",
+     "private"
+    ]
+   }
+  },
+  {
+   "word": "access",
+   "pos": "名詞",
+   "meaning": "アクセス、利用",
+   "note": "",
+   "ipa": "ˈækˌsɛs",
+   "freq": 3,
+   "toeic": "access to ~",
+   "level": 730,
+   "ex": "The IT department will be upgrading the server over the weekend, so access to the system may be limited.",
+   "parts": [
+    {
+     "p": "ac-",
+     "kind": "接頭辞",
+     "mean": "〜へ(ad-)"
+    },
+    {
+     "p": "cess",
+     "kind": "語根",
+     "mean": "行く",
+     "like": [
+      "process 過程",
+      "proceed 進む",
+      "success 成功",
+      "exceed 超える",
+      "necessary 必要な"
+     ]
+    }
+   ],
+   "tip": "「〜へ行くこと」から、アクセス・利用の意味になる。",
+   "rel": {
+    "syn": [
+     "entry",
+     "entrance"
+    ]
+   }
+  },
+  {
+   "word": "prompt",
+   "pos": "動詞",
+   "meaning": "促す",
+   "note": "",
+   "ipa": "ˈpɹɑmpt",
+   "freq": 2,
+   "toeic": "be prompted to + 動詞の原形",
+   "level": 730,
+   "ex": "Once the software has been installed, users will be prompted to create an account.",
+   "parts": [
+    {
+     "p": "pro-",
+     "kind": "接頭辞",
+     "mean": "前に"
+    },
+    {
+     "p": "mpt",
+     "kind": "語根",
+     "mean": "取る",
+     "like": [
+      "exempt 免除された",
+      "sample 見本"
+     ]
+    }
+   ],
+   "tip": "「前に取り出す」から、促す・すばやいの意味になる。",
+   "rel": {
+    "syn": [
+     "quick",
+     "urge"
+    ]
+   }
+  },
+  {
+   "word": "exceed",
+   "pos": "動詞",
+   "meaning": "上回る、超える",
+   "note": "他動詞なので前置詞は不要",
+   "ipa": "ɪkˈsid",
+   "freq": 3,
+   "toeic": "exceed expectations / exceed the budget",
+   "level": 730,
+   "ex": "Ms. Alvarez, whose department exceeded its annual target, was invited to speak at the company retreat.",
+   "parts": [
+    {
+     "p": "ex-",
+     "kind": "接頭辞",
+     "mean": "外へ"
+    },
+    {
+     "p": "ceed",
+     "kind": "語根",
+     "mean": "行く",
+     "like": [
+      "proceed 進む",
+      "succeed 成功する",
+      "precede 先立つ",
+      "access 近づく"
+     ]
+    }
+   ],
+   "tip": "「外へ出ていく」から、上回る・超えるの意味になる。",
+   "rel": {
+    "syn": [
+     "surpass",
+     "go beyond"
+    ]
+   }
+  },
+  {
+   "word": "communicate",
+   "pos": "動詞",
+   "meaning": "意思疎通する",
+   "note": "communicate with ~",
+   "ipa": "kəˈmjunəˌkeɪt",
+   "freq": 2,
+   "toeic": "communicate with clients",
+   "level": 730,
+   "ex": "The training session is designed to help new managers communicate more effectively with their teams.",
+   "parts": [
+    {
+     "p": "com-",
+     "kind": "接頭辞",
+     "mean": "共に"
+    },
+    {
+     "p": "mun",
+     "kind": "語根",
+     "mean": "分け合う",
+     "like": [
+      "community 地域社会",
+      "common 共通の",
+      "municipal 市の",
+      "immune 免疫の"
+     ]
+    },
+    {
+     "p": "-ic-ate",
+     "kind": "接尾辞",
+     "mean": "〜する(動詞をつくる)"
+    }
+   ],
+   "tip": "「共有する」から、意思疎通するの意味になる。",
+   "rel": {
+    "syn": [
+     "convey",
+     "contact"
+    ]
+   }
+  },
+  {
+   "word": "monitor",
+   "pos": "動詞",
+   "meaning": "監視する、管理する",
+   "note": "",
+   "ipa": "ˈmɑnətɚ",
+   "freq": 2,
+   "toeic": "monitor progress / monitor expenses",
+   "level": 860,
+   "ex": "The more closely we monitor expenses, the more money we can save.",
+   "parts": [
+    {
+     "p": "mon",
+     "kind": "語根",
+     "mean": "警告する",
+     "like": [
+      "monument 記念碑",
+      "summon 呼び出す"
+     ]
+    },
+    {
+     "p": "-itor",
+     "kind": "接尾辞",
+     "mean": "〜する人・装置"
+    }
+   ],
+   "tip": "「警告して見張る人・装置」から、監視する・管理するの意味になる。",
+   "rel": {
+    "syn": [
+     "watch",
+     "supervise"
+    ]
+   }
+  },
+  {
+   "word": "postpone",
+   "pos": "動詞",
+   "meaning": "延期する",
+   "note": "postpone ~ until / to ...",
+   "ipa": "poʊstˈpoʊn",
+   "freq": 3,
+   "toeic": "be postponed until next week",
+   "level": 730,
+   "ex": "The meeting was postponed until all department heads could attend.",
+   "parts": [
+    {
+     "p": "post-",
+     "kind": "接頭辞",
+     "mean": "後ろに",
+     "like": [
+      "postpone 延期する",
+      "postscript 追伸"
+     ]
+    },
+    {
+     "p": "pone",
+     "kind": "語根",
+     "mean": "置く",
+     "like": [
+      "component 構成要素",
+      "opponent 反対者",
+      "exponent 提唱者"
+     ]
+    }
+   ],
+   "tip": "「後ろに置く」から、延期するの意味になる。",
+   "rel": {
+    "syn": [
+     "delay",
+     "put off"
+    ],
+    "ant": [
+     "advance",
+     "bring forward"
+    ]
+   }
+  },
+  {
+   "word": "attend",
+   "pos": "動詞",
+   "meaning": "出席する",
+   "note": "他動詞(attend to は別の意味)",
+   "ipa": "əˈtɛnd",
+   "freq": 3,
+   "toeic": "attend a meeting / attend a conference",
+   "level": 730,
+   "ex": "The meeting was postponed until all department heads could attend.",
+   "parts": [
+    {
+     "p": "at-",
+     "kind": "接頭辞",
+     "mean": "〜へ(ad-)"
+    },
+    {
+     "p": "tend",
+     "kind": "語根",
+     "mean": "伸ばす",
+     "like": [
+      "attention 注意",
+      "extend 延ばす",
+      "intend 意図する",
+      "pretend ふりをする"
+     ]
+    }
+   ],
+   "tip": "「〜へ心を伸ばす」から、出席する・世話をするの意味になる。",
+   "rel": {
+    "syn": [
+     "be present at",
+     "go to"
+    ],
+    "ant": [
+     "miss"
+    ]
+   }
+  },
+  {
+   "word": "attendance",
+   "pos": "名詞",
+   "meaning": "出席者数、出席",
+   "note": "",
+   "ipa": "əˈtɛndəns",
+   "freq": 3,
+   "toeic": "attendance record / high attendance",
+   "level": 730,
+   "ex": "Although the conference was held in a remote location, attendance exceeded expectations.",
+   "parts": [
+    {
+     "p": "at-",
+     "kind": "接頭辞",
+     "mean": "〜へ(ad-)"
+    },
+    {
+     "p": "tend",
+     "kind": "語根",
+     "mean": "伸ばす",
+     "like": [
+      "attention 注意",
+      "extend 延ばす",
+      "intend 意図する"
+     ]
+    },
+    {
+     "p": "-ance",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる",
+     "like": [
+      "maintenance 保守",
+      "assurance 保証",
+      "performance 実績"
+     ]
+    }
+   ],
+   "tip": "出席すること、または出席者数。",
+   "rel": {
+    "syn": [
+     "turnout",
+     "presence"
+    ],
+    "ant": [
+     "absence"
+    ]
+   }
+  },
+  {
+   "word": "remote",
+   "pos": "形容詞",
+   "meaning": "辺鄙な、離れた",
+   "note": "",
+   "ipa": "ɹɪˈmoʊt",
+   "freq": 2,
+   "toeic": "remote location / remote work",
+   "level": 730,
+   "ex": "Although the conference was held in a remote location, attendance exceeded expectations.",
+   "parts": [
+    {
+     "p": "re-",
+     "kind": "接頭辞",
+     "mean": "後ろへ"
+    },
+    {
+     "p": "mote",
+     "kind": "語根",
+     "mean": "動かす",
+     "like": [
+      "promote 昇進させる",
+      "motion 動き",
+      "motive 動機",
+      "emotion 感情"
+     ]
+    }
+   ],
+   "tip": "「後ろへ動かされた」から、離れた・辺鄙なの意味になる。",
+   "rel": {
+    "syn": [
+     "distant",
+     "isolated"
+    ],
+    "ant": [
+     "nearby"
+    ]
+   }
+  },
+  {
+   "word": "conference",
+   "pos": "名詞",
+   "meaning": "会議、学会",
+   "note": "",
+   "ipa": "ˈkɑnfɚəns",
+   "freq": 3,
+   "toeic": "hold a conference / conference room",
+   "level": 730,
+   "ex": "Although the conference was held in a remote location, attendance exceeded expectations.",
+   "parts": [
+    {
+     "p": "con-",
+     "kind": "接頭辞",
+     "mean": "共に"
+    },
+    {
+     "p": "fer",
+     "kind": "語根",
+     "mean": "運ぶ",
+     "like": [
+      "transfer 移す",
+      "refer 参照する",
+      "prefer 好む",
+      "offer 提供する",
+      "differ 異なる"
+     ]
+    },
+    {
+     "p": "-ence",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "「意見を共に持ち寄る」から、会議の意味になる。",
+   "rel": {
+    "syn": [
+     "meeting",
+     "convention"
+    ]
+   }
+  },
+  {
+   "word": "deposit",
+   "pos": "名詞",
+   "meaning": "保証金、手付金",
+   "note": "預金の意味もある",
+   "ipa": "dəˈpɑzɪt",
+   "freq": 3,
+   "toeic": "security deposit / pay a deposit",
+   "level": 600,
+   "ex": "In the event of a cancellation, the deposit will be returned within ten business days.",
+   "parts": [
+    {
+     "p": "de-",
+     "kind": "接頭辞",
+     "mean": "下に"
+    },
+    {
+     "p": "posit",
+     "kind": "語根",
+     "mean": "置く",
+     "like": [
+      "position 位置",
+      "positive 肯定的な",
+      "compose 構成する"
+     ]
+    }
+   ],
+   "tip": "「下に置く」から、預ける・保証金の意味になる。",
+   "rel": {
+    "syn": [
+     "down payment",
+     "pledge"
+    ],
+    "ant": [
+     "withdrawal"
+    ]
+   }
+  },
+  {
+   "word": "export",
+   "pos": "動詞",
+   "meaning": "輸出する",
+   "note": "名詞では アクセントが前",
+   "ipa": "ˈɛkspɔɹt",
+   "freq": 2,
+   "toeic": "export goods to overseas markets",
+   "level": 730,
+   "ex": "The firm's profits have risen steadily since it began exporting to overseas markets.",
+   "parts": [
+    {
+     "p": "ex-",
+     "kind": "接頭辞",
+     "mean": "外へ"
+    },
+    {
+     "p": "port",
+     "kind": "語根",
+     "mean": "運ぶ",
+     "like": [
+      "import 輸入する",
+      "transport 輸送する",
+      "support 支える",
+      "portable 持ち運べる"
+     ]
+    }
+   ],
+   "tip": "「外へ運ぶ」から、輸出するの意味になる。",
+   "rel": {
+    "ant": [
+     "import"
+    ]
+   }
+  },
+  {
+   "word": "appliance",
+   "pos": "名詞",
+   "meaning": "家電製品、器具",
+   "note": "",
+   "ipa": "əˈplaɪəns",
+   "freq": 3,
+   "toeic": "kitchen appliances / home appliances",
+   "level": 730,
+   "ex": "Our new line of kitchen appliances is not only affordable but also environmentally friendly.",
+   "parts": [
+    {
+     "p": "ap-",
+     "kind": "接頭辞",
+     "mean": "〜に(ad-)"
+    },
+    {
+     "p": "pli",
+     "kind": "語根",
+     "mean": "折る・重ねる",
+     "like": [
+      "apply 適用する",
+      "comply 従う",
+      "reply 返事する",
+      "employ 雇う"
+     ]
+    },
+    {
+     "p": "-ance",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "生活に「当てはめて使う」器具。家電製品。",
+   "rel": {
+    "up": [
+     "equipment"
+    ],
+    "down": [
+     "refrigerator",
+     "microwave"
+    ]
+   }
+  },
+  {
+   "word": "indicate",
+   "pos": "動詞",
+   "meaning": "示す",
+   "note": "",
+   "ipa": "ˈɪndəˌkeɪt",
+   "freq": 3,
+   "toeic": "survey results indicate that",
+   "level": 730,
+   "ex": "Customer feedback indicates that most users prefer the redesigned website to the previous version.",
+   "parts": [
+    {
+     "p": "in-",
+     "kind": "接頭辞",
+     "mean": "中に"
+    },
+    {
+     "p": "dic",
+     "kind": "語根",
+     "mean": "示す・言う",
+     "like": [
+      "dictate 命令する",
+      "predict 予測する",
+      "contradict 矛盾する",
+      "dictionary 辞書"
+     ]
+    },
+    {
+     "p": "-ate",
+     "kind": "接尾辞",
+     "mean": "〜する(動詞をつくる)"
+    }
+   ],
+   "tip": "「指し示す」から、示すの意味になる。",
+   "rel": {
+    "syn": [
+     "show",
+     "suggest"
+    ]
+   }
+  },
+  {
+   "word": "previous",
+   "pos": "形容詞",
+   "meaning": "以前の",
+   "note": "",
+   "ipa": "ˈpɹiviəs",
+   "freq": 3,
+   "toeic": "previous version / previous experience",
+   "level": 730,
+   "ex": "Customer feedback indicates that most users prefer the redesigned website to the previous version.",
+   "parts": [
+    {
+     "p": "pre-",
+     "kind": "接頭辞",
+     "mean": "前の",
+     "like": [
+      "preview 試写",
+      "predict 予測する",
+      "prepare 準備する"
+     ]
+    },
+    {
+     "p": "vi",
+     "kind": "語根",
+     "mean": "道",
+     "like": [
+      "via 〜経由で",
+      "obvious 明らかな",
+      "deviate それる"
+     ]
+    },
+    {
+     "p": "-ous",
+     "kind": "接尾辞",
+     "mean": "〜の(形容詞をつくる)"
+    }
+   ],
+   "tip": "「前を行く(道)」から、以前のの意味になる。",
+   "rel": {
+    "syn": [
+     "former",
+     "earlier"
+    ],
+    "ant": [
+     "next",
+     "following"
+    ]
+   }
+  },
+  {
+   "word": "construction",
+   "pos": "名詞",
+   "meaning": "工事",
+   "note": "",
+   "ipa": "kənˈstɹʌkʃən",
+   "freq": 3,
+   "toeic": "under construction / construction work",
+   "level": 600,
+   "ex": "Because of ongoing construction, the main entrance will remain closed until further notice.",
+   "parts": [
+    {
+     "p": "con-",
+     "kind": "接頭辞",
+     "mean": "共に"
+    },
+    {
+     "p": "struct",
+     "kind": "語根",
+     "mean": "組み立てる",
+     "like": [
+      "structure 構造",
+      "instruct 指示する",
+      "destruction 破壊",
+      "industry 産業"
+     ]
+    },
+    {
+     "p": "-ion",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "組み立てること。工事・建設。",
+   "rel": {
+    "syn": [
+     "building"
+    ],
+    "ant": [
+     "demolition"
+    ]
+   }
+  },
+  {
+   "word": "remain",
+   "pos": "動詞",
+   "meaning": "〜のままである",
+   "note": "",
+   "ipa": "ɹɪˈmeɪn",
+   "freq": 3,
+   "toeic": "remain closed / remain open",
+   "level": 600,
+   "ex": "Because of ongoing construction, the main entrance will remain closed until further notice.",
+   "parts": [
+    {
+     "p": "re-",
+     "kind": "接頭辞",
+     "mean": "後ろに"
+    },
+    {
+     "p": "main",
+     "kind": "語根",
+     "mean": "とどまる",
+     "like": [
+      "permanent 永続的な",
+      "mansion 大邸宅"
+     ]
+    }
+   ],
+   "tip": "「後ろにとどまる」から、〜のままであるの意味になる。",
+   "rel": {
+    "syn": [
+     "stay",
+     "continue to be"
+    ]
+   }
+  },
+  {
+   "word": "attach",
+   "pos": "動詞",
+   "meaning": "添付する",
+   "note": "",
+   "ipa": "əˈtætʃ",
+   "freq": 3,
+   "toeic": "attached file / please find attached",
+   "level": 730,
+   "ex": "Attached is the revised schedule, which reflects the changes discussed during yesterday's meeting.",
+   "parts": [
+    {
+     "p": "at-",
+     "kind": "接頭辞",
+     "mean": "〜へ(ad-)"
+    },
+    {
+     "p": "tach",
+     "kind": "語根",
+     "mean": "くぎ・留める",
+     "like": [
+      "detach 切り離す",
+      "attack 攻撃する"
+     ]
+    }
+   ],
+   "tip": "「〜へ留める」から、添付するの意味になる。",
+   "rel": {
+    "ant": [
+     "detach"
+    ]
+   }
+  },
+  {
+   "word": "revised",
+   "pos": "形容詞",
+   "meaning": "改訂された",
+   "note": "",
+   "ipa": "ɹɪˈvaɪzd",
+   "freq": 3,
+   "toeic": "revised schedule / revised edition",
+   "level": 730,
+   "ex": "Attached is the revised schedule, which reflects the changes discussed during yesterday's meeting.",
+   "parts": [
+    {
+     "p": "re-",
+     "kind": "接頭辞",
+     "mean": "再び"
+    },
+    {
+     "p": "vis",
+     "kind": "語根",
+     "mean": "見る",
+     "like": [
+      "vision 視覚",
+      "visit 訪れる",
+      "supervise 監督する",
+      "review 見直す"
+     ]
+    },
+    {
+     "p": "-ed",
+     "kind": "接尾辞",
+     "mean": "過去分詞"
+    }
+   ],
+   "tip": "「もう一度見て直した」から、改訂された。",
+   "rel": {
+    "syn": [
+     "updated",
+     "amended"
+    ]
+   }
+  },
+  {
+   "word": "reflect",
+   "pos": "動詞",
+   "meaning": "反映する",
+   "note": "",
+   "ipa": "ɹɪˈflɛkt",
+   "freq": 2,
+   "toeic": "reflect changes",
+   "level": 730,
+   "ex": "Attached is the revised schedule, which reflects the changes discussed during yesterday's meeting.",
+   "parts": [
+    {
+     "p": "re-",
+     "kind": "接頭辞",
+     "mean": "後ろへ"
+    },
+    {
+     "p": "flect",
+     "kind": "語根",
+     "mean": "曲げる",
+     "like": [
+      "flexible 柔軟な",
+      "reflex 反射",
+      "deflect そらす"
+     ]
+    }
+   ],
+   "tip": "「光を曲げて返す」から、反映する・映すの意味になる。",
+   "rel": {
+    "syn": [
+     "mirror",
+     "show"
+    ]
+   }
+  },
+  {
+   "word": "eligible",
+   "pos": "形容詞",
+   "meaning": "資格がある",
+   "note": "",
+   "ipa": "ˈɛlədʒəbəl",
+   "freq": 3,
+   "toeic": "be eligible for ~ / be eligible to do",
+   "level": 860,
+   "ex": "Unless otherwise noted, all full-time staff are eligible for the company health plan.",
+   "parts": [
+    {
+     "p": "e-",
+     "kind": "接頭辞",
+     "mean": "外へ(ex-)"
+    },
+    {
+     "p": "lig",
+     "kind": "語根",
+     "mean": "選ぶ",
+     "like": [
+      "elect 選挙で選ぶ",
+      "select 選ぶ",
+      "neglect 怠る",
+      "intelligent 知的な"
+     ]
+    },
+    {
+     "p": "-ible",
+     "kind": "接尾辞",
+     "mean": "〜できる"
+    }
+   ],
+   "tip": "「選び出される資格がある」から、資格があるの意味になる。",
+   "rel": {
+    "syn": [
+     "qualified",
+     "entitled"
+    ],
+    "ant": [
+     "ineligible"
+    ]
+   }
+  },
+  {
+   "word": "select",
+   "pos": "動詞",
+   "meaning": "~を選ぶ",
+   "note": "",
+   "ipa": "səˈlɛkt",
+   "freq": 2,
+   "toeic": "be selected for ~",
+   "level": 860,
+   "ex": "Having reviewed all of the applications, the committee selected five candidates for a second interview.",
+   "parts": [
+    {
+     "p": "se-",
+     "kind": "接頭辞",
+     "mean": "分けて",
+     "like": [
+      "separate 分ける",
+      "secret 秘密"
+     ]
+    },
+    {
+     "p": "lect",
+     "kind": "語根",
+     "mean": "選ぶ",
+     "like": [
+      "elect 選挙で選ぶ",
+      "collect 集める",
+      "neglect 怠る"
+     ]
+    }
+   ],
+   "tip": "「分けて選ぶ」から、選ぶの意味になる。",
+   "rel": {
+    "syn": [
+     "choose",
+     "pick"
+    ]
+   }
+  },
+  {
+   "word": "committee",
+   "pos": "名詞",
+   "meaning": "委員会",
+   "note": "",
+   "ipa": "kəˈmɪti",
+   "freq": 2,
+   "toeic": "selection committee / committee member",
+   "level": 860,
+   "ex": "Having reviewed all of the applications, the committee selected five candidates for a second interview.",
+   "parts": [
+    {
+     "p": "com-",
+     "kind": "接頭辞",
+     "mean": "共に"
+    },
+    {
+     "p": "mit",
+     "kind": "語根",
+     "mean": "送る・任せる",
+     "like": [
+      "commit 委ねる",
+      "permit 許可する",
+      "submit 提出する",
+      "transmit 送る"
+     ]
+    },
+    {
+     "p": "-ee",
+     "kind": "接尾辞",
+     "mean": "〜される人"
+    }
+   ],
+   "tip": "「任された人たち」から、委員会の意味になる。",
+   "rel": {
+    "syn": [
+     "board",
+     "panel"
+    ]
+   }
+  },
+  {
+   "word": "employee",
+   "pos": "名詞",
+   "meaning": "従業員",
+   "note": "",
+   "ipa": "ɛmˈplɔɪi",
+   "freq": 3,
+   "toeic": "new employee / full-time employee",
+   "level": 600,
+   "ex": "All new employees must complete the safety training before they begin working on the production floor.",
+   "parts": [
+    {
+     "p": "em-",
+     "kind": "接頭辞",
+     "mean": "中に"
+    },
+    {
+     "p": "ploy",
+     "kind": "語根",
+     "mean": "折る→使う",
+     "like": [
+      "employ 雇う",
+      "apply 適用する",
+      "deploy 配備する",
+      "reply 返事する"
+     ]
+    },
+    {
+     "p": "-ee",
+     "kind": "接尾辞",
+     "mean": "〜される人",
+     "like": [
+      "trainee 研修生",
+      "nominee 候補者",
+      "interviewee 面接を受ける人"
+     ]
+    }
+   ],
+   "tip": "雇われる(employ される)人。従業員。",
+   "rel": {
+    "syn": [
+     "worker",
+     "staff member"
+    ],
+    "ant": [
+     "employer"
+    ]
+   }
+  },
+  {
+   "word": "applicant",
+   "pos": "名詞",
+   "meaning": "応募者",
+   "note": "",
+   "ipa": "ˈæplɪkənt",
+   "freq": 3,
+   "toeic": "job applicant / qualified applicant",
+   "level": 600,
+   "ex": "Applicants are required to submit two letters of recommendation along with their résumés.",
+   "parts": [
+    {
+     "p": "ap-",
+     "kind": "接頭辞",
+     "mean": "〜に(ad-)"
+    },
+    {
+     "p": "pli",
+     "kind": "語根",
+     "mean": "折る・重ねる",
+     "like": [
+      "apply 申し込む",
+      "comply 従う",
+      "reply 返事する"
+     ]
+    },
+    {
+     "p": "-ant",
+     "kind": "接尾辞",
+     "mean": "〜する人",
+     "like": [
+      "assistant 助手",
+      "participant 参加者",
+      "consultant 相談役"
+     ]
+    }
+   ],
+   "tip": "申し込む(apply)人。応募者。",
+   "rel": {
+    "syn": [
+     "candidate"
+    ]
+   }
+  },
+  {
+   "word": "candidate",
+   "pos": "名詞",
+   "meaning": "候補者",
+   "note": "",
+   "ipa": "ˈkændədeɪt",
+   "freq": 3,
+   "toeic": "qualified candidate / candidate for a position",
+   "level": 860,
+   "ex": "Having reviewed all of the applications, the committee selected five candidates for a second interview.",
+   "parts": [
+    {
+     "p": "candid",
+     "kind": "語根",
+     "mean": "白く輝く・率直な",
+     "like": [
+      "candid 率直な",
+      "candor 率直さ"
+     ]
+    },
+    {
+     "p": "-ate",
+     "kind": "接尾辞",
+     "mean": "〜される人・もの",
+     "like": [
+      "graduate 卒業生",
+      "delegate 代表者",
+      "advocate 擁護者"
+     ]
+    }
+   ],
+   "tip": "古代ローマで、立候補者が白い衣を着たことから。",
+   "rel": {
+    "syn": [
+     "nominee",
+     "applicant"
+    ],
+    "up": [
+     "person"
+    ]
+   }
+  },
+  {
+   "word": "interview",
+   "pos": "名詞",
+   "meaning": "面接",
+   "note": "",
+   "ipa": "ˈɪntɚˌvju",
+   "freq": 3,
+   "toeic": "job interview / schedule an interview",
+   "level": 730,
+   "ex": "Interviews will be conducted next week by a panel of three department heads.",
+   "parts": [
+    {
+     "p": "inter-",
+     "kind": "接頭辞",
+     "mean": "間で",
+     "like": [
+      "international 国際的な",
+      "internet",
+      "interact 交流する",
+      "intermission 休憩"
+     ]
+    },
+    {
+     "p": "view",
+     "kind": "語根",
+     "mean": "見る",
+     "like": [
+      "review 見直す",
+      "preview 試写",
+      "survey 調査"
+     ]
+    }
+   ],
+   "tip": "「互いに(間で)見合う」から、面接の意味になる。"
+  },
+  {
+   "word": "supervisor",
+   "pos": "名詞",
+   "meaning": "上司、監督者",
+   "note": "",
+   "ipa": "ˈsupɚˌvaɪzɚ",
+   "freq": 3,
+   "toeic": "immediate supervisor / contact your supervisor",
+   "level": 730,
+   "ex": "Please inform your supervisor at least two weeks in advance if you plan to take extended leave.",
+   "parts": [
+    {
+     "p": "super-",
+     "kind": "接頭辞",
+     "mean": "上から",
+     "like": [
+      "superior 上位の",
+      "supermarket"
+     ]
+    },
+    {
+     "p": "vis",
+     "kind": "語根",
+     "mean": "見る",
+     "like": [
+      "vision 視覚",
+      "visit 訪れる",
+      "revise 改訂する"
+     ]
+    },
+    {
+     "p": "-or",
+     "kind": "接尾辞",
+     "mean": "〜する人"
+    }
+   ],
+   "tip": "上から見る人。上司・監督者。",
+   "rel": {
+    "syn": [
+     "manager",
+     "boss"
+    ],
+    "ant": [
+     "subordinate"
+    ]
+   }
+  },
+  {
+   "word": "coordinator",
+   "pos": "名詞",
+   "meaning": "調整役、まとめ役",
+   "note": "",
+   "ipa": "koʊˈɔɹdəˌneɪtɚ",
+   "freq": 2,
+   "toeic": "project coordinator / event coordinator",
+   "level": 730,
+   "ex": "Mr. Okada was hired as a project coordinator because of his extensive experience in logistics.",
+   "parts": [
+    {
+     "p": "co-",
+     "kind": "接頭辞",
+     "mean": "共に"
+    },
+    {
+     "p": "ordin",
+     "kind": "語根",
+     "mean": "順序",
+     "like": [
+      "order 順番",
+      "ordinary 普通の",
+      "subordinate 部下",
+      "coordinate 調整する"
+     ]
+    },
+    {
+     "p": "-ator",
+     "kind": "接尾辞",
+     "mean": "〜する人"
+    }
+   ],
+   "tip": "順序をそろえる人。調整役。",
+   "rel": {
+    "syn": [
+     "organizer"
+    ]
+   }
+  },
+  {
+   "word": "conduct",
+   "pos": "動詞",
+   "meaning": "~を行う",
+   "note": "",
+   "ipa": "ˈkɑndəkt",
+   "freq": 3,
+   "toeic": "conduct a survey / conduct an interview",
+   "level": 730,
+   "ex": "Interviews will be conducted next week by a panel of three department heads.",
+   "parts": [
+    {
+     "p": "con-",
+     "kind": "接頭辞",
+     "mean": "共に"
+    },
+    {
+     "p": "duct",
+     "kind": "語根",
+     "mean": "導く",
+     "like": [
+      "produce 生産する",
+      "reduce 減らす",
+      "introduce 紹介する",
+      "educate 教育する",
+      "product 製品"
+     ]
+    }
+   ],
+   "tip": "「共に導く」から、行う・指揮するの意味になる。",
+   "rel": {
+    "syn": [
+     "carry out",
+     "perform"
+    ]
+   }
+  },
+  {
+   "word": "compensation",
+   "pos": "名詞",
+   "meaning": "報酬、補償",
+   "note": "不可算名詞",
+   "ipa": "ˌkɑmpənˈseɪʃən",
+   "freq": 3,
+   "toeic": "compensation package / receive compensation",
+   "level": 730,
+   "ex": "Employees who work overtime are entitled to additional compensation.",
+   "parts": [
+    {
+     "p": "com-",
+     "kind": "接頭辞",
+     "mean": "共に"
+    },
+    {
+     "p": "pens",
+     "kind": "語根",
+     "mean": "重さを量る・払う",
+     "like": [
+      "expense 費用",
+      "pension 年金",
+      "suspend 中断する",
+      "depend 頼る"
+     ]
+    },
+    {
+     "p": "-ation",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "「釣り合うように払うこと」から、報酬・補償の意味になる。",
+   "rel": {
+    "syn": [
+     "payment",
+     "reward"
+    ]
+   }
+  },
+  {
+   "word": "additional",
+   "pos": "形容詞",
+   "meaning": "追加の",
+   "note": "",
+   "ipa": "əˈdɪʃənəl",
+   "freq": 2,
+   "toeic": "additional charge / additional information",
+   "level": 730,
+   "ex": "Employees who work overtime are entitled to additional compensation.",
+   "parts": [
+    {
+     "p": "ad-",
+     "kind": "接頭辞",
+     "mean": "〜へ"
+    },
+    {
+     "p": "dit",
+     "kind": "語根",
+     "mean": "与える・置く",
+     "like": [
+      "edition 版",
+      "tradition 伝統",
+      "addition 追加"
+     ]
+    },
+    {
+     "p": "-ion-al",
+     "kind": "接尾辞",
+     "mean": "名詞+形容詞"
+    }
+   ],
+   "tip": "「さらに付け足された」の意味。",
+   "rel": {
+    "syn": [
+     "extra",
+     "further"
+    ]
+   }
+  },
+  {
+   "word": "extensive",
+   "pos": "形容詞",
+   "meaning": "豊富な、広範囲の",
+   "note": "",
+   "ipa": "ɪkˈstɛnsɪv",
+   "freq": 3,
+   "toeic": "extensive experience / extensive knowledge",
+   "level": 730,
+   "ex": "Mr. Okada was hired as a project coordinator because of his extensive experience in logistics.",
+   "parts": [
+    {
+     "p": "ex-",
+     "kind": "接頭辞",
+     "mean": "外へ",
+     "like": [
+      "export 輸出する",
+      "expand 広げる"
+     ]
+    },
+    {
+     "p": "tens",
+     "kind": "語根",
+     "mean": "伸ばす",
+     "like": [
+      "extend 延ばす",
+      "intense 強烈な",
+      "tension 緊張",
+      "attend 出席する"
+     ]
+    },
+    {
+     "p": "-ive",
+     "kind": "接尾辞",
+     "mean": "〜の性質の"
+    }
+   ],
+   "tip": "「外へ伸びた」から、広範囲の・豊富なの意味になる。",
+   "rel": {
+    "syn": [
+     "wide",
+     "broad",
+     "comprehensive"
+    ]
+   }
+  },
+  {
+   "word": "immediately",
+   "pos": "副詞",
+   "meaning": "すぐに",
+   "note": "",
+   "ipa": "ˌɪˈmiˌdiətli",
+   "freq": 2,
+   "toeic": "notify us immediately",
+   "level": 600,
+   "ex": "If the flight is delayed, please contact the travel desk immediately.",
+   "parts": [
+    {
+     "p": "im-",
+     "kind": "接頭辞",
+     "mean": "否定(in-)"
+    },
+    {
+     "p": "medi",
+     "kind": "語根",
+     "mean": "間・中間",
+     "like": [
+      "medium 中間",
+      "media",
+      "mediate 仲裁する",
+      "intermediate 中級の"
+     ]
+    },
+    {
+     "p": "-ate-ly",
+     "kind": "接尾辞",
+     "mean": "副詞をつくる"
+    }
+   ],
+   "tip": "「間(時間)を置かずに」から、すぐにの意味になる。",
+   "rel": {
+    "syn": [
+     "at once",
+     "promptly"
+    ]
+   }
+  },
+  {
+   "word": "quarterly",
+   "pos": "形容詞",
+   "meaning": "四半期の、年4回の",
+   "note": "",
+   "ipa": "ˈkwɔɹtɚli",
+   "freq": 2,
+   "toeic": "quarterly report / quarterly earnings",
+   "level": 600,
+   "ex": "The quarterly sales meeting has been rescheduled to Thursday due to the director's business trip.",
+   "parts": [
+    {
+     "p": "quarter",
+     "kind": "語根",
+     "mean": "4分の1",
+     "like": [
+      "quartet 四重奏",
+      "quadruple 4倍の"
+     ]
+    },
+    {
+     "p": "-ly",
+     "kind": "接尾辞",
+     "mean": "〜ごとの"
+    }
+   ],
+   "tip": "1年の4分の1ごとの。四半期の。",
+   "rel": {
+    "syn": [
+     "every three months"
+    ]
+   }
+  },
+  {
+   "word": "department",
+   "pos": "名詞",
+   "meaning": "部署",
+   "note": "",
+   "ipa": "dɪˈpɑɹtmənt",
+   "freq": 3,
+   "toeic": "sales department / department head",
+   "level": 730,
+   "ex": "Ms. Alvarez, whose department exceeded its annual target, was invited to speak at the company retreat.",
+   "parts": [
+    {
+     "p": "de-",
+     "kind": "接頭辞",
+     "mean": "分離",
+     "like": [
+      "depart 出発する",
+      "detach 取り外す"
+     ]
+    },
+    {
+     "p": "part",
+     "kind": "語根",
+     "mean": "部分",
+     "like": [
+      "partial 部分的な",
+      "apart 離れて",
+      "counterpart 対応する人"
+     ]
+    },
+    {
+     "p": "-ment",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "全体から分けられた部分。部署。",
+   "rel": {
+    "syn": [
+     "division",
+     "section"
+    ]
+   }
+  },
+  {
+   "word": "accounting",
+   "pos": "名詞",
+   "meaning": "経理、会計",
+   "note": "",
+   "ipa": "əˈkaʊntɪŋ",
+   "freq": 3,
+   "toeic": "accounting department / accounting software",
+   "level": 730,
+   "ex": "The accounting department is responsible for verifying every receipt submitted with an expense report.",
+   "parts": [
+    {
+     "p": "ac-",
+     "kind": "接頭辞",
+     "mean": "〜へ(ad-)"
+    },
+    {
+     "p": "count",
+     "kind": "語根",
+     "mean": "数える",
+     "like": [
+      "discount 割引",
+      "recount 数え直す",
+      "accountant 会計士"
+     ]
+    },
+    {
+     "p": "-ing",
+     "kind": "接尾辞",
+     "mean": "名詞をつくる"
+    }
+   ],
+   "tip": "「数えて報告すること」から、会計・経理の意味になる。",
+   "rel": {
+    "syn": [
+     "bookkeeping"
+    ]
+   }
+  },
+  {
+   "word": "discount",
+   "pos": "名詞",
+   "meaning": "割引",
+   "note": "",
+   "ipa": "dɪˈskaʊnt",
+   "freq": 3,
+   "toeic": "receive a discount / discount on",
+   "level": 730,
+   "ex": "Attendees who register before the end of the month will receive a discount on the admission fee.",
+   "parts": [
+    {
+     "p": "dis-",
+     "kind": "接頭辞",
+     "mean": "逆・離れて",
+     "like": [
+      "disagree 反対する",
+      "disconnect 切断する",
+      "discover 発見する"
+     ]
+    },
+    {
+     "p": "count",
+     "kind": "語根",
+     "mean": "数える",
+     "like": [
+      "account 説明・口座",
+      "recount 数え直す"
+     ]
+    }
+   ],
+   "tip": "数えた額から引く。割引。",
+   "rel": {
+    "syn": [
+     "markdown",
+     "reduction"
+    ],
+    "ant": [
+     "surcharge"
+    ]
+   }
+  },
+  {
+   "word": "attendee",
+   "pos": "名詞",
+   "meaning": "出席者、参加者",
+   "note": "",
+   "ipa": "əˈtɛnˈdi",
+   "freq": 3,
+   "toeic": "conference attendees",
+   "level": 730,
+   "ex": "Attendees who register before the end of the month will receive a discount on the admission fee.",
+   "parts": [
+    {
+     "p": "at-",
+     "kind": "接頭辞",
+     "mean": "〜へ(ad-)"
+    },
+    {
+     "p": "tend",
+     "kind": "語根",
+     "mean": "伸ばす",
+     "like": [
+      "attention 注意",
+      "extend 延ばす"
+     ]
+    },
+    {
+     "p": "-ee",
+     "kind": "接尾辞",
+     "mean": "〜する人・〜される人",
+     "like": [
+      "employee 従業員",
+      "trainee 研修生",
+      "nominee 候補者"
+     ]
+    }
+   ],
+   "tip": "出席する(attend)人。",
+   "rel": {
+    "syn": [
+     "participant",
+     "guest"
+    ]
+   }
+  },
+  {
+   "word": "expense",
+   "pos": "名詞",
+   "meaning": "経費、費用",
+   "note": "通常は複数形",
+   "ipa": "ɪkˈspɛns",
+   "freq": 3,
+   "toeic": "travel expenses / expense report",
+   "level": 600,
+   "ex": "Travel expenses must be reported within thirty days of the trip.",
+   "parts": [
+    {
+     "p": "ex-",
+     "kind": "接頭辞",
+     "mean": "外へ"
+    },
+    {
+     "p": "pense",
+     "kind": "語根",
+     "mean": "重さを量る・払う",
+     "like": [
+      "pension 年金",
+      "compensate 補償する",
+      "suspend 保留する",
+      "depend 頼る"
+     ]
+    }
+   ],
+   "tip": "「外へ支払うこと」から、経費・費用の意味になる。",
+   "rel": {
+    "syn": [
+     "cost",
+     "spending"
+    ],
+    "ant": [
+     "income"
+    ]
+   }
+  },
+  {
+   "word": "receipt",
+   "pos": "名詞",
+   "meaning": "領収書",
+   "note": "発音は p を読まない",
+   "ipa": "ɹɪˈsit",
+   "freq": 3,
+   "toeic": "keep the receipt / receipt of payment",
+   "level": 730,
+   "ex": "The accounting department is responsible for verifying every receipt submitted with an expense report.",
+   "parts": [
+    {
+     "p": "re-",
+     "kind": "接頭辞",
+     "mean": "返して"
+    },
+    {
+     "p": "ceipt",
+     "kind": "語根",
+     "mean": "受け取る",
+     "like": [
+      "receive 受け取る",
+      "concept 概念",
+      "accept 受け入れる"
+     ]
+    }
+   ],
+   "tip": "受け取ったことの証拠。領収書。"
+  },
+  {
+   "word": "repave",
+   "pos": "動詞",
+   "meaning": "再舗装する",
+   "note": "名詞形は repaving",
+   "ipa": "ɹiˈpeɪv",
+   "freq": 2,
+   "toeic": "道路・駐車場の工事の告知で使われる",
+   "level": 730,
+   "ex": "Please be advised that the parking lot will be closed for repaving from Friday evening until Monday morning.",
+   "parts": [
+    {
+     "p": "re-",
+     "kind": "接頭辞",
+     "mean": "再び",
+     "like": [
+      "rebuild 再建する",
+      "repaint 塗り直す",
+      "redo やり直す"
+     ]
+    },
+    {
+     "p": "pave",
+     "kind": "語",
+     "mean": "舗装する"
+    }
+   ],
+   "tip": "舗装をやり直す。",
+   "rel": {
+    "syn": [
+     "resurface"
+    ]
+   }
+  },
+  {
+   "word": "affordable",
+   "pos": "形容詞",
+   "meaning": "手頃な価格の",
+   "note": "",
+   "ipa": "əˈfɔɹdəbəl",
+   "freq": 3,
+   "toeic": "affordable price",
+   "level": 730,
+   "ex": "Our new line of kitchen appliances is not only affordable but also environmentally friendly.",
+   "parts": [
+    {
+     "p": "afford",
+     "kind": "語",
+     "mean": "〜する余裕がある"
+    },
+    {
+     "p": "-able",
+     "kind": "接尾辞",
+     "mean": "〜できる",
+     "like": [
+      "reasonable 妥当な",
+      "comfortable 快適な",
+      "reliable 信頼できる"
+     ]
+    }
+   ],
+   "tip": "「余裕をもって買える」から、手頃な価格のの意味になる。",
+   "rel": {
+    "syn": [
+     "inexpensive",
+     "reasonable"
+    ],
+    "ant": [
+     "expensive"
+    ]
+   }
+  }
+ ]
+}

@@ -166,6 +166,20 @@ const Clean = (() => {
     return c;
   }
 
+  // 単語の「分解」と「つながり」。parts = 語の部品 [{p, kind, mean, like}]、rel = 類義語・反意語・上位・下位、tip = 覚え方
+  const PKIND = ["接頭辞", "語根", "接尾辞", "語"];
+  const strs = (a, n, m) => (Array.isArray(a) ? a : []).slice(0, n).map(x => clip(x, m)).filter(Boolean);
+  function wordExtra(o) {
+    const parts = (Array.isArray(o.parts) ? o.parts : []).slice(0, 8).filter(x => x && typeof x.p === "string" && x.p.trim())
+      .map(x => ({ p: clip(x.p, 40), kind: PKIND.includes(x.kind) ? x.kind : "語", mean: clip(x.mean, 100), like: strs(x.like, 8, 60) }));
+    let rel = null;
+    if (o.rel && typeof o.rel === "object" && !Array.isArray(o.rel)) {
+      const r = { syn: strs(o.rel.syn, 8, 60), ant: strs(o.rel.ant, 8, 60), up: strs(o.rel.up, 8, 60), down: strs(o.rel.down, 8, 60) };
+      if (r.syn.length || r.ant.length || r.up.length || r.down.length) rel = r;
+    }
+    return { parts, rel, tip: clip(o.tip, 600) };
+  }
+
   // 単語1件。word(または text)が無い・空なら null。
   // freq = TOEIC頻出度 1〜3、level = 難易度 600/730/860。試作の単語は、level に頻出度を入れていたので、freq が無いときは level(1〜3)を頻出度とみなす
   function word(o, { keepState = false } = {}) {
@@ -178,7 +192,7 @@ const Clean = (() => {
       id: uid(), type: "word", text, ipa: ipa(o.ipa), ja: clip(o.meaning ?? o.ja, 300), pos: clip(o.pos, 40),
       freq, level: level(o.level), note: clip(o.note, 500), toeic: clip(o.toeic, 500), ex: clip(o.ex, 500),
       groups: [...new Set((Array.isArray(o.groups) ? o.groups : []).map(g => clip(g, 40)).filter(Boolean))].slice(0, 20),
-      status: "new", review_count: 0, last_reviewed: null, mistakes: [], added: Date.now()
+      status: "new", review_count: 0, last_reviewed: null, mistakes: [], added: Date.now(), ...wordExtra(o)
     };
     if (keepState) {
       if (has(STATUS, o.status)) w.status = o.status;
@@ -233,6 +247,9 @@ const Clean = (() => {
     let c = false;
     for (const k of ["ipa", "ja", "pos", "note", "toeic", "ex"]) if (!ex[k] && add[k]) { ex[k] = add[k]; c = true }
     for (const k of ["freq", "level"]) if (!ex[k] && add[k]) { ex[k] = add[k]; c = true }
+    if (!(ex.parts && ex.parts.length) && add.parts && add.parts.length) { ex.parts = add.parts; c = true }
+    if (!ex.rel && add.rel) { ex.rel = add.rel; c = true }
+    if (!ex.tip && add.tip) { ex.tip = add.tip; c = true }
     const g = [...new Set([...(ex.groups || []), ...(add.groups || [])])];
     if (g.length !== (ex.groups || []).length) { ex.groups = g; c = true }
     return c;
