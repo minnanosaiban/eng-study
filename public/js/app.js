@@ -195,7 +195,7 @@
     const body = chunk
       ? `${esc(r.text)} ${r.ipa ? `<span class="ipa">/${esc(r.ipa)}/</span>` : ""}<span class="m"><br>${esc(r.ja)}</span>`
       : unit === "word"
-      ? `<b>${esc(r.text)}</b> ${r.ipa ? `<span class="ipa">/${esc(r.ipa)}/</span>` : ""} <span class="m">${esc(r.pos)} ${"★".repeat(r.freq || 0)}</span><span class="m"><br>${esc(r.ja)}</span>`
+      ? `<b>${esc(r.text)}</b> ${r.ipa ? `<span class="ipa">/${esc(r.ipa)}/</span>` : ""} <span class="m">${esc(r.pos)}</span><span class="m"><br>${esc(r.ja)}</span>`
       : `${esc(r.text)}<span class="m"><br>${esc(r.ja)}</span>`;
     return `<label class="row-i"><input type="checkbox" data-id="${r.id}" ${sel[unit].has(r.id) ? "checked" : ""}><span class="t">${body}<span class="m"><br>${tags}</span></span></label>`;
   }
@@ -484,7 +484,7 @@
       if (a.ex) h += `<div class="blk"><h3>文の中で</h3>${inContext(w)}</div>`;
       if (a.tr) { const p = rowOf(w.ex); h += `<div class="blk"><h3>文の和訳</h3>${p && p.ja ? esc(p.ja) : '<span class="sub">なし</span>'}</div>` }
     } else {
-      $("#wDisp").innerHTML = `<div class="word">${hide && wq.q.kind !== "en2ja" ? "？" : esc(w.text)}</div>${hide && wq.q.kind !== "en2ja" ? "" : ipa}<div class="sub meta">${esc(w.pos)} ${"★".repeat(w.freq || 0)} ${lv}${tags}</div>`;
+      $("#wDisp").innerHTML = `<div class="word">${hide && wq.q.kind !== "en2ja" ? "？" : esc(w.text)}</div>${hide && wq.q.kind !== "en2ja" ? "" : ipa}<div class="sub meta">${esc(w.pos)} ${lv}${tags}</div>`;
       if (!hide) h += `<div class="blk">${wReveal ? `<h3>意味</h3>${esc(w.ja) || '<span class="sub">なし</span>'}${w.note ? `<div class="sub">${esc(w.note)}</div>` : ""}` : `<button class="hide-btn" id="wShow">意味を見る(M)</button>`}</div>`;
       if (a.ex && !hide) h += `<div class="blk"><h3>例文</h3>${w.ex ? esc(w.ex) : '<span class="sub">なし</span>'}</div>`;
       if (a.toeic && !hide) h += `<div class="blk"><h3>TOEIC での使われ方</h3>${w.toeic ? esc(w.toeic) : '<span class="sub">なし</span>'}</div>`;
