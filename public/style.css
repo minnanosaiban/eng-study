@@ -162,3 +162,7 @@ code{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding
 .jabox:not(:empty) + #disp{margin-top:12px}
 /* 英文の画面のボタン・選択肢の文字は、すべて同じ大きさ */
 .sentence button,.sentence select,#selPlay{font-size:12px}
+/* 日本語で書かれた文字は、すべて 12px(原文の英文だけを大きく) */
+.sentence .sub,.sentence .inl,.sentence h3,.sentence .tag,.jabox,#disp .sljas .ja,#disp .ph .lab,
+.gram .gh,.gram .gp,.gram .cls,.gram .gpt,#aux table.v td:nth-child(2),#aux table.v td:nth-child(3){font-size:12px}
+#aux h3,.sentence .legend{font-size:12px}

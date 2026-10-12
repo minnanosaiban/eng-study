@@ -333,10 +333,10 @@
     const P2 = mkP();
     h += r.phrases && r.phrases.length ? r.phrases.map((p, i) => `<span class="ph"><span class="no">${NUM[i] || i + 1}</span><span class="seg-i cl-${phClass(p.f)}${hl(i)}${sl("phrases", i)}" data-c="${i}">${P2(p.t)}</span> <span class="lab">${esc(p.f)}</span></span>`).join("") : '<div class="sub">この英文には、文法区切りのデータがありません。</div>';
     h += '<h4 class="gh">文法の解説</h4>';
-    h += (r.grammar || []).length ? r.grammar.map(g => `<div><b>・${esc(g.point)}</b><div class="sub">${esc(g.explanation)}</div></div>`).join("") : '<div class="sub">なし</div>';
+    h += (r.grammar || []).length ? r.grammar.map(g => `<div class="gpt"><b>・${esc(g.point)}</b><div class="sub">${esc(g.explanation)}</div></div>`).join("") : '<div class="sub">なし</div>';
     { const t = r.toeic;
     h += '<h4 class="gh">TOEIC</h4>';
-    h += `<div>${t ? `<span class="tag">${esc(t.part)}</span><span class="tag">${esc(t.scene)}</span>${t.points.map(p => `<div><b>・${esc(p.type)}</b> <span class="sub">${esc(p.detail)}</span></div>`).join("")}${t.paraphrase.length ? `<div class="sub">言い換え: ${t.paraphrase.map(esc).join(" / ")}</div>` : ""}` : '<span class="sub">なし</span>'}</div>`;
+    h += `<div>${t ? `<span class="tag">${esc(t.part)}</span><span class="tag">${esc(t.scene)}</span>${t.points.map(p => `<div class="gpt"><b>・${esc(p.type)}</b> <span class="sub">${esc(p.detail)}</span></div>`).join("")}${t.paraphrase.length ? `<div class="sub">言い換え: ${t.paraphrase.map(esc).join(" / ")}</div>` : ""}` : '<span class="sub">なし</span>'}</div>`;
     }
     return h + "</div>";
   }
