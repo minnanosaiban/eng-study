@@ -643,6 +643,7 @@
 
   $("#segWAudio").onclick = e => { if (e.target.closest("#wStop")) return stopAudio(); const b = e.target.closest("button[data-a]"); if (b) play(b.dataset.a) };
   $("#btnStop").onclick = stopAudio;
+  $("#btnPlay").onclick = () => play("once");
 
   // ---------- ショートカット ----------
   document.addEventListener("keydown", e => {

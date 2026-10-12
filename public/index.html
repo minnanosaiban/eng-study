@@ -218,19 +218,6 @@
     <div id="studyBox" hidden>
       <div class="card ctl">
         <div class="rowl">
-          <span class="lbl">調節</span>
-          <label class="inl">速さ
-            <select id="rate"><option value="0.7">0.7</option><option value="0.85">0.85</option><option value="1" selected>1.0</option><option value="1.15">1.15</option></select>
-          </label>
-          <label class="inl">間
-            <select id="shGap" title="区切りを読んだあとに置く、まねする時間(読み上げの長さの何倍か)。「なし」なら、続けて読む"><option value="0" selected>なし</option><option value="0.8">0.8倍</option><option value="1">1倍</option><option value="1.5">1.5倍</option><option value="2">2倍</option></select>
-          </label>
-          <label class="inl">繰り返し
-            <select id="shRep" title="区切りの ▶・クリックで選んだ区切りで、同じ区切りを何回続けて繰り返すか"><option value="1" selected>1回</option><option value="2">2回</option><option value="3">3回</option><option value="4">4回</option><option value="5">5回</option><option value="6">6回</option><option value="7">7回</option><option value="8">8回</option><option value="9">9回</option><option value="10">10回</option></select>
-          </label>
-          <button id="btnStop" title="読み上げを止める(S)">■ 止める</button>
-        </div>
-        <div class="rowl">
           <span class="lbl">表示</span>
           <div class="seg aux" id="segShow" role="group" aria-label="表示">
             <button data-v="slash" title="意味のまとまりで / 区切る。和訳・IPA を入れると、区切りごとに付く。区切りの先頭の ▶ は、この区切りで進む(1)">英文</button>
@@ -249,6 +236,18 @@
           <span id="pos" class="sub"></span>
           <button id="btnNext" aria-label="次へ">→</button>
         </div>
+          <div class="rowl adj">
+            <button id="btnPlay" title="全文を聞く(スペース)">▶</button><button id="btnStop" title="止める(S)">■</button>
+            <label class="inl">速さ
+              <select id="rate"><option value="0.7">0.7</option><option value="0.85">0.85</option><option value="1" selected>1.0</option><option value="1.15">1.15</option></select>
+            </label>
+            <label class="inl">間
+              <select id="shGap" title="区切りを読んだあとに置く、まねする時間(読み上げの長さの何倍か)。「なし」なら、続けて読む"><option value="0" selected>なし</option><option value="0.8">0.8倍</option><option value="1">1倍</option><option value="1.5">1.5倍</option><option value="2">2倍</option></select>
+            </label>
+            <label class="inl">繰り返し
+              <select id="shRep" title="区切りの ▶・クリックで選んだ区切りで、同じ区切りを何回続けて繰り返すか"><option value="1" selected>1回</option><option value="2">2回</option><option value="3">3回</option><option value="4">4回</option><option value="5">5回</option><option value="6">6回</option><option value="7">7回</option><option value="8">8回</option><option value="9">9回</option><option value="10">10回</option></select>
+            </label>
+          </div>
         <div id="disp"></div>
         <div id="pstatus" class="pstatus" hidden></div>
         <div id="aux"></div>
